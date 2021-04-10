@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "/6tslHhdcKgEjG09Eq8UZHbdAHZMjDHji12MHWyiyRIv9lwSlP92JxyUhz84ghI1CCT7OzbMdQonJEcoJAfi3g==",
+  "success": true,
+  "projectFilePath": "D:\\SYS\\Program Files\\Visual Studio\\spreadsheet-NateLanza\\Spreadsheet\\DependencyGraph\\DependencyGraph.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dolph\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\dolph\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "WbuOaQ31pTUGzw+YvGzp2cH3yUmjNFdQpmmolaOuHtgf+OALoul0D0ecVWFbl1ui59pBBABdQLADB0/twvhdBA==",
+  "success": true,
+  "projectFilePath": "D:\\SYS\\Program Files\\Visual Studio\\PS7\\PS7\\NetworkController\\NetworkController.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dolph\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\dolph\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

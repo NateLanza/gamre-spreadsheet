@@ -1,0 +1,6 @@
+D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\SpreadsheetPanel\bin\Debug\SpreadsheetPanel.dll
+D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\SpreadsheetPanel\bin\Debug\SpreadsheetPanel.pdb
+D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csprojAssemblyReference.cache
+D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csproj.CoreCompileInputs.cache
+D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.dll
+D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.pdb
