@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\client",
+    "\\client\\DependencyGraph",
+    "\\client\\Formula",
+    "\\client\\Spreadsheet"
   ],
-  "SelectedNode": "\\client",
+  "SelectedNode": "\\client\\NetworkController",
   "PreviewInSolutionExplorer": false
 }
