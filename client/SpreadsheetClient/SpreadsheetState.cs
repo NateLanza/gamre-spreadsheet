@@ -3,13 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Linq;
-using System.Xml;
-using System.Linq.Expressions;
 
 namespace SS {
 
     /// <summary>
-    /// An SpreadsheeState object represents the state of a simple spreadsheet.  A 
+    /// An SpreadsheetState object represents the state of a simple spreadsheet.  A 
     /// spreadsheet consists of an infinite number of named cells.
     /// 
     /// A string is a valid cell name if and only if:
@@ -51,7 +49,7 @@ namespace SS {
     /// A1 depends on B1, which depends on C1, which depends on A1.  That's a circular
     /// dependency.
     /// </summary>
-    public class SpreadsheeState {
+    public class SpreadsheetState {
         /// <summary>
         /// Maps cell names to their contents
         /// </summary>
@@ -70,7 +68,7 @@ namespace SS {
         /// <summary>
         /// Creates a new, empty spreadsheet
         /// </summary>
-        public SpreadsheeState() {
+        public SpreadsheetState() {
             cells = new Dictionary<string, object>();
             dependencies = new DependencyGraph();
             values = new Dictionary<string, object>();
@@ -85,24 +83,27 @@ namespace SS {
         /// <exception cref="ArgumentNullException">If content or name is null</exception>
         /// <exception cref="ArgumentException">If name is not a cell in this spreadsheet</exception>
         /// <exception cref="FormulaFormatException">If the formula is formatted incorrectly</exception>
-        public void SetContentsOfCell(string name, string content) {
+        public IList<string> SetContentsOfCell(string name, string content) {
             // Check for invalid values
             ValidateParameters(name, content);
 
             double value;
+            IList<string> result;
             // Try formula
             if (content.Length > 0 && content[0] == '=') {
-                SetCellContents(name, new Formula(content.Substring(1)));
+                result = SetCellContents(name, new Formula(content.Substring(1)));
                 // Try double
             } else if (Double.TryParse(content, out value)) {
-                SetCellContents(name, value);
+                result = SetCellContents(name, value);
                 // Try string
             } else {
-                SetCellContents(name, content);
+                result = SetCellContents(name, content);
             }
 
             // If an error was not thrown above, the cell is assigned and needs evaluation
             EvaluateCell(name);
+
+            return result;
         }
 
         /// <summary>
@@ -123,7 +124,7 @@ namespace SS {
         /// Enumerates the names of all the non-empty cells in the spreadsheet
         /// </summary>
         /// <returns>Enumerable HashSet</returns>
-        protected IEnumerable<String> GetNamesOfAllNonemptyCells() {
+        public IEnumerable<String> GetNamesOfAllNonemptyCells() {
             // Get all cell names
             List<String> keys = cells.Keys.ToList();
 

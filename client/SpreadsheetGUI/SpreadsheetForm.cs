@@ -1,4 +1,5 @@
 ﻿using SS;
+using SpreadsheetUtilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,7 +24,7 @@ namespace SpreadsheetGUI {
 
             SpreadsheetGrid.SelectionChanged += SpreadsheetChanged;
 
-            spreadsheet = new SpreadsheetState(s => true, s => s.ToUpper(), "ps6");
+            spreadsheet = new SpreadsheetState();
 
             this.FormClosing += SpreadsheetClosing;
 
@@ -41,7 +42,7 @@ namespace SpreadsheetGUI {
 
             SpreadsheetGrid.SelectionChanged += SpreadsheetChanged;
 
-            spreadsheet = new SpreadsheeState(path, s => true, s => s.ToUpper(), "ps6");
+            spreadsheet = new SpreadsheetState();
 
             foreach (String newCell in spreadsheet.GetNamesOfAllNonemptyCells()) {
                 int[] rowCol = CellToRowCol(newCell);
@@ -76,15 +77,8 @@ namespace SpreadsheetGUI {
                 return;
             }
 
-            if (args.KeyCode == Keys.S) {
-                SaveFile.Filter = "Spreadsheets (*.sprd)|*.sprd|All files (*.*)|*.*";
-                SaveFile.ShowDialog();
-            } else if (args.KeyCode == Keys.O) {
-                OpenFile.Filter = "Spreadsheets (*.sprd)|*.sprd|All files (*.*)|*.*";
-                OpenFile.ShowDialog();
-            } else if (args.KeyCode == Keys.N) {
-                NewSpreadsheet();
-            } else if (args.KeyCode == Keys.X) {
+            // Close when user presses control + x
+            if (args.KeyCode == Keys.X) {
                 this.Close();
             }
         }
@@ -103,7 +97,7 @@ namespace SpreadsheetGUI {
                 if (typeof(FormulaFormatException).IsInstanceOfType(e)) {
                     int[] rowCol = CellToRowCol(cell);
                     SpreadsheetGrid.SetValue(rowCol[1], rowCol[0], "Invalid formula: " + e.Message);
-                } else if (typeof(CircularException).IsInstanceOfType(e)) {
+                } else if (typeof(ArgumentException).IsInstanceOfType(e)) {
                     int[] rowCol = CellToRowCol(cell);
                     SpreadsheetGrid.SetValue(rowCol[1], rowCol[0], "Circular Error: Cells cannot depend on each other in a circular fashion");
                 }
@@ -152,45 +146,7 @@ namespace SpreadsheetGUI {
         }
 
         private void SpreadsheetClosing(Object sender, FormClosingEventArgs args) {
-            if (spreadsheet.Changed) {
-                DialogResult result = MessageBox.Show("Do you want to save your changes before closing?", "", MessageBoxButtons.YesNoCancel);
-                if (result == DialogResult.Yes) {
-                    SaveFile.Filter = "Spreadsheets (*.sprd)|*.sprd|All files (*.*)|*.*";
-                    SaveFile.ShowDialog();
-                } else if (result == DialogResult.Cancel) {
-                    args.Cancel = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Creates a new this and opens a window for it
-        /// </summary>
-        private void NewSpreadsheet() {
-            SpreadsheetApplicationContext.getAppContext().RunForm(new SpreadsheetForm());
-        }
-
-        private void OpenSpreadsheet(String path) {
-            try {
-                SpreadsheetApplicationContext.getAppContext().RunForm(new SpreadsheetForm(path));
-            } catch (SpreadsheetReadWriteException e) {
-                Console.WriteLine(e.Message);
-                MessageBox.Show("Unable to open file", "", MessageBoxButtons.OK);
-            }
-        }
-
-        private void SaveSpreadsheet(string path) {
-            // Guarantee extension
-            path = path.Length >= 5 && path.Substring(path.Length - 5) == ".sprd" ? path : path + ".sprd";
-            // Warn if file exists
-            if (File.Exists(path)) {
-                DialogResult result = MessageBox.Show("Are you sure you want to overwrite this file?", "", MessageBoxButtons.OKCancel);
-                if (result != DialogResult.OK) {
-                    return;
-                }
-            }
-
-            spreadsheet.Save(path);
+            // Fires when the spreadsheet window closes. Needs to send remaining changes to server and disconnect
         }
 
         /// <summary>
@@ -215,37 +171,6 @@ namespace SpreadsheetGUI {
             String cell = RowColToCell(row, col);
             UpdateCellContents(cell, SelectedCellContent.Text);
             UpdateCellValueBox();
-        }
-
-        /// <summary>
-        /// Runs when file > new is clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void newToolStripMenuItem_Click(object sender, EventArgs e) {
-            NewSpreadsheet();
-        }
-
-        private void openToolStripMenuItem_Click(object sender, EventArgs e) {
-            OpenFile.Filter = "Spreadsheets (*.sprd)|*.sprd|All files (*.*)|*.*";
-            OpenFile.ShowDialog();
-        }
-
-        private void OpenFile_FileOk(object sender, CancelEventArgs e) {
-            OpenSpreadsheet(OpenFile.FileName);
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e) {
-            SaveFile.Filter = "Spreadsheets (*.sprd)|*.sprd|All files (*.*)|*.*";
-            SaveFile.ShowDialog();
-        }
-
-        private void SaveFile_FileOk(object sender, CancelEventArgs e) {
-            SaveSpreadsheet(SaveFile.FileName);
-        }
-
-        private void closeToolStripMenuItem_Click(object sender, EventArgs e) {
-            this.Close();
         }
 
         private void HelpButton_Click(object sender, EventArgs e) {
