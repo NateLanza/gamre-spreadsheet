@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/gamre-spreadsheet/v16/Browse.VC.db
+/.vs/gamre-spreadsheet/v16/Browse.VC.db-shm
+/.vs/gamre-spreadsheet/v16/Browse.VC.db-wal
+/.vs/gamre-spreadsheet/v16/Browse.VC.opendb

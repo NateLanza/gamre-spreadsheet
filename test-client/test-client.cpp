@@ -1,0 +1,1 @@
+/* Entry point for the test client application. Launches the test client controller */
