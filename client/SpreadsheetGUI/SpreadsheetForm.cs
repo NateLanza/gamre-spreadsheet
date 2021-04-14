@@ -1,5 +1,4 @@
-﻿using SpreadsheetUtilities;
-using SS;
+﻿using SS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +13,7 @@ using System.Windows.Forms;
 
 namespace SpreadsheetGUI {
     public partial class SpreadsheetForm : Form {
-        private Spreadsheet spreadsheet;
+        private SpreadsheetState spreadsheet;
 
         /// <summary>
         /// Creates a new, empty spreadsheet
@@ -24,7 +23,7 @@ namespace SpreadsheetGUI {
 
             SpreadsheetGrid.SelectionChanged += SpreadsheetChanged;
 
-            spreadsheet = new Spreadsheet(s => true, s => s.ToUpper(), "ps6");
+            spreadsheet = new SpreadsheetState(s => true, s => s.ToUpper(), "ps6");
 
             this.FormClosing += SpreadsheetClosing;
 
@@ -42,7 +41,7 @@ namespace SpreadsheetGUI {
 
             SpreadsheetGrid.SelectionChanged += SpreadsheetChanged;
 
-            spreadsheet = new Spreadsheet(path, s => true, s => s.ToUpper(), "ps6");
+            spreadsheet = new SpreadsheeState(path, s => true, s => s.ToUpper(), "ps6");
 
             foreach (String newCell in spreadsheet.GetNamesOfAllNonemptyCells()) {
                 int[] rowCol = CellToRowCol(newCell);

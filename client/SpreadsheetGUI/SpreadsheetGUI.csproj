@@ -89,17 +89,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Formula\Formula.csproj">
-      <Project>{EB0B5701-BC16-40D6-9F60-C11D3D213194}</Project>
-      <Name>Formula</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SpreadsheetPanel\SpreadsheetPanel.csproj">
-      <Project>{3AE66BA1-0EE0-4E7B-AC33-F8A1C3DB3F89}</Project>
-      <Name>SpreadsheetPanel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Spreadsheet\Spreadsheet.csproj">
-      <Project>{5f4df3af-283b-4ac3-b417-78dd1f0bba31}</Project>
-      <Name>Spreadsheet</Name>
+    <ProjectReference Include="..\Spreadsheet\SpreadsheetClient.csproj">
+      <Project>{011558e1-040c-45c9-99e0-51635b28bc3b}</Project>
+      <Name>SpreadsheetClient</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
