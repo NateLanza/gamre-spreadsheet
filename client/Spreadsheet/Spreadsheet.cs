@@ -69,11 +69,6 @@ namespace SS {
         private Dictionary<String, Object> values;
 
         /// <summary>
-        /// Tracks all cell dependencies
-        /// </summary>
-        private DependencyGraph dependencies;
-
-        /// <summary>
         /// Creates a new, empty spreadsheet
         /// </summary>
         public Spreadsheet(): base(s => true, s => s, "default") {

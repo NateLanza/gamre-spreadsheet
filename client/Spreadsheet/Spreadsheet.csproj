@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DependencyGraph\DependencyGraph.csproj" />
     <ProjectReference Include="..\Formula\Formula.csproj" />
   </ItemGroup>
 

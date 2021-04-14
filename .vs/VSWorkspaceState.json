@@ -2,10 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\client",
-    "\\client\\DependencyGraph",
     "\\client\\Formula",
-    "\\client\\Spreadsheet"
+    "\\client\\Spreadsheet",
+    "\\client\\SpreadsheetGUI",
+    "\\server",
+    "\\test-client"
   ],
-  "SelectedNode": "\\client\\NetworkController",
+  "SelectedNode": "\\client\\Spreadsheet\\Spreadsheet.cs",
   "PreviewInSolutionExplorer": false
 }

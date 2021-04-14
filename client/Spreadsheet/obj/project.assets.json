@@ -26,16 +26,6 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "DependencyGraph/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "compile": {
-          "bin/placeholder/DependencyGraph.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DependencyGraph.dll": {}
-        }
-      },
       "Formula/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -193,11 +183,6 @@
         "netstandard.library.nuspec"
       ]
     },
-    "DependencyGraph/1.0.0": {
-      "type": "project",
-      "path": "../DependencyGraph/DependencyGraph.csproj",
-      "msbuildProject": "../DependencyGraph/DependencyGraph.csproj"
-    },
     "Formula/1.0.0": {
       "type": "project",
       "path": "../Formula/Formula.csproj",
@@ -206,26 +191,27 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "DependencyGraph >= 1.0.0",
       "Formula >= 1.0.0",
       "NETStandard.Library >= 2.0.3"
     ]
   },
   "packageFolders": {
     "C:\\Users\\dolph\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SYS\\Program Files\\Visual Studio\\spreadsheet-NateLanza\\Spreadsheet\\Spreadsheet\\Spreadsheet.csproj",
+      "projectUniqueName": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Spreadsheet\\Spreadsheet.csproj",
       "projectName": "Spreadsheet",
-      "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\spreadsheet-NateLanza\\Spreadsheet\\Spreadsheet\\Spreadsheet.csproj",
+      "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Spreadsheet\\Spreadsheet.csproj",
       "packagesPath": "C:\\Users\\dolph\\.nuget\\packages\\",
-      "outputPath": "D:\\SYS\\Program Files\\Visual Studio\\spreadsheet-NateLanza\\Spreadsheet\\Spreadsheet\\obj\\",
+      "outputPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Spreadsheet\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
         "C:\\Users\\dolph\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -243,11 +229,8 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "projectReferences": {
-            "D:\\SYS\\Program Files\\Visual Studio\\spreadsheet-NateLanza\\Spreadsheet\\DependencyGraph\\DependencyGraph.csproj": {
-              "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\spreadsheet-NateLanza\\Spreadsheet\\DependencyGraph\\DependencyGraph.csproj"
-            },
-            "D:\\SYS\\Program Files\\Visual Studio\\spreadsheet-NateLanza\\Spreadsheet\\Formula\\Formula.csproj": {
-              "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\spreadsheet-NateLanza\\Spreadsheet\\Formula\\Formula.csproj"
+            "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Formula\\Formula.csproj": {
+              "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Formula\\Formula.csproj"
             }
           }
         }
@@ -279,7 +262,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -7,3 +7,12 @@ D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\Formula\obj
 D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\Formula\obj\Debug\netstandard2.0\Formula.csproj.CoreCompileInputs.cache
 D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\Formula\obj\Debug\netstandard2.0\Formula.dll
 D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\Formula\obj\Debug\netstandard2.0\Formula.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.deps.json
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.csprojAssemblyReference.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.AssemblyInfoInputs.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.AssemblyInfo.cs
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.csproj.CoreCompileInputs.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.pdb

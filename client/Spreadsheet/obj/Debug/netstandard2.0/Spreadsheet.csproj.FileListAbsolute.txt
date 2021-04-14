@@ -12,3 +12,7 @@ D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\Spreadsheet
 D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\Spreadsheet\obj\Debug\netstandard2.0\Spreadsheet.csproj.CopyComplete
 D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\Spreadsheet\obj\Debug\netstandard2.0\Spreadsheet.dll
 D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\Spreadsheet\obj\Debug\netstandard2.0\Spreadsheet.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Spreadsheet\obj\Debug\netstandard2.0\Spreadsheet.csprojAssemblyReference.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Spreadsheet\obj\Debug\netstandard2.0\Spreadsheet.AssemblyInfoInputs.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Spreadsheet\obj\Debug\netstandard2.0\Spreadsheet.AssemblyInfo.cs
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Spreadsheet\obj\Debug\netstandard2.0\Spreadsheet.csproj.CoreCompileInputs.cache

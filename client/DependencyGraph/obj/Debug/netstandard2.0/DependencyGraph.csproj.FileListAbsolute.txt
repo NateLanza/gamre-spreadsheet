@@ -1,9 +1,0 @@
-D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\DependencyGraph\bin\Debug\netstandard2.0\DependencyGraph.deps.json
-D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\DependencyGraph\bin\Debug\netstandard2.0\DependencyGraph.dll
-D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\DependencyGraph\bin\Debug\netstandard2.0\DependencyGraph.pdb
-D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.csprojAssemblyReference.cache
-D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.AssemblyInfoInputs.cache
-D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.AssemblyInfo.cs
-D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.csproj.CoreCompileInputs.cache
-D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.dll
-D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.pdb

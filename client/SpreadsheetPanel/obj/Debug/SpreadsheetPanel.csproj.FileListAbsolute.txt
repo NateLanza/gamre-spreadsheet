@@ -4,3 +4,9 @@ D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\Spreadsheet
 D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csproj.CoreCompileInputs.cache
 D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.dll
 D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetPanel\bin\Debug\SpreadsheetPanel.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetPanel\bin\Debug\SpreadsheetPanel.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csprojAssemblyReference.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csproj.CoreCompileInputs.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.pdb
