@@ -53,25 +53,25 @@ namespace SS {
         /// <summary>
         /// Maps cell names to their contents
         /// </summary>
-        private Dictionary<String, Object> cells;
+        private Dictionary<String, Object> Cells;
 
         /// <summary>
         /// Maps cell names to their values
         /// </summary>
-        private Dictionary<String, Object> values;
+        private Dictionary<String, Object> Values;
 
         /// <summary>
         /// Tracks all cell dependencies
         /// </summary>
-        private DependencyGraph dependencies;
+        private DependencyGraph Dependencies;
 
         /// <summary>
         /// Creates a new, empty spreadsheet
         /// </summary>
         public SpreadsheetState() {
-            cells = new Dictionary<string, object>();
-            dependencies = new DependencyGraph();
-            values = new Dictionary<string, object>();
+            Cells = new Dictionary<string, object>();
+            Dependencies = new DependencyGraph();
+            Values = new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace SS {
         /// <param name="name">The named cell</param>
         /// <returns>String, double, or SpreadsheetUtilities.FormulaError</returns>
         public object GetCellValue(string name) {
-            if (values.ContainsKey(name)) {
-                return values[name];
+            if (Values.ContainsKey(name)) {
+                return Values[name];
             } else {
                 return "";
             }
@@ -126,11 +126,11 @@ namespace SS {
         /// <returns>Enumerable HashSet</returns>
         public IEnumerable<String> GetNamesOfAllNonemptyCells() {
             // Get all cell names
-            List<String> keys = cells.Keys.ToList();
+            List<String> keys = Cells.Keys.ToList();
 
             // Prune empty cells
-            foreach (String key in cells.Keys) {
-                if (typeof(String).IsInstanceOfType(cells[key]) && (String)cells[key] == "") {
+            foreach (String key in Cells.Keys) {
+                if (typeof(String).IsInstanceOfType(Cells[key]) && (String)Cells[key] == "") {
                     keys.Remove(key);
                 }
             }
@@ -184,7 +184,7 @@ namespace SS {
 
             // Get value
             Object result;
-            cells.TryGetValue(name, out result);
+            Cells.TryGetValue(name, out result);
 
             // Return "" if result was null, else result
             return result == null ? "" : result;
@@ -207,7 +207,7 @@ namespace SS {
             RemoveDependencies(name);
 
             // Assign cell
-            cells[name] = number;
+            Cells[name] = number;
 
             return GetCellsToRecalculate(name).ToList();
         }
@@ -230,7 +230,7 @@ namespace SS {
             RemoveDependencies(name);
 
             // Assign cell
-            cells[name] = text;
+            Cells[name] = text;
 
             return GetCellsToRecalculate(name).ToList();
         }
@@ -253,11 +253,11 @@ namespace SS {
             RemoveDependencies(name);
 
             // Assign cell
-            cells[name] = formula;
+            Cells[name] = formula;
 
             // Add dependencies
             foreach (String var in formula.GetVariables()) {
-                dependencies.AddDependency(var, name);
+                Dependencies.AddDependency(var, name);
             }
 
             return GetCellsToRecalculate(name).ToList();
@@ -268,9 +268,9 @@ namespace SS {
         /// </summary>
         /// <param name="name"></param>
         private void RemoveDependencies(String name) {
-            if (cells.ContainsKey(name) && typeof(Formula).IsInstanceOfType(cells[name])) {
-                foreach (String var in ((Formula)cells[name]).GetVariables()) {
-                    dependencies.RemoveDependency(var, name);
+            if (Cells.ContainsKey(name) && typeof(Formula).IsInstanceOfType(Cells[name])) {
+                foreach (String var in ((Formula)Cells[name]).GetVariables()) {
+                    Dependencies.RemoveDependency(var, name);
                 }
             }
         }
@@ -283,10 +283,10 @@ namespace SS {
         /// <exception cref="CircularException">If a circular dependency is found while evaluating cells</exception>
         private void EvaluateCell(String name) {
             // Reassign if string or double
-            if (typeof(string).IsInstanceOfType(cells[name]) || typeof(double).IsInstanceOfType(cells[name])) {
-                values[name] = cells[name];
-            } else if (typeof(Formula).IsInstanceOfType(cells[name])) {
-                values[name] = ((Formula)cells[name]).Evaluate(CellLookup);
+            if (typeof(string).IsInstanceOfType(Cells[name]) || typeof(double).IsInstanceOfType(Cells[name])) {
+                Values[name] = Cells[name];
+            } else if (typeof(Formula).IsInstanceOfType(Cells[name])) {
+                Values[name] = ((Formula)Cells[name]).Evaluate(CellLookup);
             }
 
             // Recalculate all dependent cells
@@ -305,8 +305,8 @@ namespace SS {
         /// <returns>Value of cell as double</returns>
         /// <exception cref="InvalidOperationException">If the cell's value is a string, FormulaError, or null</exception>
         private double CellLookup(String name) {
-            if (typeof(double).IsInstanceOfType(values[name])) {
-                return (double)values[name];
+            if (typeof(double).IsInstanceOfType(Values[name])) {
+                return (double)Values[name];
             } else {
                 throw new InvalidOperationException("Cell " + name + " is not a double");
             }
@@ -321,7 +321,7 @@ namespace SS {
         /// <param name="name">The named cell</param>
         /// <returns>Enumerable list of cell names</returns>
         protected IEnumerable<String> GetDirectDependents(String name) {
-            return dependencies.GetDependents(name);
+            return Dependencies.GetDependents(name);
         }
 
         /// <summary>

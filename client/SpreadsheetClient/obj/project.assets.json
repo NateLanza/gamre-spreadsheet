@@ -45,6 +45,16 @@
         "runtime": {
           "bin/placeholder/Formula.dll": {}
         }
+      },
+      "NetworkController/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/NetworkController.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NetworkController.dll": {}
+        }
       }
     }
   },
@@ -202,13 +212,19 @@
       "type": "project",
       "path": "../Formula/Formula.csproj",
       "msbuildProject": "../Formula/Formula.csproj"
+    },
+    "NetworkController/1.0.0": {
+      "type": "project",
+      "path": "../NetworkController/NetworkController.csproj",
+      "msbuildProject": "../NetworkController/NetworkController.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "DependencyGraph >= 1.0.0",
       "Formula >= 1.0.0",
-      "NETStandard.Library >= 2.0.3"
+      "NETStandard.Library >= 2.0.3",
+      "NetworkController >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -250,6 +266,9 @@
             },
             "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Formula\\Formula.csproj": {
               "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Formula\\Formula.csproj"
+            },
+            "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {
+              "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj"
             }
           }
         }

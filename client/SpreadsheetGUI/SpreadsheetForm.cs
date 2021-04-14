@@ -14,7 +14,9 @@ using System.Windows.Forms;
 
 namespace SpreadsheetGUI {
     public partial class SpreadsheetForm : Form {
-        private SpreadsheetState spreadsheet;
+        private SpreadsheetState Spreadsheet;
+
+        private SpreadsheetController Controller;
 
         /// <summary>
         /// Creates a new, empty spreadsheet
@@ -24,7 +26,8 @@ namespace SpreadsheetGUI {
 
             SpreadsheetGrid.SelectionChanged += SpreadsheetChanged;
 
-            spreadsheet = new SpreadsheetState();
+            Spreadsheet = new SpreadsheetState();
+            Controller = new SpreadsheetController(Spreadsheet);
 
             this.FormClosing += SpreadsheetClosing;
 
@@ -42,11 +45,11 @@ namespace SpreadsheetGUI {
 
             SpreadsheetGrid.SelectionChanged += SpreadsheetChanged;
 
-            spreadsheet = new SpreadsheetState();
+            Spreadsheet = new SpreadsheetState();
 
-            foreach (String newCell in spreadsheet.GetNamesOfAllNonemptyCells()) {
+            foreach (String newCell in Spreadsheet.GetNamesOfAllNonemptyCells()) {
                 int[] rowCol = CellToRowCol(newCell);
-                SpreadsheetGrid.SetValue(rowCol[1], rowCol[0], spreadsheet.GetCellValue(newCell).ToString());
+                SpreadsheetGrid.SetValue(rowCol[1], rowCol[0], Spreadsheet.GetCellValue(newCell).ToString());
             }
 
             this.FormClosing += SpreadsheetClosing;
@@ -92,7 +95,7 @@ namespace SpreadsheetGUI {
             IList<string> ToRecalculate;
             // Update backend
             try {
-                ToRecalculate = spreadsheet.SetContentsOfCell(cell, content);
+                ToRecalculate = Spreadsheet.SetContentsOfCell(cell, content);
             } catch (Exception e) {
                 if (typeof(FormulaFormatException).IsInstanceOfType(e)) {
                     int[] rowCol = CellToRowCol(cell);
@@ -106,7 +109,7 @@ namespace SpreadsheetGUI {
             // Update display for all necessary cells
             foreach(String newCell in ToRecalculate) {
                 int[] rowCol = CellToRowCol(newCell);
-                SpreadsheetGrid.SetValue(rowCol[1], rowCol[0], spreadsheet.GetCellValue(newCell).ToString());
+                SpreadsheetGrid.SetValue(rowCol[1], rowCol[0], Spreadsheet.GetCellValue(newCell).ToString());
             }
         }
 
@@ -156,7 +159,7 @@ namespace SpreadsheetGUI {
         private void SpreadsheetChanged(SpreadsheetPanel sender) {
             SpreadsheetGrid.GetSelection(out int col, out int row);
             String cell = RowColToCell(row, col);
-            SelectedCellContent.Text = spreadsheet.GetCellContents(cell).ToString();
+            SelectedCellContent.Text = Spreadsheet.GetCellContents(cell).ToString();
             SelectedCellLabel.Text = "Selected Cell: " + cell;
             UpdateCellValueBox();
         }
