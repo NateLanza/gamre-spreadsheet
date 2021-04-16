@@ -6,7 +6,8 @@ using System.Drawing;
 using System.Windows.Forms;
 
 
-namespace SS {
+namespace SS
+{
 
 
     /// <summary>
@@ -28,13 +29,12 @@ namespace SS {
     /// None of the cells are editable.  They are for display purposes only.
     /// </summary>
 
-    public partial class SpreadsheetPanel : UserControl {
+    public partial class SpreadsheetPanel : UserControl
+    {
         /// <summary>
         /// The event used to send notifications of a selection change
         /// </summary>
         public event SelectionChangedHandler SelectionChanged;
-
-
 
         // The SpreadsheetPanel is composed of a DrawingPanel (where the grid is drawn),
         // a horizontal scroll bar, and a vertical scroll bar.
@@ -58,7 +58,8 @@ namespace SS {
         /// Creates an empty SpreadsheetPanel
         /// </summary>
 
-        public SpreadsheetPanel() {
+        public SpreadsheetPanel()
+        {
 
             InitializeComponent();
 
@@ -95,7 +96,8 @@ namespace SS {
         /// Clears the display.
         /// </summary>
 
-        public void Clear() {
+        public void Clear()
+        {
             drawingPanel.Clear();
         }
 
@@ -109,7 +111,8 @@ namespace SS {
         /// <param name="value"></param>
         /// <returns></returns>
 
-        public bool SetValue(int col, int row, string value) {
+        public bool SetValue(int col, int row, string value)
+        {
             return drawingPanel.SetValue(col, row, value);
         }
 
@@ -124,7 +127,8 @@ namespace SS {
         /// <param name="value"></param>
         /// <returns></returns>
 
-        public bool GetValue(int col, int row, out string value) {
+        public bool GetValue(int col, int row, out string value)
+        {
             return drawingPanel.GetValue(col, row, out value);
         }
 
@@ -137,7 +141,8 @@ namespace SS {
         /// <param name="row"></param>
         /// <returns></returns>
 
-        public bool SetSelection(int col, int row) {
+        public bool SetSelection(int col, int row)
+        {
             return drawingPanel.SetSelection(col, row);
         }
 
@@ -149,10 +154,31 @@ namespace SS {
         /// <param name="col"></param>
         /// <param name="row"></param>
 
-        public void GetSelection(out int col, out int row) {
+        public void GetSelection(out int col, out int row)
+        {
             drawingPanel.GetSelection(out col, out row);
         }
+        /// <summary>
+        /// If another user selects a new cell, this should be called
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="col"></param>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        public bool SetNetworkSelection(int id, int col, int row)
+        {
+            return drawingPanel.SetNetworkSelection(id, col, row);
+        }
 
+        /// <summary>
+        /// Removes the selection of a user on the network (i.e., if they disconnect)
+        /// </summary>
+        /// <param name="id"></param>
+        /// 
+        public void RemoveNetworkSelection(int id)
+        {
+            drawingPanel.RemoveNetworkSelection(id);
+        }
 
         /// <summary>
         /// When the SpreadsheetPanel is resized, we set the size and locations of the three
@@ -160,9 +186,11 @@ namespace SS {
         /// </summary>
         /// <param name="eventargs"></param>
 
-        protected override void OnResize(EventArgs eventargs) {
+        protected override void OnResize(EventArgs eventargs)
+        {
             base.OnResize(eventargs);
-            if (FindForm() == null || FindForm().WindowState != FormWindowState.Minimized) {
+            if (FindForm() == null || FindForm().WindowState != FormWindowState.Minimized)
+            {
                 drawingPanel.Size = new Size(Width - SCROLLBAR_WIDTH, Height - SCROLLBAR_WIDTH);
                 vScroll.Location = new Point(Width - SCROLLBAR_WIDTH, 0);
                 vScroll.Size = new Size(SCROLLBAR_WIDTH, Height - SCROLLBAR_WIDTH);
@@ -179,22 +207,27 @@ namespace SS {
         /// Used internally to keep track of cell addresses
         /// </summary>
 
-        private class Address {
+        private class Address
+        {
 
             public int Col { get; set; }
             public int Row { get; set; }
 
-            public Address(int c, int r) {
+            public Address(int c, int r)
+            {
                 Col = c;
                 Row = r;
             }
 
-            public override int GetHashCode() {
+            public override int GetHashCode()
+            {
                 return Col.GetHashCode() ^ Row.GetHashCode();
             }
 
-            public override bool Equals(object obj) {
-                if ((obj == null) || !(obj is Address)) {
+            public override bool Equals(object obj)
+            {
+                if ((obj == null) || !(obj is Address))
+                {
                     return false;
                 }
                 Address a = (Address)obj;
@@ -209,7 +242,8 @@ namespace SS {
         /// current selection as well as what is supposed to be drawn in each cell.
         /// </summary>
 
-        private class DrawingPanel : Panel {
+        private class DrawingPanel : Panel
+        {
             // Columns and rows are numbered beginning with 0.  This is the coordinate
             // of the selected cell.
             private int _selectedCol;
@@ -219,6 +253,13 @@ namespace SS {
             private int _firstColumn = 0;
             private int _firstRow = 0;
 
+            // Stores the color used and selection of other users by id (CS3505 Final Project)
+            Dictionary<int, Tuple<Color, int, int>> networkSelectedCells = new Dictionary<int, Tuple<Color, int, int>>();
+            // A list of colors to move through to assign to new users
+            List<Color> colorList = new List<Color>() {Color.IndianRed, Color.Orchid, Color.PaleGreen, Color.Coral, Color.Azure, Color.Brown,
+                Color.SkyBlue, Color.DarkCyan, Color.Yellow, Color.MediumVioletRed, Color.Chartreuse, Color.Magenta };
+            int colorIndex = -1;
+
             // The strings contained by the spreadsheet
             private Dictionary<Address, String> _values;
 
@@ -226,33 +267,41 @@ namespace SS {
             private SpreadsheetPanel _ssp;
 
 
-            public DrawingPanel(SpreadsheetPanel ss) {
+            public DrawingPanel(SpreadsheetPanel ss)
+            {
                 DoubleBuffered = true;
                 _values = new Dictionary<Address, String>();
                 _ssp = ss;
             }
 
 
-            private bool InvalidAddress(int col, int row) {
+            private bool InvalidAddress(int col, int row)
+            {
                 return col < 0 || row < 0 || col >= COL_COUNT || row >= ROW_COUNT;
             }
 
 
-            public void Clear() {
+            public void Clear()
+            {
                 _values.Clear();
                 Invalidate();
             }
 
 
-            public bool SetValue(int col, int row, string c) {
-                if (InvalidAddress(col, row)) {
+            public bool SetValue(int col, int row, string c)
+            {
+                if (InvalidAddress(col, row))
+                {
                     return false;
                 }
 
                 Address a = new Address(col, row);
-                if (c == null || c == "") {
+                if (c == null || c == "")
+                {
                     _values.Remove(a);
-                } else {
+                }
+                else
+                {
                     _values[a] = c;
                 }
                 Invalidate();
@@ -260,20 +309,25 @@ namespace SS {
             }
 
 
-            public bool GetValue(int col, int row, out string c) {
-                if (InvalidAddress(col, row)) {
+            public bool GetValue(int col, int row, out string c)
+            {
+                if (InvalidAddress(col, row))
+                {
                     c = null;
                     return false;
                 }
-                if (!_values.TryGetValue(new Address(col, row), out c)) {
+                if (!_values.TryGetValue(new Address(col, row), out c))
+                {
                     c = "";
                 }
                 return true;
             }
 
 
-            public bool SetSelection(int col, int row) {
-                if (InvalidAddress(col, row)) {
+            public bool SetSelection(int col, int row)
+            {
+                if (InvalidAddress(col, row))
+                {
                     return false;
                 }
                 _selectedCol = col;
@@ -282,25 +336,71 @@ namespace SS {
                 return true;
             }
 
+            /// <summary>
+            /// If another user selects a new cell, this should be called
+            /// </summary>
+            /// <param name="id"></param>
+            /// <param name="col"></param>
+            /// <param name="row"></param>
+            /// <returns></returns>
+            public bool SetNetworkSelection(int id, int col, int row)
+            {
+                if (InvalidAddress(col, row))
+                    return false;
 
-            public void GetSelection(out int col, out int row) {
+                Color c = Color.Black;
+                if (networkSelectedCells.ContainsKey(id))
+                {
+                    c = networkSelectedCells[id].Item1;
+                }
+                else
+                {
+                    if (colorIndex == -1)
+                    {
+                        Random rand = new Random();
+                        colorIndex = rand.Next(0, colorList.Count);
+                    }
+                    c = colorList[colorIndex];
+                    colorIndex = (colorIndex + 1) % colorList.Count;
+                    //we must choose a color to use
+                }
+
+                networkSelectedCells[id] = new Tuple<Color, int, int>(c, col, row);
+                Invalidate();
+                return true;
+            }
+
+            /// <summary>
+            /// Removes the selection of a user on the network (i.e., if they disconnect)
+            /// </summary>
+            /// <param name="id"></param>
+            public void RemoveNetworkSelection(int id)
+            {
+                networkSelectedCells.Remove(id);
+            }
+
+            public void GetSelection(out int col, out int row)
+            {
                 col = _selectedCol;
                 row = _selectedRow;
             }
 
 
-            public void HandleHScroll(Object sender, ScrollEventArgs args) {
+            public void HandleHScroll(Object sender, ScrollEventArgs args)
+            {
                 _firstColumn = args.NewValue;
                 Invalidate();
             }
 
-            public void HandleVScroll(Object sender, ScrollEventArgs args) {
+            public void HandleVScroll(Object sender, ScrollEventArgs args)
+            {
                 _firstRow = args.NewValue;
                 Invalidate();
             }
 
 
-            protected override void OnPaint(PaintEventArgs e) {
+            protected override void OnPaint(PaintEventArgs e)
+            {
 
                 // Clip based on what needs to be refreshed.
                 Region clip = new Region(e.ClipRectangle);
@@ -323,7 +423,8 @@ namespace SS {
                 // Draw the column lines
                 int bottom = LABEL_ROW_HEIGHT + (ROW_COUNT - _firstRow) * DATA_ROW_HEIGHT;
                 e.Graphics.DrawLine(pen, new Point(0, 0), new Point(0, bottom));
-                for (int x = 0; x <= (COL_COUNT - _firstColumn); x++) {
+                for (int x = 0; x <= (COL_COUNT - _firstColumn); x++)
+                {
                     e.Graphics.DrawLine(
                         pen,
                         new Point(LABEL_COL_WIDTH + x * DATA_COL_WIDTH, 0),
@@ -331,7 +432,8 @@ namespace SS {
                 }
 
                 // Draw the column labels
-                for (int x = 0; x < COL_COUNT - _firstColumn; x++) {
+                for (int x = 0; x < COL_COUNT - _firstColumn; x++)
+                {
                     Font f = (_selectedCol - _firstColumn == x) ? boldFont : Font;
                     DrawColumnLabel(e.Graphics, x, f);
                 }
@@ -339,7 +441,8 @@ namespace SS {
                 // Draw the row lines
                 int right = LABEL_COL_WIDTH + (COL_COUNT - _firstColumn) * DATA_COL_WIDTH;
                 e.Graphics.DrawLine(pen, new Point(0, 0), new Point(right, 0));
-                for (int y = 0; y <= ROW_COUNT - _firstRow; y++) {
+                for (int y = 0; y <= ROW_COUNT - _firstRow; y++)
+                {
                     e.Graphics.DrawLine(
                         pen,
                         new Point(0, LABEL_ROW_HEIGHT + y * DATA_ROW_HEIGHT),
@@ -347,13 +450,15 @@ namespace SS {
                 }
 
                 // Draw the row labels
-                for (int y = 0; y < (ROW_COUNT - _firstRow); y++) {
+                for (int y = 0; y < (ROW_COUNT - _firstRow); y++)
+                {
                     Font f = (_selectedRow - _firstRow == y) ? boldFont : Font;
                     DrawRowLabel(e.Graphics, y, f);
                 }
 
                 // Highlight the selection, if it is visible
-                if ((_selectedCol - _firstColumn >= 0) && (_selectedRow - _firstRow >= 0)) {
+                if ((_selectedCol - _firstColumn >= 0) && (_selectedRow - _firstRow >= 0))
+                {
                     e.Graphics.DrawRectangle(
                         pen,
                         new Rectangle(LABEL_COL_WIDTH + (_selectedCol - _firstColumn) * DATA_COL_WIDTH + 1,
@@ -362,14 +467,33 @@ namespace SS {
                                       DATA_ROW_HEIGHT - 2));
                 }
 
+                //Highlight other user's selections, if visible
+                foreach (Tuple<Color, int, int> selection in networkSelectedCells.Values)
+                {
+                    pen = new Pen(new SolidBrush(selection.Item1));
+                    int col = selection.Item2;
+                    int row = selection.Item3;
+                    if ((col - _firstColumn >= 0) && (row - _firstRow >= 0))
+                    {
+                        e.Graphics.DrawRectangle(
+                            pen,
+                            new Rectangle(LABEL_COL_WIDTH + (col - _firstColumn) * DATA_COL_WIDTH + 1,
+                                          LABEL_ROW_HEIGHT + (row - _firstRow) * DATA_ROW_HEIGHT + 1,
+                                          DATA_COL_WIDTH - 2,
+                                          DATA_ROW_HEIGHT - 2));
+                    }
+                }
+
                 // Draw the text
-                foreach (KeyValuePair<Address, String> address in _values) {
+                foreach (KeyValuePair<Address, String> address in _values)
+                {
                     String text = address.Value;
                     int x = address.Key.Col - _firstColumn;
                     int y = address.Key.Row - _firstRow;
                     float height = e.Graphics.MeasureString(text, regularFont).Height;
                     float width = e.Graphics.MeasureString(text, regularFont).Width;
-                    if (x >= 0 && y >= 0) {
+                    if (x >= 0 && y >= 0)
+                    {
                         Region cellClip = new Region(new Rectangle(LABEL_COL_WIDTH + x * DATA_COL_WIDTH + PADDING,
                                                                    LABEL_ROW_HEIGHT + y * DATA_ROW_HEIGHT,
                                                                    DATA_COL_WIDTH - 2 * PADDING,
@@ -395,7 +519,8 @@ namespace SS {
             /// <param name="g"></param>
             /// <param name="x"></param>
             /// <param name="f"></param>
-            private void DrawColumnLabel(Graphics g, int x, Font f) {
+            private void DrawColumnLabel(Graphics g, int x, Font f)
+            {
                 String label = ((char)('A' + x + _firstColumn)).ToString();
                 float height = g.MeasureString(label, f).Height;
                 float width = g.MeasureString(label, f).Width;
@@ -414,7 +539,8 @@ namespace SS {
             /// <param name="g"></param>
             /// <param name="y"></param>
             /// <param name="f"></param>
-            private void DrawRowLabel(Graphics g, int y, Font f) {
+            private void DrawRowLabel(Graphics g, int y, Font f)
+            {
                 String label = (y + 1 + _firstRow).ToString();
                 float height = g.MeasureString(label, f).Height;
                 float width = g.MeasureString(label, f).Width;
@@ -433,14 +559,17 @@ namespace SS {
             /// </summary>
             /// <param name="e"></param>
 
-            protected override void OnMouseClick(MouseEventArgs e) {
+            protected override void OnMouseClick(MouseEventArgs e)
+            {
                 base.OnClick(e);
                 int x = (e.X - LABEL_COL_WIDTH) / DATA_COL_WIDTH;
                 int y = (e.Y - LABEL_ROW_HEIGHT) / DATA_ROW_HEIGHT;
-                if (e.X > LABEL_COL_WIDTH && e.Y > LABEL_ROW_HEIGHT && (x + _firstColumn < COL_COUNT) && (y + _firstRow < ROW_COUNT)) {
+                if (e.X > LABEL_COL_WIDTH && e.Y > LABEL_ROW_HEIGHT && (x + _firstColumn < COL_COUNT) && (y + _firstRow < ROW_COUNT))
+                {
                     _selectedCol = x + _firstColumn;
                     _selectedRow = y + _firstRow;
-                    if (_ssp.SelectionChanged != null) {
+                    if (_ssp.SelectionChanged != null)
+                    {
                         _ssp.SelectionChanged(_ssp);
                     }
                 }

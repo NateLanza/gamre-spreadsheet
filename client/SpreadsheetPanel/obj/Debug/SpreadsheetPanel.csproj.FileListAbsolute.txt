@@ -10,3 +10,9 @@ D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetPanel\obj
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csproj.CoreCompileInputs.cache
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.dll
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.pdb
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetPanel\bin\Debug\SpreadsheetPanel.dll
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetPanel\bin\Debug\SpreadsheetPanel.pdb
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csprojAssemblyReference.cache
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csproj.CoreCompileInputs.cache
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.dll
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.pdb

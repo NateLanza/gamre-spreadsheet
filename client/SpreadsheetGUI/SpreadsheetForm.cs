@@ -180,5 +180,55 @@ namespace SpreadsheetGUI {
             Help help = new Help();
             help.ShowDialog();
         }
+
+        /// <summary>
+        /// When the connect button is pressed - starts connection process
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ConnectButton_Click(object sender, EventArgs e)
+        {
+            ConnectButton.Enabled = false;
+            IPTextBox.Enabled = false;
+            Controller.ConnectToServer(IPTextBox.Text);
+        }
+
+        /// <summary>
+        /// Populates the list of spreadsheets available to open with the given list of strings.
+        /// Also sets the gui elements to enabled for opening a spreadsheet.
+        /// </summary>
+        /// <param name="names">List of spreadsheet names</param>
+        private void PopulateSpreadsheetNameList(List<string> names)
+        {
+            SpreadsheetNameList.Items.AddRange(names.ToArray());
+            SpreadsheetNameList.Enabled = true;
+            OpenButton.Enabled = true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cellName"></param>
+        private void SetNetworkSelection(int id, string cellName)
+        {
+            //we assume that the cellname is a single capital character followed by an integer
+            int col = (int)cellName[0] - 65;
+            int row = int.Parse(cellName.Substring(1));
+
+            SpreadsheetGrid.SetNetworkSelection(id, col, row);
+        }
+
+        /// <summary>
+        /// Send the command to open a given spreadsheet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenButton_Click(object sender, EventArgs e)
+        {
+            OpenButton.Enabled = false;
+            SpreadsheetNameList.Enabled = false;
+            Controller.ConnectToSpreadsheet(SpreadsheetNameList.Text);
+        }
     }
 }

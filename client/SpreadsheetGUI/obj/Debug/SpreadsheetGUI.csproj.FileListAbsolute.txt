@@ -38,3 +38,25 @@ D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\D
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.CopyComplete
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.exe
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.pdb
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe.config
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.pdb
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\Formula.dll
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\SpreadsheetClient.dll
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\SpreadsheetPanel.dll
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\NetworkController.dll
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\DependencyGraph.dll
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\Formula.pdb
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\SpreadsheetClient.pdb
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\SpreadsheetPanel.pdb
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\NetworkController.pdb
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\DependencyGraph.pdb
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csprojAssemblyReference.cache
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.Help.resources
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.SpreadsheetForm.resources
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.Properties.Resources.resources
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.GenerateResource.cache
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.CoreCompileInputs.cache
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.CopyComplete
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.exe
+C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.pdb
