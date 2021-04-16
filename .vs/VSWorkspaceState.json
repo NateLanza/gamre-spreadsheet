@@ -1,13 +1,9 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\client",
     "\\client\\Formula",
-    "\\client\\Spreadsheet",
     "\\client\\SpreadsheetGUI",
     "\\server",
     "\\test-client"
   ],
-  "SelectedNode": "\\client\\Spreadsheet\\Spreadsheet.cs",
   "PreviewInSolutionExplorer": false
 }
