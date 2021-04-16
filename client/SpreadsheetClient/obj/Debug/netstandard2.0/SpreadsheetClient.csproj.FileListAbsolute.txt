@@ -1,0 +1,7 @@
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\bin\Debug\netstandard2.0\DependencyGraph.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\bin\Debug\netstandard2.0\Formula.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\bin\Debug\netstandard2.0\NetworkController.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\bin\Debug\netstandard2.0\DependencyGraph.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.csprojAssemblyReference.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.AssemblyInfoInputs.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.AssemblyInfo.cs
