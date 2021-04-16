@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using NetworkUtil;
 
@@ -7,6 +8,7 @@ namespace SS {
     /// <summary>
     /// Controls the spreadsheet, handling server connections
     /// and passing information to the SpreadsheetState
+    /// TODO: Make thread safe
     /// </summary>
     public class SpreadsheetController {
 
@@ -53,7 +55,7 @@ namespace SS {
         public event ClientDisconnectHandler OtherClientDisconnected;
 
         /// <summary>
-        /// Fires when this client disconnects from the server unexpectedly
+        /// Fires when this client disconnects from the server
         /// </summary>
         public delegate void DisconnectHandler();
         public event DisconnectHandler Disconnected;
@@ -90,12 +92,18 @@ namespace SS {
         public bool Connected { get; private set; }
 
         /// <summary>
+        /// ID of this client, will be -1 if not connected
+        /// </summary>
+        public int ID { get; private set; }
+
+        /// <summary>
         /// Creates a new SpreadsheetController
         /// </summary>
         /// <param name="state">State object of current spreadsheet</param>
         public SpreadsheetController(SpreadsheetState state) {
             this.State = state;
             Connected = false;
+            ID = -1;
         }
 
         /// <summary>
@@ -120,7 +128,42 @@ namespace SS {
             } else {
                 Connected = true;
                 Connection = connection;
+                Connection.OnNetworkAction = SpreadsheetListCallback;
+                Networking.GetData(Connection);
             }
+        }
+
+        /// <summary>
+        /// Callback after receiving list of valid spreadsheets from server
+        /// </summary>
+        /// <param name="ss">Connection to server</param>
+        private void SpreadsheetListCallback(SocketState ss) {
+            // Ensure we have received a complete list
+            if (!ss.GetData().Contains("\n\n")) {
+                Networking.GetData(ss);
+                return;
+            }
+
+            // Parse spreadsheet list, trigger event
+            string serverData = ss.GetData();
+            ss.RemoveData(0, serverData.Length);
+            List<string> spreadsheets = new List<string>(serverData.Split('\n'));
+            ConnectionAttempted(false, spreadsheets);
+        }
+
+        /// <summary>
+        /// Connects to a spreadsheet on the server.
+        /// Should only be called after a connection to server has been established
+        /// and a list of spreadsheets has been received.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">If a connection to the server has not been established</exception>
+        /// <param name="name"></param>
+        public void ConnectToSpreadsheet(string name) {
+        }
+
+        public void SendEditRequest(string cell, string contents) {
+            if (!Connected || ID == -1 || Connection.ErrorOccured)
+                return;
         }
     }
 }

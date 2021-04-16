@@ -49,6 +49,7 @@ namespace SS {
     /// A1 depends on B1, which depends on C1, which depends on A1.  That's a circular
     /// dependency.
     /// </summary>
+    /// TODO: Make thread safe
     public class SpreadsheetState {
         /// <summary>
         /// Maps cell names to their contents
