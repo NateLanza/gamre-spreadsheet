@@ -70,11 +70,6 @@ namespace SS {
         public event InvalidChangeHandler ChangeRejected;
 
         /// <summary>
-        /// Current state of this spreadsheet
-        /// </summary>
-        private SpreadsheetState State;
-
-        /// <summary>
         /// Stores the current server connection, if it exists
         /// </summary>
         private SocketState Connection;
@@ -99,10 +94,20 @@ namespace SS {
         /// Creates a new SpreadsheetController
         /// </summary>
         /// <param name="state">State object of current spreadsheet</param>
-        public SpreadsheetController(SpreadsheetState state) {
-            this.State = state;
+        public SpreadsheetController() {
             ConnectionState = ConnectionStates.Disconnected;
             ID = -1;
+            Disconnected += HandleDisconnect;
+        }
+
+        /// <summary>
+        /// Event handler for when this client disconnects
+        /// </summary>
+        private void HandleDisconnect(string message) {
+            Connection = null;
+            Username = null;
+            ID = -1;
+            ConnectionState = ConnectionStates.Disconnected;
         }
 
         /// <summary>

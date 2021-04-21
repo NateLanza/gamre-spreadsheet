@@ -24,16 +24,34 @@ namespace SpreadsheetGUI {
         public SpreadsheetForm() {
             InitializeComponent();
 
-            SpreadsheetGrid.SelectionChanged += SpreadsheetChanged;
-
+            // Create model and controller
             Spreadsheet = new SpreadsheetState();
-            Controller = new SpreadsheetController(Spreadsheet);
+            Controller = new SpreadsheetController();
 
+            // Register events
+            Controller.CellChanged += HandleCellChange;
+            Controller.ChangeRejected += HandleInvalidChange;
+            Controller.SelectionChanged += HandleSelectionChange;
+            Controller.ConnectionAttempted += HandleServerConnection;
+            Controller.OtherClientDisconnected += HandleClientDisconnect;
+            Controller.Disconnected += HandleDisconnect;
             this.FormClosing += SpreadsheetClosing;
+            SpreadsheetGrid.SelectionChanged += SpreadsheetChanged;
 
             // Add keyboard event handlers
             this.KeyPreview = true;
             this.KeyDown += new KeyEventHandler(FormKeyDown);
+        }
+
+        /// <summary>
+        /// Event handler for when the server rejects a change request
+        /// </summary>
+        /// <param name="cell">Cell which the change was requested for</param>
+        /// <param name="message">Server message</param>
+        public void HandleInvalidChange(string cell, string message) {
+            this.Invoke((MethodInvoker)delegate {
+                MessageBox.Show("Invalid change to cell " + cell + ": " + message);
+            });
         }
 
         /// <summary>
