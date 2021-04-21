@@ -36,6 +36,8 @@
             this.SpreadsheetNameList = new System.Windows.Forms.ComboBox();
             this.SpreadsheetNameLabel = new System.Windows.Forms.Label();
             this.OpenButton = new System.Windows.Forms.Button();
+            this.UsernameBox = new System.Windows.Forms.TextBox();
+            this.UsernameLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // SpreadsheetGrid
@@ -43,56 +45,50 @@
             this.SpreadsheetGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SpreadsheetGrid.Location = new System.Drawing.Point(0, 105);
-            this.SpreadsheetGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SpreadsheetGrid.Location = new System.Drawing.Point(0, 85);
             this.SpreadsheetGrid.Name = "SpreadsheetGrid";
-            this.SpreadsheetGrid.Size = new System.Drawing.Size(2153, 661);
+            this.SpreadsheetGrid.Size = new System.Drawing.Size(1773, 555);
             this.SpreadsheetGrid.TabIndex = 1;
             // 
             // SelectedCellContent
             // 
-            this.SelectedCellContent.Location = new System.Drawing.Point(16, 73);
-            this.SelectedCellContent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SelectedCellContent.Location = new System.Drawing.Point(12, 59);
             this.SelectedCellContent.Name = "SelectedCellContent";
-            this.SelectedCellContent.Size = new System.Drawing.Size(443, 22);
+            this.SelectedCellContent.Size = new System.Drawing.Size(333, 20);
             this.SelectedCellContent.TabIndex = 0;
             this.SelectedCellContent.TextChanged += new System.EventHandler(this.SelectedCellContent_TextChanged);
             // 
             // SelectedCellLabel
             // 
             this.SelectedCellLabel.AutoSize = true;
-            this.SelectedCellLabel.Location = new System.Drawing.Point(16, 53);
-            this.SelectedCellLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.SelectedCellLabel.Location = new System.Drawing.Point(12, 43);
             this.SelectedCellLabel.Name = "SelectedCellLabel";
-            this.SelectedCellLabel.Size = new System.Drawing.Size(115, 17);
+            this.SelectedCellLabel.Size = new System.Drawing.Size(88, 13);
             this.SelectedCellLabel.TabIndex = 2;
             this.SelectedCellLabel.Text = "Selected Cell: A1";
             // 
             // CellValueBox
             // 
-            this.CellValueBox.Location = new System.Drawing.Point(468, 73);
-            this.CellValueBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CellValueBox.Location = new System.Drawing.Point(351, 59);
             this.CellValueBox.Name = "CellValueBox";
             this.CellValueBox.ReadOnly = true;
-            this.CellValueBox.Size = new System.Drawing.Size(541, 22);
+            this.CellValueBox.Size = new System.Drawing.Size(407, 20);
             this.CellValueBox.TabIndex = 3;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(464, 53);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(348, 43);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 17);
+            this.label1.Size = new System.Drawing.Size(54, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Cell Value";
             // 
             // helpButton
             // 
-            this.helpButton.Location = new System.Drawing.Point(1197, 69);
-            this.helpButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.helpButton.Location = new System.Drawing.Point(898, 56);
             this.helpButton.Name = "helpButton";
-            this.helpButton.Size = new System.Drawing.Size(100, 28);
+            this.helpButton.Size = new System.Drawing.Size(75, 23);
             this.helpButton.TabIndex = 6;
             this.helpButton.Text = "Get Help";
             this.helpButton.UseVisualStyleBackColor = true;
@@ -100,25 +96,28 @@
             // 
             // IPTextBox
             // 
-            this.IPTextBox.Location = new System.Drawing.Point(16, 28);
+            this.IPTextBox.Location = new System.Drawing.Point(12, 23);
+            this.IPTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.IPTextBox.Name = "IPTextBox";
-            this.IPTextBox.Size = new System.Drawing.Size(343, 22);
+            this.IPTextBox.Size = new System.Drawing.Size(258, 20);
             this.IPTextBox.TabIndex = 7;
             // 
             // IPAddressLabel
             // 
             this.IPAddressLabel.AutoSize = true;
-            this.IPAddressLabel.Location = new System.Drawing.Point(16, 5);
+            this.IPAddressLabel.Location = new System.Drawing.Point(12, 4);
+            this.IPAddressLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.IPAddressLabel.Name = "IPAddressLabel";
-            this.IPAddressLabel.Size = new System.Drawing.Size(80, 17);
+            this.IPAddressLabel.Size = new System.Drawing.Size(61, 13);
             this.IPAddressLabel.TabIndex = 8;
             this.IPAddressLabel.Text = "IP Address:";
             // 
             // ConnectButton
             // 
-            this.ConnectButton.Location = new System.Drawing.Point(366, 28);
+            this.ConnectButton.Location = new System.Drawing.Point(430, 17);
+            this.ConnectButton.Margin = new System.Windows.Forms.Padding(2);
             this.ConnectButton.Name = "ConnectButton";
-            this.ConnectButton.Size = new System.Drawing.Size(93, 23);
+            this.ConnectButton.Size = new System.Drawing.Size(70, 30);
             this.ConnectButton.TabIndex = 9;
             this.ConnectButton.Text = "Connect";
             this.ConnectButton.UseVisualStyleBackColor = true;
@@ -129,36 +128,57 @@
             this.SpreadsheetNameList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SpreadsheetNameList.Enabled = false;
             this.SpreadsheetNameList.FormattingEnabled = true;
-            this.SpreadsheetNameList.Location = new System.Drawing.Point(468, 27);
+            this.SpreadsheetNameList.Location = new System.Drawing.Point(522, 21);
+            this.SpreadsheetNameList.Margin = new System.Windows.Forms.Padding(2);
             this.SpreadsheetNameList.Name = "SpreadsheetNameList";
-            this.SpreadsheetNameList.Size = new System.Drawing.Size(244, 24);
+            this.SpreadsheetNameList.Size = new System.Drawing.Size(184, 21);
             this.SpreadsheetNameList.TabIndex = 10;
             // 
             // SpreadsheetNameLabel
             // 
             this.SpreadsheetNameLabel.AutoSize = true;
-            this.SpreadsheetNameLabel.Location = new System.Drawing.Point(465, 7);
+            this.SpreadsheetNameLabel.Location = new System.Drawing.Point(519, 6);
+            this.SpreadsheetNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.SpreadsheetNameLabel.Name = "SpreadsheetNameLabel";
-            this.SpreadsheetNameLabel.Size = new System.Drawing.Size(134, 17);
+            this.SpreadsheetNameLabel.Size = new System.Drawing.Size(101, 13);
             this.SpreadsheetNameLabel.TabIndex = 11;
             this.SpreadsheetNameLabel.Text = "Spreadsheet Name:";
             // 
             // OpenButton
             // 
             this.OpenButton.Enabled = false;
-            this.OpenButton.Location = new System.Drawing.Point(738, 28);
+            this.OpenButton.Location = new System.Drawing.Point(710, 21);
+            this.OpenButton.Margin = new System.Windows.Forms.Padding(2);
             this.OpenButton.Name = "OpenButton";
-            this.OpenButton.Size = new System.Drawing.Size(75, 23);
+            this.OpenButton.Size = new System.Drawing.Size(56, 22);
             this.OpenButton.TabIndex = 12;
             this.OpenButton.Text = "Open";
             this.OpenButton.UseVisualStyleBackColor = true;
             this.OpenButton.Click += new System.EventHandler(this.OpenButton_Click);
             // 
+            // UsernameBox
+            // 
+            this.UsernameBox.Location = new System.Drawing.Point(275, 23);
+            this.UsernameBox.Name = "UsernameBox";
+            this.UsernameBox.Size = new System.Drawing.Size(150, 20);
+            this.UsernameBox.TabIndex = 13;
+            // 
+            // UsernameLabel
+            // 
+            this.UsernameLabel.AutoSize = true;
+            this.UsernameLabel.Location = new System.Drawing.Point(273, 6);
+            this.UsernameLabel.Name = "UsernameLabel";
+            this.UsernameLabel.Size = new System.Drawing.Size(55, 13);
+            this.UsernameLabel.TabIndex = 14;
+            this.UsernameLabel.Text = "Username";
+            // 
             // SpreadsheetForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 660);
+            this.ClientSize = new System.Drawing.Size(1601, 554);
+            this.Controls.Add(this.UsernameLabel);
+            this.Controls.Add(this.UsernameBox);
             this.Controls.Add(this.OpenButton);
             this.Controls.Add(this.SpreadsheetNameLabel);
             this.Controls.Add(this.SpreadsheetNameList);
@@ -171,7 +191,6 @@
             this.Controls.Add(this.SelectedCellLabel);
             this.Controls.Add(this.SelectedCellContent);
             this.Controls.Add(this.SpreadsheetGrid);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "SpreadsheetForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -194,6 +213,8 @@
         private System.Windows.Forms.ComboBox SpreadsheetNameList;
         private System.Windows.Forms.Label SpreadsheetNameLabel;
         private System.Windows.Forms.Button OpenButton;
+        private System.Windows.Forms.TextBox UsernameBox;
+        private System.Windows.Forms.Label UsernameLabel;
     }
 }
 

@@ -37,26 +37,71 @@ namespace SpreadsheetGUI {
         }
 
         /// <summary>
-        /// Creates a new spreadsheet from a file path
+        /// Event handler for when the server indicates that a cell has changed
         /// </summary>
-        /// <param name="path"></param>
-        public SpreadsheetForm(String path) {
-            InitializeComponent();
+        /// <param name="cell">Changed cell</param>
+        /// <param name="contents">Cell contents</param>
+        public void HandleCellChange(string cell, string content) {
+            this.Invoke((MethodInvoker) delegate {
+                UpdateCellContents(cell, content);
+            });
+        }
 
-            SpreadsheetGrid.SelectionChanged += SpreadsheetChanged;
+        /// <summary>
+        /// Event handler for when the server indicates that a cell selection has changed
+        /// </summary>
+        /// <param name="cell">Cell selected</param>
+        /// <param name="name">Name of selector</param>
+        /// <param name="id">ID of selector</param>
+        public void HandleSelectionChange(string cell, string name, int id) {
+            this.Invoke((MethodInvoker) delegate {
+                if (id == Controller.ID) {
+                    int[] cellCoords = CellToRowCol(cell);
+                    SpreadsheetGrid.SetSelection(cellCoords[1], cellCoords[0]);
+                    SelectedCellContent.Text = Spreadsheet.GetCellContents(cell).ToString();
+                    SelectedCellLabel.Text = "Selected Cell: " + cell;
+                    UpdateCellValueBox();
+                } else {
+                    SetNetworkSelection(id, cell);
+                }
+            });
+        }
 
-            Spreadsheet = new SpreadsheetState();
+        /// <summary>
+        /// Event handler for when this client connects to a server and receives a spreadsheet list
+        /// </summary>
+        /// <param name="error">Whether an error occurred on connection</param>
+        /// <param name="spreadsheets">Spreadsheet list</param>
+        public void HandleServerConnection(bool error, List<string> spreadsheets) {
+            this.Invoke((MethodInvoker) delegate {
+                if (error) {
+                    MessageBox.Show("Unable to connect to server", "", MessageBoxButtons.OK);
+                    return;
+                }
+                PopulateSpreadsheetNameList(spreadsheets);
+            });
+        }
 
-            foreach (String newCell in Spreadsheet.GetNamesOfAllNonemptyCells()) {
-                int[] rowCol = CellToRowCol(newCell);
-                SpreadsheetGrid.SetValue(rowCol[1], rowCol[0], Spreadsheet.GetCellValue(newCell).ToString());
-            }
+        /// <summary>
+        /// Handler for when another client disconnects from the server
+        /// </summary>
+        /// <param name="ID">ID of client</param>
+        public void HandleClientDisconnect(int ID) {
+            this.Invoke((MethodInvoker)delegate {
+                RemoveNetworkConnection(ID);
+            });
+        }
 
-            this.FormClosing += SpreadsheetClosing;
-
-            // Add keyboard event handlers
-            this.KeyPreview = true;
-            this.KeyDown += new KeyEventHandler(FormKeyDown);
+        /// <summary>
+        /// Handler for when this client disconnects from the server
+        /// </summary>
+        public void HandleDisconnect(string controllerMessage) {
+            this.Invoke((MethodInvoker)delegate {
+                MessageBox.Show("Disconnected from the server: " + controllerMessage, "", MessageBoxButtons.OK);
+                IPTextBox.Enabled = true;
+                UsernameBox.Enabled = true;
+                ConnectButton.Enabled = true;
+            });
         }
 
         /// <summary>
@@ -159,9 +204,7 @@ namespace SpreadsheetGUI {
         private void SpreadsheetChanged(SpreadsheetPanel sender) {
             SpreadsheetGrid.GetSelection(out int col, out int row);
             String cell = RowColToCell(row, col);
-            SelectedCellContent.Text = Spreadsheet.GetCellContents(cell).ToString();
-            SelectedCellLabel.Text = "Selected Cell: " + cell;
-            UpdateCellValueBox();
+            Controller.SendSelectRequest(cell);
         }
 
         /// <summary>
@@ -172,8 +215,7 @@ namespace SpreadsheetGUI {
         private void SelectedCellContent_TextChanged(object sender, EventArgs e) {
             SpreadsheetGrid.GetSelection(out int col, out int row);
             String cell = RowColToCell(row, col);
-            UpdateCellContents(cell, SelectedCellContent.Text);
-            UpdateCellValueBox();
+            Controller.SendEditRequest(cell, SelectedCellContent.Text);
         }
 
         private void HelpButton_Click(object sender, EventArgs e) {
@@ -190,7 +232,8 @@ namespace SpreadsheetGUI {
         {
             ConnectButton.Enabled = false;
             IPTextBox.Enabled = false;
-            Controller.ConnectToServer(IPTextBox.Text);
+            UsernameBox.Enabled = false;
+            Controller.ConnectToServer(IPTextBox.Text, UsernameBox.Text);
         }
 
         /// <summary>
@@ -206,10 +249,10 @@ namespace SpreadsheetGUI {
         }
 
         /// <summary>
-        /// 
+        /// Sets the selected cell for a networked client
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="cellName"></param>
+        /// <param name="id">ID of client</param>
+        /// <param name="cellName">Name of client</param>
         private void SetNetworkSelection(int id, string cellName)
         {
             //we assume that the cellname is a single capital character followed by an integer
@@ -217,6 +260,14 @@ namespace SpreadsheetGUI {
             int row = int.Parse(cellName.Substring(1));
 
             SpreadsheetGrid.SetNetworkSelection(id, col, row);
+        }
+
+        /// <summary>
+        /// Removes a networked client & their selection indicator by ID
+        /// </summary>
+        /// <param name="id">ID of client to remove</param>
+        private void RemoveNetworkConnection(int id) {
+            SpreadsheetGrid.RemoveNetworkSelection(id);
         }
 
         /// <summary>

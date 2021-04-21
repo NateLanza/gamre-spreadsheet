@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using NetworkUtil;
+using Newtonsoft.Json;
 
 namespace SS {
 
@@ -57,7 +58,7 @@ namespace SS {
         /// <summary>
         /// Fires when this client disconnects from the server
         /// </summary>
-        public delegate void DisconnectHandler();
+        public delegate void DisconnectHandler(string message);
         public event DisconnectHandler Disconnected;
 
         /// <summary>
@@ -67,14 +68,6 @@ namespace SS {
         /// <param name="serverMessage">Error message sent by server</param>
         public delegate void InvalidChangeHandler(string cellName, string serverMessage);
         public event InvalidChangeHandler ChangeRejected;
-
-        /// <summary>
-        /// Fires if the server sends a serverError message and disconnects this client
-        /// </summary>
-        /// <param name="message">Message sent by the server</param>
-        public delegate void ServerShutdownHandler(string message);
-        public event ServerShutdownHandler ServerClosed;
-
 
         /// <summary>
         /// Current state of this spreadsheet
@@ -98,6 +91,11 @@ namespace SS {
         public int ID { get; private set; }
 
         /// <summary>
+        /// Username of this client
+        /// </summary>
+        public string Username { get; private set; }
+
+        /// <summary>
         /// Creates a new SpreadsheetController
         /// </summary>
         /// <param name="state">State object of current spreadsheet</param>
@@ -112,7 +110,8 @@ namespace SS {
         /// all connection tasks
         /// </summary>
         /// <param name="server">Hostname or IP of the server</param>
-        public void ConnectToServer(string server) {
+        public void ConnectToServer(string server, string username) {
+            Username = username;
             Thread t = new Thread(() => {
                 Networking.ConnectToServer(ServerConnectionCallback, server, 1100);
             });
@@ -130,6 +129,9 @@ namespace SS {
                 ConnectionState = ConnectionStates.WaitForSpreadsheets;
                 Connection = connection;
                 Connection.OnNetworkAction = SpreadsheetListCallback;
+                // Send username to server
+                Networking.Send(Connection.TheSocket, Username + "\n");
+                // Get spreadsheet list
                 Networking.GetData(Connection);
             }
         }
@@ -149,6 +151,7 @@ namespace SS {
             string serverData = ss.GetData();
             ss.RemoveData(0, serverData.Length);
             List<string> spreadsheets = new List<string>(serverData.Split('\n'));
+            spreadsheets.Remove("");
             ConnectionAttempted(false, spreadsheets);
             ConnectionState = ConnectionStates.WaitForSpreadsheetConnection;
         }
@@ -181,20 +184,12 @@ namespace SS {
         /// </summary>
         /// <param name="ss">Connection</param>
         private void WaitForIDCallback(SocketState ss) {
-            // Get data, make sure we have a complete token
-            string serverData = ss.GetData();
-            if (!serverData.Contains("\n")) {
-                Networking.GetData(ss);
+            // See if we have tokens
+            List<string> serverTokens = ParseServerTokens();
+            if (serverTokens.Count == 0) {
+                Networking.GetData(Connection);
                 return;
             }
-
-            // Parse tokens
-            List<string> serverTokens = new List<string>(serverData.Split('\n'));
-            ss.RemoveData(0, serverData.LastIndexOf('\n'));
-
-            // Remove incomplete token
-            if (!serverData.EndsWith("\n"))
-                serverTokens.RemoveAt(serverTokens.Count - 1);
 
             bool receivedID = false;
             // See if we've received the ID, set if so
@@ -203,6 +198,8 @@ namespace SS {
                 if (int.TryParse(ID, out int intID)) {
                     this.ID = intID;
                     receivedID = true;
+                } else {
+                    throw new InvalidOperationException("Unable to parse ID from the server");
                 }
                 serverTokens.RemoveAt(serverTokens.Count - 1);
             }
@@ -227,8 +224,44 @@ namespace SS {
         /// </summary>
         /// <param name="ss">Connection</param>
         private void ReceiveLoop(SocketState ss) {
+            // Get & parse tokens
+            List<string> tokens = ParseServerTokens();
+            foreach (string token in tokens)
+                ProcessServerJson(token);
 
-            Networking.GetData(ss);
+            // Check for error
+            if (Connection.ErrorOccured) {
+                Disconnected("Connection error occurred");
+            }
+            // Continue look
+            Networking.GetData(Connection);
+        }
+        
+        /// <summary>
+        /// Parses all received tokens from the server into a list of strings.
+        /// Uses this.Connection as the connection to the server, to parse strings from
+        /// </summary>
+        /// <returns>List of tokens. Will be empty if no tokens received</returns>
+        private List<String> ParseServerTokens() {
+            // Make sure we're connected
+            if (Connection == null)
+                throw new InvalidOperationException("Connection must be established to parse tokens");
+
+            // Get data, make sure we have a complete token
+            string serverData = Connection.GetData();
+            if (!serverData.Contains("\n")) {
+                return new List<string>();
+            }
+
+            // Parse tokens
+            List<string> serverTokens = new List<string>(serverData.Split('\n'));
+            Connection.RemoveData(0, serverData.LastIndexOf('\n'));
+
+            // Remove incomplete token
+            if (!serverData.EndsWith("\n"))
+                serverTokens.RemoveAt(serverTokens.Count - 1);
+
+            return serverTokens;
         }
 
         /// <summary>
@@ -237,23 +270,80 @@ namespace SS {
         /// </summary>
         /// <param name="json"></param>
         private void ProcessServerJson(string json) {
+            // Try to deserialize object
+            ServerMessage message;
+            try {
+                message = JsonConvert.DeserializeObject<ServerMessage>(json);
+            } catch (JsonException) {
+                return;
+            }
 
+            // Take action based on message
+            switch (message.Type) {
+                case "cellUpdated":
+                    CellChanged(message.Cell, message.Contents);
+                    break;
+                case "cellSelected":
+                    SelectionChanged(message.Cell, message.Selector, message.ID);
+                    break;
+                case "disconnected":
+                    OtherClientDisconnected(message.ID);
+                    break;
+                case "requestError":
+                    ChangeRejected(message.Cell, message.Message);
+                    break;
+                case "serverError":
+                    Disconnected(message.Message);
+                    break;
+            }
         }
 
+        /// <summary>
+        /// Sends an edit request to the server
+        /// </summary>
+        /// <param name="cell">Name of the cell</param>
+        /// <param name="contents">New contents of the cell</param>
         public void SendEditRequest(string cell, string contents) {
-            
+            Networking.Send(Connection.TheSocket,
+                "{requestType: \"editCell\", cellName: \"" +
+                cell +
+                "\", contents: \"" +
+                contents +
+                "\"}"
+                );
         }
 
+        /// <summary>
+        /// Sends a revert request to the server
+        /// </summary>
+        /// <param name="cell">Cell to revert</param>
         public void SendRevertRequest(string cell) {
-
+            Networking.Send(Connection.TheSocket,
+                "{requestType: \"revertCell\", cellName: \"" +
+                cell +
+                "\"}"
+                );
         }
 
+        /// <summary>
+        /// Sends a select request to the server
+        /// </summary>
+        /// <param name="cell">Cell to select</param>
         public void SendSelectRequest(string cell) {
-
+            Networking.Send(Connection.TheSocket,
+                "{requestType: \"selectCell\", cellName: \"" +
+                cell +
+                "\"}"
+                );
         }
 
+        /// <summary>
+        /// Sends an undo request to the server
+        /// </summary>
         public void SendUndoRequest() {
-
+            Networking.Send(Connection.TheSocket,
+                "{requestType: \"undo\"}"
+                );
         }
     }
 }
