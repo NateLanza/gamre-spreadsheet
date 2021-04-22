@@ -9,3 +9,42 @@
 /client/Spreadsheet Client/.vs/Spreadsheet Client/DesignTimeBuild/.dtbcache.v2
 /client/.vs/Spreadsheet Client/v16/.suo
 /client/.vs/Spreadsheet Client/DesignTimeBuild/.dtbcache.v2
+
+################################################################################
+# Added files for C++ language
+################################################################################
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+*.vs
+*.suo
