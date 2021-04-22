@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "\\client\\Formula",
-    "\\client\\SpreadsheetGUI",
-    "\\server",
-    "\\test-client"
+    ""
   ],
+  "SelectedNode": "\\test-client",
   "PreviewInSolutionExplorer": false
 }
