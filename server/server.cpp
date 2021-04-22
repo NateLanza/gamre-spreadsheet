@@ -1,1 +1,0 @@
-/* Entry point for the server application. Launches the server controller*/
