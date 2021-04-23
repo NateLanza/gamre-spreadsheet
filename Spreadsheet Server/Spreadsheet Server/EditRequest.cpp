@@ -28,6 +28,11 @@ void EditRequest::SetType(string t)
 	this->type = t;
 }
 
+void EditRequest::SetName(string n)
+{
+	this->cellname = n;
+}
+
 void EditRequest::SetContent(string c)
 {
 	this->content = c;

@@ -22,6 +22,7 @@ public:
 	string GetContent();
 
 	void SetType(string t);
+	void SetName(string n);
 	void SetContent(string c);
 };
 

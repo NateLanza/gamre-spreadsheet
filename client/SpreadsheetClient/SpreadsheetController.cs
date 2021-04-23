@@ -363,9 +363,9 @@ namespace SS {
             }
 
             Networking.Send(Connection.TheSocket,
-                "{requestType: \"editCell\", cellName: \"" +
+                "{\"requestType\": \"editCell\", \"cellName\": \"" +
                 cell +
-                "\", contents: \"" +
+                "\", \"contents\": \"" +
                 contents +
                 "\"}"
                 );
@@ -383,7 +383,7 @@ namespace SS {
             }
 
             Networking.Send(Connection.TheSocket,
-                "{requestType: \"revertCell\", cellName: \"" +
+                "{\"requestType\": \"revertCell\", \"cellName\": \"" +
                 cell +
                 "\"}"
                 );
@@ -401,7 +401,7 @@ namespace SS {
             }
 
             Networking.Send(Connection.TheSocket,
-                "{requestType: \"selectCell\", cellName: \"" +
+                "{\"requestType\": \"selectCell\", \"cellName\": \"" +
                 cell +
                 "\"}"
                 );
@@ -418,7 +418,7 @@ namespace SS {
             }
 
             Networking.Send(Connection.TheSocket,
-                "{requestType: \"undo\"}"
+                "{\"requestType\": \"undo\"}"
                 );
         }
     }

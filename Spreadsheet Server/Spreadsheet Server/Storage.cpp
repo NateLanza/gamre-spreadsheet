@@ -1,7 +1,7 @@
 #include "Storage.h"
 #include <stdexcept>
 
-set<Cell> Open(string spreadsheetName)
+set<Cell> Storage::Open(string spreadsheetName)
 {
     if (spreadsheets.find(spreadsheetName) != spreadsheets.end())
     {
@@ -13,7 +13,7 @@ set<Cell> Open(string spreadsheetName)
     }
 }
 
-void Save(string spreadsheetName, set<Cell> cellsInSpreadsheet)
+void Storage::Save(string spreadsheetName, set<Cell> cellsInSpreadsheet)
 {
     if (spreadsheets.find(spreadsheetName) != spreadsheets.end()) // element is in spreadsheet
     {
@@ -25,7 +25,31 @@ void Save(string spreadsheetName, set<Cell> cellsInSpreadsheet)
     }
 }
 
-map<string, set<Cell>> GetSpreadsheets()
+void Storage::AddSpreadsheet(string name, set<Cell> newSpreadsheet)
+{
+    if (!(spreadsheets.find(name) != spreadsheets.end()))
+    {
+        spreadsheets.insert({ name, newSpreadsheet });
+    }
+    else
+    {
+        throw invalid_argument("Spreadsheet already exists.");     // display some error
+    }
+}
+
+void Storage::RemoveSpreadsheet(string name)
+{
+    if ((spreadsheets.find(name) != spreadsheets.end()))
+    {
+        spreadsheets.erase(name);
+    }
+    else
+    {
+        throw invalid_argument("Spreadsheet does not exist.");     // display some error
+    }
+}
+
+map<string, set<Cell>> Storage::GetSpreadsheets()
 {
     if (spreadsheets.size() > 0)
         return spreadsheets;
@@ -39,7 +63,7 @@ map<string, set<Cell>> GetSpreadsheets()
  * Param:   key, the name of the spreadsheet trying to be returned
  * Returns: the spreadsheet pertaining to the name given, empty set otherwise.
  */
-set<Cell> GetSpreadsheet(string name)
+set<Cell> Storage::GetSpreadsheet(string name)
 {
     if (spreadsheets.find(name) != spreadsheets.end())
         return spreadsheets.at(name);
