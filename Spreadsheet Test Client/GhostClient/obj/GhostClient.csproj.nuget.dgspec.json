@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj": {}
+    "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj": {}
   },
   "projects": {
-    "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj": {
+    "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj",
+        "projectUniqueName": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj",
         "projectName": "GhostClient",
-        "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj",
+        "projectPath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj",
         "packagesPath": "C:\\Users\\abarr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\obj\\",
+        "outputPath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\abarr\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -27,8 +27,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj": {
-                "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj"
+              "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj": {
+                "projectPath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj"
               }
             }
           }
@@ -66,14 +66,14 @@
         }
       }
     },
-    "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj": {
+    "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj",
+        "projectUniqueName": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj",
         "projectName": "NetworkController",
-        "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj",
+        "projectPath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj",
         "packagesPath": "C:\\Users\\abarr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\obj\\",
+        "outputPath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\abarr\\AppData\\Roaming\\NuGet\\NuGet.Config",

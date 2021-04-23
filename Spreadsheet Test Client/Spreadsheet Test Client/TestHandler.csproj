@@ -6,4 +6,8 @@
     <RootNamespace>Spreadsheet_Test_Client</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ClientHandler\ClientHandler.csproj" />
+  </ItemGroup>
+
 </Project>

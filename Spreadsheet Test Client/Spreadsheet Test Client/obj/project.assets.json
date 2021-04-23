@@ -1,11 +1,103 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "Newtonsoft.Json/13.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "ClientHandler/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "GhostClient": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/ClientHandler.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ClientHandler.dll": {}
+        }
+      },
+      "GhostClient/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "NetworkController": "1.0.0",
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "compile": {
+          "bin/placeholder/GhostClient.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/GhostClient.dll": {}
+        }
+      },
+      "NetworkController/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/NetworkController.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NetworkController.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Newtonsoft.Json/13.0.1": {
+      "sha512": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
+      "type": "package",
+      "path": "newtonsoft.json/13.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "newtonsoft.json.13.0.1.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
+      ]
+    },
+    "ClientHandler/1.0.0": {
+      "type": "project",
+      "path": "../ClientHandler/ClientHandler.csproj",
+      "msbuildProject": "../ClientHandler/ClientHandler.csproj"
+    },
+    "GhostClient/1.0.0": {
+      "type": "project",
+      "path": "../GhostClient/GhostClient.csproj",
+      "msbuildProject": "../GhostClient/GhostClient.csproj"
+    },
+    "NetworkController/1.0.0": {
+      "type": "project",
+      "path": "../NetworkController/NetworkController.csproj",
+      "msbuildProject": "../NetworkController/NetworkController.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "ClientHandler >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\abarr\\.nuget\\packages\\": {}
@@ -32,7 +124,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\ClientHandler\\ClientHandler.csproj": {
+              "projectPath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\ClientHandler\\ClientHandler.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

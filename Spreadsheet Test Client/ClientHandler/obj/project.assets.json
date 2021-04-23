@@ -87,11 +87,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\ClientHandler\\ClientHandler.csproj",
+      "projectUniqueName": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\ClientHandler\\ClientHandler.csproj",
       "projectName": "ClientHandler",
-      "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\ClientHandler\\ClientHandler.csproj",
+      "projectPath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\ClientHandler\\ClientHandler.csproj",
       "packagesPath": "C:\\Users\\abarr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\ClientHandler\\obj\\",
+      "outputPath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\ClientHandler\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\abarr\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -107,8 +107,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj": {
-              "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj"
+            "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj": {
+              "projectPath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj"
             }
           }
         }
