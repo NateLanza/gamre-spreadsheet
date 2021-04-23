@@ -144,6 +144,7 @@
     <ClCompile Include="DependencyGraph.cpp" />
     <ClCompile Include="CellEdit.cpp" />
     <ClCompile Include="Formula.cpp" />
+    <ClCompile Include="ServerConnection.cpp" />
     <ClCompile Include="Spreadsheet Server.cpp" />
     <ClCompile Include="SpreadsheetState.cpp" />
     <ClCompile Include="Storage.cpp" />
