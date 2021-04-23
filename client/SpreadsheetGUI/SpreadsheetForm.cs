@@ -93,6 +93,9 @@ namespace SpreadsheetGUI {
         public void HandleServerConnection(bool error, List<string> spreadsheets) {
             this.Invoke((MethodInvoker) delegate {
                 if (error) {
+                    IPTextBox.Enabled = true;
+                    UsernameBox.Enabled = true;
+                    ConnectButton.Enabled = true;
                     MessageBox.Show("Unable to connect to server", "", MessageBoxButtons.OK);
                     return;
                 }

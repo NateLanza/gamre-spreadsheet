@@ -21,3 +21,12 @@ C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetClient\obj
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.csproj.CopyComplete
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.dll
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\bin\Debug\netstandard2.0\SpreadsheetClient.deps.json
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\bin\Debug\netstandard2.0\SpreadsheetClient.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\bin\Debug\netstandard2.0\SpreadsheetClient.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\bin\Debug\netstandard2.0\Formula.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\bin\Debug\netstandard2.0\NetworkController.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.csproj.CoreCompileInputs.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.csproj.CopyComplete
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.pdb
