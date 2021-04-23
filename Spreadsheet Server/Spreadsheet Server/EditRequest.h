@@ -1,27 +1,28 @@
 #pragma once
 #include <string>
+#include "Cell.h"
 #include <windows.data.json.h>
 
 #ifndef EditRequest_H
 #define EditRequest_H
 
-using namespace std;
-
 class EditRequest
 {
 private:
-	string request;
+	
+	string type;
+	string cellname;
+	string content;
 
-	string requestType;
-	string cellName;
-	string contents;
 public:
-	EditRequest(string request);
+	EditRequest();
 
-	string GetRequest();
 	string GetType();
-	string GetCellName();
-	string GetContents();
+	string GetName();
+	string GetContent();
+
+	void SetType(string t);
+	void SetContent(string c);
 };
 
 #endif 

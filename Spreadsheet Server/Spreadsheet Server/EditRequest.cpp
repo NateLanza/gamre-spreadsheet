@@ -1,28 +1,34 @@
 #include "EditRequest.h"
+#include <string>
 
-EditRequest::EditRequest(string request)
+EditRequest::EditRequest()
 {
-	this->request = request;
-
-	// check request to get type, name, contents and enter into variables
-}
-
-string EditRequest::GetRequest()
-{
-	return request;
+	this->type = "none";
+	this->cellname = "none";
+	this->content = "none";	
 }
 
 string EditRequest::GetType()
 {
-	return requestType;
+	return type;
 }
 
-string EditRequest::GetCellName()
+string EditRequest::GetName()
 {
-	return cellName;
+	return cellname;
 }
 
-string EditRequest::GetContents()
+string EditRequest::GetContent()
 {
-	return contents;
+	return content;
+}
+
+void EditRequest::SetType(string t)
+{
+	this->type = t;
+}
+
+void EditRequest::SetContent(string c)
+{
+	this->content = c;
 }

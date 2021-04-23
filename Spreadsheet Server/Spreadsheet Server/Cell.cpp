@@ -22,7 +22,6 @@ void Cell::ParseContents(string content)
 	{
 
 	}
-		//value = 
 }
 
 bool is_number(const string s)

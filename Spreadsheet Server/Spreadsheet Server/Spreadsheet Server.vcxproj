@@ -141,19 +141,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
-    <ClCompile Include="CellEdit.cpp" />
     <ClCompile Include="DependencyGraph.cpp" />
-    <ClCompile Include="EditRequest.cpp" />
+    <ClCompile Include="CellEdit.cpp" />
     <ClCompile Include="Formula.cpp" />
     <ClCompile Include="Spreadsheet Server.cpp" />
     <ClCompile Include="SpreadsheetState.cpp" />
     <ClCompile Include="Storage.cpp" />
+    <ClCompile Include="EditRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h" />
-    <ClInclude Include="CellEdit.h" />
-    <ClInclude Include="DependencyGraph.h" />
     <ClInclude Include="EditRequest.h" />
+    <ClInclude Include="DependencyGraph.h" />
+    <ClInclude Include="CellEdit.h" />
     <ClInclude Include="Formula.h" />
     <ClInclude Include="SpreadsheetState.h" />
     <ClInclude Include="Storage.h" />
