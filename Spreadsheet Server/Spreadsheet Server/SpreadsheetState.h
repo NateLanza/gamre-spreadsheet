@@ -1,31 +1,30 @@
 #pragma once
-#include <vector>
 #include <list>
+#include <map>
+#include <set>
 #include <windows.data.json.h>
+#include <windows.networking.sockets.h>
+
 #include "Cell.h"
+#include "CellEdit.h"
+#include "EditRequest.h"
 
 using namespace ABI::Windows::Data::Json;
+using namespace std;
 
 #ifndef SpreadsheetState_H
 #define SpreadsheetState_H
 
-//list<Spreadsheet> spreadsheets;	// s. state contains list of spreadsheets that already exist that the client can open (or client can create new ss)
 class SpreadsheetState
 {
-private:
-	list<Cell> currentSpreadsheet;
 public:
-	void SetCurrentSpreadsheet(list<Cell> spreadsheet);
-};
+	SpreadsheetState();
 
-//
-//// 'OnNetworkAction' functions (names can be changed) 
-//static void NewClientConnected();  // client successfully connects
-//static void ParseClientRequest();  // server checks for existing ss, sends current state of ss and client ID
-//static void HandleClientRequest(); // continuously receive client requests
-//
-//// possible helper functions
-//bool IsValid(Cell cellChange); // check to see if the change made by client is valid
-//string MessageBuilder(bool connected);
+	set<Cell> spreadsheetCells;         // set for cells because the cells are unique
+	list<EditRequest> clientRequests;   // list so that we can pop the 'first' element as the first is the first edit that should be handled
+	list<CellEdit> cellUpdates;         // list of cells that need to be updated in spreadsheetCells
+	//map<int, socket> clients;         // have a map of client IDs and clients (need to know the socket setup for this)
+
+};
 
 #endif

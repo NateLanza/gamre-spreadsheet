@@ -22,12 +22,10 @@ D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\D
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.pdb
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Formula.dll
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Spreadsheet.dll
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetPanel.dll
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\DependencyGraph.dll
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Formula.pdb
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetPanel.pdb
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Spreadsheet.pdb
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\DependencyGraph.pdb
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csprojAssemblyReference.cache
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.Help.resources
@@ -60,3 +58,7 @@ C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\De
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.CopyComplete
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.exe
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetClient.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\NetworkController.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetClient.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\NetworkController.pdb

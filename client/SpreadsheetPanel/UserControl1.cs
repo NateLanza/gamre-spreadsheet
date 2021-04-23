@@ -566,8 +566,9 @@ namespace SS
                 int y = (e.Y - LABEL_ROW_HEIGHT) / DATA_ROW_HEIGHT;
                 if (e.X > LABEL_COL_WIDTH && e.Y > LABEL_ROW_HEIGHT && (x + _firstColumn < COL_COUNT) && (y + _firstRow < ROW_COUNT))
                 {
-                    _selectedCol = x + _firstColumn;
-                    _selectedRow = y + _firstRow;
+                    // These lines set the selection immediately on click instead of waiting for server response, so are commented out
+                    //_selectedCol = x + _firstColumn;
+                    //_selectedRow = y + _firstRow;
                     if (_ssp.SelectionChanged != null)
                     {
                         _ssp.SelectionChanged(_ssp);

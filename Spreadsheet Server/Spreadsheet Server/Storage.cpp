@@ -1,16 +1,19 @@
 #include "Storage.h"
+#include <stdexcept>
 
-void Open(string spreadsheetName)
+set<Cell> Open(string spreadsheetName)
 {
     if (spreadsheets.find(spreadsheetName) != spreadsheets.end())
     {
-        state.SetCurrentSpreadsheet(spreadsheets.at(spreadsheetName));
+        return spreadsheets.at(spreadsheetName);
     }
-
-    // display some error
+    else
+    {
+        throw invalid_argument("Spreadsheet does not exist.");     // display some error
+    }
 }
 
-void Save(string spreadsheetName, list<Cell> cellsInSpreadsheet)
+void Save(string spreadsheetName, set<Cell> cellsInSpreadsheet)
 {
     if (spreadsheets.find(spreadsheetName) != spreadsheets.end()) // element is in spreadsheet
     {
@@ -22,12 +25,23 @@ void Save(string spreadsheetName, list<Cell> cellsInSpreadsheet)
     }
 }
 
-map<string, list<Cell>> GetSpreadsheets()
+map<string, set<Cell>> GetSpreadsheets()
 {
-    return spreadsheets;
+    if (spreadsheets.size() > 0)
+        return spreadsheets;
+    throw invalid_argument("There are no spreadsheets available.");
 }
 
-list<Cell> GetSpreadsheet(string key)
+/*
+ * Gets a specific spreadsheet from the possible spreadsheets if the 
+ * spreadsheet exists.
+ * 
+ * Param:   key, the name of the spreadsheet trying to be returned
+ * Returns: the spreadsheet pertaining to the name given, empty set otherwise.
+ */
+set<Cell> GetSpreadsheet(string name)
 {
-    return spreadsheets.at(key);
+    if (spreadsheets.find(name) != spreadsheets.end())
+        return spreadsheets.at(name);
+    throw invalid_argument("Spreadsheet not found.");
 }

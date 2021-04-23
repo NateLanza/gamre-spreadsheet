@@ -81,6 +81,11 @@ namespace SS {
         public int ConnectionState { get; private set; }
 
         /// <summary>
+        /// Thread lock object to use when modifying/interacting with ConnectionState
+        /// </summary>
+        private object ConnectionThreadKey;
+
+        /// <summary>
         /// ID of this client, will be -1 if not connected
         /// </summary>
         public int ID { get; private set; }
@@ -98,16 +103,19 @@ namespace SS {
             ConnectionState = ConnectionStates.Disconnected;
             ID = -1;
             Disconnected += HandleDisconnect;
+            ConnectionThreadKey = new Object();
         }
 
         /// <summary>
         /// Event handler for when this client disconnects
         /// </summary>
         private void HandleDisconnect(string message) {
-            Connection = null;
-            Username = null;
-            ID = -1;
-            ConnectionState = ConnectionStates.Disconnected;
+            lock (ConnectionThreadKey) {
+                Connection = null;
+                Username = null;
+                ID = -1;
+                ConnectionState = ConnectionStates.Disconnected; 
+            }
         }
 
         /// <summary>
@@ -116,7 +124,10 @@ namespace SS {
         /// </summary>
         /// <param name="server">Hostname or IP of the server</param>
         public void ConnectToServer(string server, string username) {
-            Username = username;
+            lock (ConnectionThreadKey) {
+                Username = username;
+                ConnectionState = ConnectionStates.WaitingForConnection; 
+            }
             Thread t = new Thread(() => {
                 Networking.ConnectToServer(ServerConnectionCallback, server, 1100);
             });
@@ -128,16 +139,25 @@ namespace SS {
         /// </summary>
         /// <param name="connection">Socketstate created by connection attempt</param>
         private void ServerConnectionCallback(SocketState connection) {
-            if (connection.ErrorOccured) {
-                ConnectionAttempted(true, null);
-            } else {
-                ConnectionState = ConnectionStates.WaitForSpreadsheets;
-                Connection = connection;
-                Connection.OnNetworkAction = SpreadsheetListCallback;
-                // Send username to server
-                Networking.Send(Connection.TheSocket, Username + "\n");
-                // Get spreadsheet list
-                Networking.GetData(Connection);
+            lock (ConnectionThreadKey) {
+                // Make sure we're in the right state
+                if (ConnectionState != ConnectionStates.WaitingForConnection)
+                    return;
+
+                // Check for valid connection
+                if (connection.ErrorOccured) {
+                    Username = null;
+                    ConnectionState = ConnectionStates.Disconnected;
+                    ConnectionAttempted(true, null);
+                } else {
+                    ConnectionState = ConnectionStates.WaitForSpreadsheets;
+                    Connection = connection;
+                    Connection.OnNetworkAction = SpreadsheetListCallback;
+                    // Send username to server
+                    Networking.Send(Connection.TheSocket, Username + "\n");
+                    // Get spreadsheet list
+                    Networking.GetData(Connection);
+                } 
             }
         }
 
@@ -146,19 +166,31 @@ namespace SS {
         /// </summary>
         /// <param name="ss">Connection to server</param>
         private void SpreadsheetListCallback(SocketState ss) {
+            // Validate connection state
+            lock (ConnectionThreadKey) {
+                if (ConnectionState != ConnectionStates.WaitForSpreadsheets)
+                    return;
+            }
+
             // Ensure we have received a complete list
             if (!ss.GetData().EndsWith("\n\n")) {
                 Networking.GetData(ss);
                 return;
             }
 
-            // Parse spreadsheet list, trigger event
+            // Parse spreadsheet list,
             string serverData = ss.GetData();
             ss.RemoveData(0, serverData.Length);
             List<string> spreadsheets = new List<string>(serverData.Split('\n'));
             spreadsheets.Remove("");
-            ConnectionAttempted(false, spreadsheets);
-            ConnectionState = ConnectionStates.WaitForSpreadsheetConnection;
+
+            // Check for race conditions, trigger event
+            lock (ConnectionThreadKey) {
+                if (ConnectionState != ConnectionStates.WaitForSpreadsheets)
+                    return;
+                ConnectionAttempted(false, spreadsheets);
+                ConnectionState = ConnectionStates.WaitForSpreadsheetConnection; 
+            }
         }
 
         /// <summary>
@@ -170,17 +202,20 @@ namespace SS {
         /// <exception cref="ArgumentException">If name contains \n</exception>
         /// <param name="name">Name of spreadsheet to connect to</param>
         public void ConnectToSpreadsheet(string name) {
-            // Validate input
-            if (ConnectionState != ConnectionStates.WaitForSpreadsheetConnection)
-                throw new InvalidOperationException("Cannot connect to a spreadsheet when the connection state is not WaitForSpreadsheetConnection");
-            if (name.Contains("\n"))
-                throw new ArgumentException("Param name cannot contain a newline character \\n");
+            // Validate connection state
+            lock (ConnectionThreadKey) {
+                // Validate input
+                if (ConnectionState != ConnectionStates.WaitForSpreadsheetConnection)
+                    throw new InvalidOperationException("Cannot connect to a spreadsheet when the connection state is not WaitForSpreadsheetConnection");
+                if (name.Contains("\n"))
+                    throw new ArgumentException("Param name cannot contain a newline character \\n");
 
-            // Send connection message to server
-            Networking.Send(Connection.TheSocket, name + "\n");
-            ConnectionState = ConnectionStates.WaitForID;
-            Connection.OnNetworkAction = WaitForIDCallback;
-            Networking.GetData(Connection);
+                // Send connection message to server
+                Networking.Send(Connection.TheSocket, name + "\n");
+                ConnectionState = ConnectionStates.WaitForID;
+                Connection.OnNetworkAction = WaitForIDCallback;
+                Networking.GetData(Connection); 
+            }
         }
 
         /// <summary>
@@ -189,6 +224,12 @@ namespace SS {
         /// </summary>
         /// <param name="ss">Connection</param>
         private void WaitForIDCallback(SocketState ss) {
+            // Validate state
+            lock (ConnectionThreadKey) {
+                if (ConnectionState != ConnectionStates.WaitForID)
+                    return;
+            }
+
             // See if we have tokens
             List<string> serverTokens = ParseServerTokens();
             if (serverTokens.Count == 0) {
@@ -215,9 +256,11 @@ namespace SS {
 
             // Move to next connection stage if ID received
             if (receivedID) {
-                ConnectionState = ConnectionStates.Connected;
-                Connection.OnNetworkAction = ReceiveLoop;
-                IDReceived(ID);
+                lock (ConnectionThreadKey) {
+                    ConnectionState = ConnectionStates.Connected;
+                    Connection.OnNetworkAction = ReceiveLoop;
+                    IDReceived(ID); 
+                }
             }
 
             // Get more data from server
@@ -235,8 +278,10 @@ namespace SS {
                 ProcessServerJson(token);
 
             // Check for error
-            if (Connection.ErrorOccured) {
-                Disconnected("Connection error occurred");
+            lock (ConnectionThreadKey) {
+                if (Connection.ErrorOccured) {
+                    Disconnected("Connection error occurred");
+                } 
             }
             // Continue look
             Networking.GetData(Connection);
@@ -248,25 +293,27 @@ namespace SS {
         /// </summary>
         /// <returns>List of tokens. Will be empty if no tokens received</returns>
         private List<String> ParseServerTokens() {
-            // Make sure we're connected
-            if (Connection == null)
-                throw new InvalidOperationException("Connection must be established to parse tokens");
+            lock (ConnectionThreadKey) {
+                // Make sure we're connected
+                if (Connection == null || ConnectionState == ConnectionStates.Disconnected || ConnectionState == ConnectionStates.WaitingForConnection)
+                    throw new InvalidOperationException("Connection must be established to parse tokens");
 
-            // Get data, make sure we have a complete token
-            string serverData = Connection.GetData();
-            if (!serverData.Contains("\n")) {
-                return new List<string>();
+                // Get data, make sure we have a complete token
+                string serverData = Connection.GetData();
+                if (!serverData.Contains("\n")) {
+                    return new List<string>();
+                }
+
+                // Parse tokens
+                List<string> serverTokens = new List<string>(serverData.Split('\n'));
+                Connection.RemoveData(0, serverData.LastIndexOf('\n'));
+
+                // Remove incomplete token
+                if (!serverData.EndsWith("\n"))
+                    serverTokens.RemoveAt(serverTokens.Count - 1);
+
+                return serverTokens; 
             }
-
-            // Parse tokens
-            List<string> serverTokens = new List<string>(serverData.Split('\n'));
-            Connection.RemoveData(0, serverData.LastIndexOf('\n'));
-
-            // Remove incomplete token
-            if (!serverData.EndsWith("\n"))
-                serverTokens.RemoveAt(serverTokens.Count - 1);
-
-            return serverTokens;
         }
 
         /// <summary>
@@ -309,6 +356,12 @@ namespace SS {
         /// <param name="cell">Name of the cell</param>
         /// <param name="contents">New contents of the cell</param>
         public void SendEditRequest(string cell, string contents) {
+            // Validate current connection state
+            lock (ConnectionThreadKey) {
+                if (ConnectionState != ConnectionStates.Connected)
+                    return; 
+            }
+
             Networking.Send(Connection.TheSocket,
                 "{requestType: \"editCell\", cellName: \"" +
                 cell +
@@ -323,6 +376,12 @@ namespace SS {
         /// </summary>
         /// <param name="cell">Cell to revert</param>
         public void SendRevertRequest(string cell) {
+            // Validate current connection state
+            lock (ConnectionThreadKey) {
+                if (ConnectionState != ConnectionStates.Connected)
+                    return;
+            }
+
             Networking.Send(Connection.TheSocket,
                 "{requestType: \"revertCell\", cellName: \"" +
                 cell +
@@ -335,6 +394,12 @@ namespace SS {
         /// </summary>
         /// <param name="cell">Cell to select</param>
         public void SendSelectRequest(string cell) {
+            // Validate current connection state
+            lock (ConnectionThreadKey) {
+                if (ConnectionState != ConnectionStates.Connected)
+                    return;
+            }
+
             Networking.Send(Connection.TheSocket,
                 "{requestType: \"selectCell\", cellName: \"" +
                 cell +
@@ -346,6 +411,12 @@ namespace SS {
         /// Sends an undo request to the server
         /// </summary>
         public void SendUndoRequest() {
+            // Validate current connection state
+            lock (ConnectionThreadKey) {
+                if (ConnectionState != ConnectionStates.Connected)
+                    return;
+            }
+
             Networking.Send(Connection.TheSocket,
                 "{requestType: \"undo\"}"
                 );

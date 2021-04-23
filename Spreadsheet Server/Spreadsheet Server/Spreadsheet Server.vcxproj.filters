@@ -33,10 +33,10 @@
     <ClCompile Include="DependencyGraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EditRequest.cpp">
+    <ClCompile Include="CellEdit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CellEdit.cpp">
+    <ClCompile Include="EditRequest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,10 +56,10 @@
     <ClInclude Include="DependencyGraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EditRequest.h">
+    <ClInclude Include="CellEdit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CellEdit.h">
+    <ClInclude Include="EditRequest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

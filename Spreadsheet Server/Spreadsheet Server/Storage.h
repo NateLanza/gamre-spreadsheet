@@ -10,15 +10,14 @@ using namespace std;
 #ifndef Storage_H
 #define Storage_H
 
-//list//<string> spreadsheets; // possibly contain a list of spreadsheets
-map <string, list<Cell>> spreadsheets;
+map <string, set<Cell>> spreadsheets;
 
 SpreadsheetState state;
 
-void Open(string spreadsheetName);
-void Save(string spreadsheetName, list<Cell> cellsInSpreadsheet);
+set<Cell> Open(string spreadsheetName);		// returns cells so that the spreadsheet may be 'opened' ie. the cells can be sent to the client
+void Save(string spreadsheetName, set<Cell> cellsInSpreadsheet);
 
-map<string, list<Cell>> GetSpreadsheets();
-list<Cell> GetSpreadsheet(string key);
+map<string, set<Cell>> GetSpreadsheets();
+set<Cell> GetSpreadsheet(string key);
 
 #endif
