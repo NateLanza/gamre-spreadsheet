@@ -1,0 +1,4 @@
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\GhostClient\bin\Debug\netcoreapp3.1\GhostClient.exe
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\GhostClient\obj\Debug\netcoreapp3.1\GhostClient.csprojAssemblyReference.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\GhostClient\obj\Debug\netcoreapp3.1\GhostClient.AssemblyInfoInputs.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\GhostClient\obj\Debug\netcoreapp3.1\GhostClient.AssemblyInfo.cs
