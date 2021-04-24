@@ -7,6 +7,17 @@
 
 using namespace std;
 
+class Token
+{
+private:
+	string Type;
+	string Content;
+	friend class Formula;
+	static bool IsValid(string token);
+public:
+	Token(string token); // s must be valid, or will throw
+};
+
 class Formula
 {
 private:
@@ -20,17 +31,6 @@ public:
 	double Evaluate(map<string, double> lookup);
 	vector<string> GetVariables();
 	string ToString();
-};
-
-class Token
-{
-private:
-	string Type;
-	string Content;
-	friend class Formula;
-	static bool IsValid(string token);
-public:
-	Token(string token); // s must be valid, or will throw
 };
 
 #endif

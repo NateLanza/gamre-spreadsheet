@@ -24,8 +24,6 @@ Formula::Formula(string formula)
 		throw new exception("no equals sign!");
 	}
 
-	// Init tokens
-	tokens = vector<Token>();
 	// Track last variable for operator following rule and extra following rule
 	bool lastWasOpeningOrOperator = false;
 	bool lastWasClosingNumberOrVar = false;
@@ -138,8 +136,8 @@ Formula::Formula(string formula)
 /// </summary>
 double Formula::Evaluate(map<string, double> lookup) {
 	// Init stacks
-	vector<double> values = vector<double>();
-	vector<char> ops = vector<char>();
+	vector<double> values;
+	vector<char> ops;
 	for (auto itr = tokens.begin(); itr != tokens.end(); ++itr) {
 		Token s = *itr;
 		double value;
@@ -225,7 +223,8 @@ double Formula::Evaluate(map<string, double> lookup) {
 	// Final check & return
 	if (ops.size() == 0) {
 		if (values.size() == 1) {
-			result = values.size();
+			result = values.back();
+			values.pop_back();
 		}
 	}
 	else if (ops.size() == 1) {
@@ -276,7 +275,7 @@ double Formula::applyOperation(double a, double b, char op) {
 /// new Formula("x+X*z").GetVariables() should enumerate "x", "X", and "z".
 /// </summary>
 vector<string> Formula::GetVariables() {
-	vector<string> result = vector<string>();
+	vector<string> result;
 
 	// Loop through tokens, add vars to result
 	for (auto itr = tokens.begin(); itr != tokens.end(); ++itr) {
