@@ -48,3 +48,28 @@
 *.app
 *.vs
 *.suo
+/Spreadsheet Server/Spreadsheet Server/x64/Debug/Server.tlog
+/Spreadsheet Server/Spreadsheet Server/x64/Debug/Spreadsheet Server.log
+/Spreadsheet Server/Spreadsheet Server/x64/Debug/vc142.idb
+/Spreadsheet Server/Spreadsheet Server/x64/Debug/vc142.pdb
+/Spreadsheet Test Client/ClientHandler/obj/Release/netcoreapp3.1/ClientHandler.AssemblyInfoInputs.cache
+/Spreadsheet Test Client/ClientHandler/obj/Release/netcoreapp3.1/ClientHandler.AssemblyInfo.cs
+/Spreadsheet Test Client/ClientHandler/obj/Release/netcoreapp3.1/ClientHandler.assets.cache
+/Spreadsheet Test Client/GhostClient/obj/Release/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs
+/Spreadsheet Test Client/GhostClient/obj/Release/netcoreapp3.1/GhostClient.AssemblyInfo.cs
+/Spreadsheet Test Client/GhostClient/obj/Release/netcoreapp3.1/GhostClient.AssemblyInfoInputs.cache
+/Spreadsheet Test Client/GhostClient/obj/Release/netcoreapp3.1/GhostClient.assets.cache
+/Spreadsheet Test Client/Spreadsheet Test Client/obj/Release/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs
+/Spreadsheet Test Client/Spreadsheet Test Client/obj/Release/netcoreapp3.1/TestHandler.AssemblyInfo.cs
+/Spreadsheet Test Client/Spreadsheet Test Client/obj/Release/netcoreapp3.1/TestHandler.AssemblyInfoInputs.cache
+/Spreadsheet Test Client/Spreadsheet Test Client/obj/Release/netcoreapp3.1/TestHandler.assets.cache
+/Spreadsheet Test Client/NetworkController/obj/Release/netcoreapp3.1/NetworkController.assets.cache
+/Spreadsheet Test Client/NetworkController/obj/Release/netcoreapp3.1/NetworkController.AssemblyInfoInputs.cache
+/Spreadsheet Test Client/NetworkController/obj/Release/netcoreapp3.1/NetworkController.AssemblyInfo.cs
+/Spreadsheet Test Client/NetworkController/obj/Release/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs
+/Spreadsheet Test Client/ClientHandler/obj/Release/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs
+/Spreadsheet Server/Spreadsheet Server/x64/Debug/Spreadsheet Server.vcxproj.FileListAbsolute.txt
+/Spreadsheet Server/Spreadsheet Server/x64/Debug/Server.Build.CppClean.log
+/client/NetworkController/obj/Debug/netstandard2.0/NetworkController.csprojAssemblyReference.cache
+/client/Formula/obj/Debug/netstandard2.0/Formula.csprojAssemblyReference.cache
+/client/DependencyGraph/obj/Debug/netstandard2.0/DependencyGraph.csprojAssemblyReference.cache

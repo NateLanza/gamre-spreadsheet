@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Spreadsheet Server",
-    "\\Spreadsheet Server\\Spreadsheet Server"
+    "\\client"
   ],
-  "SelectedNode": "\\Spreadsheet Server\\Spreadsheet Server\\EditRequest.h",
+  "SelectedNode": "\\client\\Spreadsheet Client.sln",
   "PreviewInSolutionExplorer": false
 }
