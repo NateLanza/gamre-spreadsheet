@@ -2,7 +2,7 @@
 
 namespace TestHandler
 {
-    class ClientHandler
+    public class ClientHandler
     {
         private GhostClient client1;
         private GhostClient client2;
@@ -11,7 +11,10 @@ namespace TestHandler
 
         public ClientHandler (string IP)
         {
-            //here I create clients and connect them to the given IP
+            client1 = new GhostClient(IP);
+            client2 = new GhostClient(IP);
+            client3 = new GhostClient(IP);
+            client4 = new GhostClient(IP);
         }
     }
 }

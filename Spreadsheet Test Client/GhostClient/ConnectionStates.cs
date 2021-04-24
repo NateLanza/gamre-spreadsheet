@@ -30,6 +30,9 @@ namespace SS {
         /// Client is connected to the server and has entered the send/receive loop
         /// </summary>
         public const int Connected = 4;
-
+        /// <summary>
+        /// When the client is attempting to establish a connection to the server
+        /// </summary>
+        public const int WaitingForConnection = 5;
     }
 }
