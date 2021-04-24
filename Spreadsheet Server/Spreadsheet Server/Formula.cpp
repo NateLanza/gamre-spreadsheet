@@ -1,5 +1,6 @@
 #include "Formula.h"
 #include <cstring>
+#include <iostream>
 
 using namespace std;
 
@@ -114,6 +115,54 @@ Formula::Formula(string formula)
 }
 
 /// <summary>
+/// Provides a list of tokens from the provided string.
+/// Automatically capitalizes all letters in variable names.
+/// </summary>
+/// <param name="s"></param>
+/// <returns></returns>
+vector<string> GetTokens(string s) {
+	//I would LOVE to use the regex that kopta provided last semeseter,
+	//but i think it will be easier and more understandable to just 
+	//use lots of conditionals instead
+	vector<string> output;
+
+	for (int i = 0; i < s.size(); i++)
+		s[i] = toupper(s[i]);
+
+	for (int i = 0; i < s.size(); i++) {
+		s[i] = toupper(s[i]);
+		//parse as an operator
+		if (s[i] == '(' || s[i] == ')' || s[i] == '*' || s[i] == '/' || s[i] == '+' || s[i] == '-')
+			output.push_back(s.substr(i, i + 1)); continue;
+
+		//parse as a variable
+		//65 is ascii for 'A', 90 is ascii for 'Z'
+		if ((int)s[i] >= 65 && (int)s[i] <= 90) {
+			int j = i + 1;
+			while (j < s.size() && (((int)s[i] >= 65 && (int)s[i] <= 90) || ((int)s[j] >= 48 && (int)s[j] <= 57)))
+				j++;
+
+			output.push_back(s.substr(i, j));
+		}
+
+		//parse as a double
+		//48 is ascii for '0', 57 is ascii for '9', 46 is ascii for '.'
+		if ((int)s[i] == 46 || ((int)s[i] >= 48 && (int)s[i] <= 57))
+		{
+			int j = i + 1;
+			while (j < s.size() && ((int)s[j] == 46 || ((int)s[j] >= 48 && (int)s[j] <= 57)))
+				j++;
+
+			output.push_back(s.substr(i, j));
+		}
+		
+		//if s[i] was none of the above, we just ignore it and move on
+	}
+
+	return output;
+}
+
+/// <summary>
 /// Evaluates this Formula, using the lookup delegate to determine the values of
 /// variables.  When a variable symbol v needs to be determined, it should be looked up
 /// via lookup(normalize(v)). (Here, normalize is the normalizer that was passed to 
@@ -187,7 +236,7 @@ double Formula::Evaluate(map<string, double> lookup) {
 		}
 		else if (s.Content.compare(")") == 0) {
 			// See if parenthesis is matched
-			if (ops.size() != 0 && ops.back() == '(') 
+			if (ops.size() != 0 && ops.back() == '(')
 			{
 				ops.pop_back();
 			}
@@ -295,7 +344,7 @@ string Formula::ToString() {
 
 	// Loop through tokens, add each to result
 	for (auto itr = tokens.begin(); itr != tokens.end(); ++itr) {
-		result+=(itr->Content);
+		result += (itr->Content);
 	}
 
 	return result;
@@ -319,7 +368,7 @@ Token::Token(string token) {
 	{
 	}
 
-	if (token.compare("*") == 0 || token.compare("/") == 0 || token.compare("-") == 0 || token.compare("+") == 0 || 
+	if (token.compare("*") == 0 || token.compare("/") == 0 || token.compare("-") == 0 || token.compare("+") == 0 ||
 		token.compare("(") == 0 || token.compare(")") == 0) {
 		Content = token;
 		Type = "op";
@@ -343,7 +392,7 @@ bool Token::IsValid(string token) {
 	//65 is ascii for 'A', 90 is ascii for 'Z'
 	if ((int)token[0] < 65 || (int)token[0] > 90)
 		return false;
-	
+
 	int i = 1;
 	while (i < token.size() && (int)token[0] >= 65 && (int)token[0] <= 90)
 		i++;

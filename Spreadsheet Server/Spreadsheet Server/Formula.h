@@ -23,7 +23,7 @@ class Formula
 private:
 	//the tokens of this formula
 	vector<Token> tokens;
-	vector<string> GetTokens(string s);
+	static vector<string> GetTokens(string s);
 	static double applyOperation(double a, double b, char op);
 
 public:
