@@ -1,0 +1,6 @@
+"libs\math\build\..\src\tr1\fminl.cpp" -Fo"C:\Users\izana\Me\School\SP21\Software\ConcurrentSpreadsheet\ConcurrentSpreadsheet\boost\bin.v2\libs\math\build\msvc-14.2\debug\threading-multi\fminl.obj"  -Yu"pch.hpp" -Fp"C:\Users\izana\Me\School\SP21\Software\ConcurrentSpreadsheet\ConcurrentSpreadsheet\boost\bin.v2\libs\math\build\msvc-14.2\debug\threading-multi\pch.pch" -TP /Z7 /Od /Ob0 /W3 /GR /MDd /Zc:forScope /Zc:wchar_t /Zc:inline /Zc:throwingNew /wd4675 /EHs -c 
+-DBOOST_ALL_NO_LIB=1 
+-DBOOST_BUILD_PCH_ENABLED 
+-DBOOST_MATH_TR1_DYN_LINK=1 
+"-I." 
+"-Ilibs\math\src\tr1"

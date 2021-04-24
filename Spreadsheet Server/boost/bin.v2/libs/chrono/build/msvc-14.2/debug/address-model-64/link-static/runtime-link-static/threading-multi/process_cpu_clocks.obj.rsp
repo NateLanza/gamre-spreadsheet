@@ -1,0 +1,4 @@
+"libs\chrono\src\process_cpu_clocks.cpp" -Fo"C:\Users\izana\Me\School\SP21\Software\ConcurrentSpreadsheet\ConcurrentSpreadsheet\boost\bin.v2\libs\chrono\build\msvc-14.2\debug\address-model-64\link-static\runtime-link-static\threading-multi\process_cpu_clocks.obj"    -TP /Z7 /Od /Ob0 /W4 /GR /MTd /Zc:forScope /Zc:wchar_t /Zc:inline /Zc:throwingNew /favor:blend /wd4675 /EHs /wd4512 -c 
+-DBOOST_ALL_NO_LIB=1 
+-DBOOST_All_STATIC_LINK=1 
+"-I."

@@ -1,0 +1,27 @@
+"libs\log\src\core.cpp" -Fo"C:\Users\izana\Me\School\SP21\Software\ConcurrentSpreadsheet\ConcurrentSpreadsheet\boost\bin.v2\libs\log\build\msvc-14.2\release\address-model-64\threadapi-win32\threading-multi\core.obj"    -TP /O2 /Ob2 /W3 /GR /MD /Zc:forScope /Zc:wchar_t /Zc:inline /Gw /Zc:throwingNew /favor:blend /wd4675 /EHs /bigobj /wd4003 /wd4456 /wd4459 /wd4503 -c 
+-DBOOST_ALL_NO_LIB=1 
+-DBOOST_ATOMIC_DYN_LINK=1 
+-DBOOST_CHRONO_DYN_LINK=1 
+-DBOOST_FILESYSTEM_DYN_LINK=1 
+-DBOOST_LOG_BUILDING_THE_LIB=1 
+-DBOOST_LOG_DLL 
+-DBOOST_LOG_USE_AVX2 
+-DBOOST_LOG_USE_SSSE3 
+-DBOOST_SPIRIT_USE_PHOENIX_V3=1 
+-DBOOST_THREAD_BUILD_DLL=1 
+-DBOOST_THREAD_DONT_USE_CHRONO=1 
+-DBOOST_THREAD_USE_DLL=1 
+-DBOOST_THREAD_WIN32 
+-DBOOST_USE_WINDOWS_H 
+-DNDEBUG 
+-DNOMINMAX 
+-DSECURITY_WIN32 
+-DWIN32_LEAN_AND_MEAN 
+-D_CRT_SECURE_NO_DEPRECATE 
+-D_CRT_SECURE_NO_WARNINGS 
+-D_SCL_SECURE_NO_DEPRECATE 
+-D_SCL_SECURE_NO_WARNINGS 
+-D__STDC_CONSTANT_MACROS 
+"-I." 
+"-IC:\Users\izana\Me\School\SP21\Software\ConcurrentSpreadsheet\ConcurrentSpreadsheet\boost\bin.v2\libs\log\build\msvc-14.2\release\address-model-64\threadapi-win32\threading-multi" 
+"-Ilibs\log\src"

@@ -1,0 +1,6 @@
+"libs\serialization\src\xml_woarchive.cpp" -Fo"C:\Users\izana\Me\School\SP21\Software\ConcurrentSpreadsheet\ConcurrentSpreadsheet\boost\bin.v2\libs\serialization\build\msvc-14.2\debug\address-model-64\threading-multi\xml_woarchive.obj"    -TP /Z7 /Od /Ob0 /W3 /GR /MDd /Zc:forScope /Zc:wchar_t /Zc:inline /Zc:throwingNew /favor:blend /wd4675 /EHs /Gy -c 
+-DBOOST_ALL_NO_LIB=1 
+-DBOOST_SERIALIZATION_DYN_LINK=1 
+-D_CRT_SECURE_NO_WARNINGS 
+-D_SCL_SECURE_NO_WARNINGS 
+"-I."

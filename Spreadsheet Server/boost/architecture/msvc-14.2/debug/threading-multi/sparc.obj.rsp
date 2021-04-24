@@ -1,0 +1,1 @@
+"libs\config\checks\architecture\sparc.cpp" -Fo"C:\Users\izana\Me\School\SP21\Software\ConcurrentSpreadsheet\ConcurrentSpreadsheet\boost\architecture\msvc-14.2\debug\threading-multi\sparc.obj"    -TP /Z7 /Od /Ob0 /W3 /GR /MDd /Zc:forScope /Zc:wchar_t /Zc:inline /Zc:throwingNew /wd4675 /EHs -c

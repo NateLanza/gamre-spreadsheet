@@ -1,0 +1,9 @@
+"libs\type_erasure\src\dynamic_binding.cpp" -Fo"C:\Users\izana\Me\School\SP21\Software\ConcurrentSpreadsheet\ConcurrentSpreadsheet\boost\bin.v2\libs\type_erasure\build\msvc-14.2\debug\address-model-64\threadapi-win32\threading-multi\dynamic_binding.obj"    -TP /Z7 /Od /Ob0 /W3 /GR /MDd /Zc:forScope /Zc:wchar_t /Zc:inline /Zc:throwingNew /favor:blend /wd4675 /EHs -c 
+-DBOOST_ALL_NO_LIB=1 
+-DBOOST_CHRONO_DYN_LINK=1 
+-DBOOST_SYSTEM_DYN_LINK=1 
+-DBOOST_THREAD_BUILD_DLL=1 
+-DBOOST_THREAD_USE_DLL=1 
+-DBOOST_THREAD_WIN32 
+-DBOOST_TYPE_ERASURE_DYN_LINK 
+"-I."

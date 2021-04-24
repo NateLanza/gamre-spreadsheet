@@ -1,0 +1,7 @@
+"libs\atomic\src\find_address_sse2.cpp" -Fo"C:\Users\izana\Me\School\SP21\Software\ConcurrentSpreadsheet\ConcurrentSpreadsheet\boost\bin.v2\libs\atomic\build\msvc-14.2\release\link-static\threading-multi\find_address_sse2.obj"    -TP /O2 /Ob2 /W3 /GR /MD /Zc:forScope /Zc:wchar_t /Zc:inline /Gw /Zc:throwingNew /wd4675 /EHs /arch:SSE2 -c 
+-DBOOST_ALL_NO_LIB=1 
+-DBOOST_ATOMIC_SOURCE 
+-DBOOST_ATOMIC_STATIC_LINK=1 
+-DBOOST_USE_WINDOWS_H 
+-DNDEBUG 
+"-I."

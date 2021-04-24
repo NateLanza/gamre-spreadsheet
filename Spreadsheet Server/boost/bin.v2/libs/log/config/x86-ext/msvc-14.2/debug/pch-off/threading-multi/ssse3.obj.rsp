@@ -1,0 +1,3 @@
+"libs\log\config\x86-ext\ssse3.cpp" -Fo"C:\Users\izana\Me\School\SP21\Software\ConcurrentSpreadsheet\ConcurrentSpreadsheet\boost\bin.v2\libs\log\config\x86-ext\msvc-14.2\debug\pch-off\threading-multi\ssse3.obj"    -TP /Z7 /Od /Ob0 /W3 /GR /MDd /Zc:forScope /Zc:wchar_t /Zc:inline /Zc:throwingNew /wd4675 /EHs /arch:SSE2 -c 
+-DBOOST_ALL_NO_LIB=1 
+"-I."
