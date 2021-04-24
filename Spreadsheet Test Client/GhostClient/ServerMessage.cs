@@ -1,15 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Newtonsoft.Json;
 
-namespace TestHandler
-{
+namespace SS {
 
     /// <summary>
     /// Represents a message received from the server
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    class ServerMessage
-    {
+    class ServerMessage {
 
         /// <summary>
         /// Type of this ServerMessage.
@@ -43,10 +43,9 @@ namespace TestHandler
         /// Never contains a value, setting sets the ID field
         /// </summary>
         [JsonProperty(PropertyName = "user")]
-        private int ID2
-        {
-            get { throw new NotImplementedException("Property ID2 does not contain a value"); }
-            set { ID = value; }
+        private int ID2 { 
+            get { throw new NotImplementedException("Property ID2 does not contain a value"); } 
+            set { ID = value; } 
         }
 
         /// <summary>

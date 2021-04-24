@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "RjnP1dOXngZIPmx5Fiux3ATSMs9yv3vJUfphc7AsKOFMES8FKdoEQC5hTlPp79pA4eLxGlLRHmTF9/Eubh7N+w==",
+  "dgSpecHash": "PYQKmMJplpQB7rCWWMRCi7TXk4RL/mLQ9UkOStMQbvmoFGf43zHgkfghUeWUHO+NALthUMqcb0gYtSw1BeK73g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\ClientHandler\\ClientHandler.csproj",
+  "projectFilePath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\ClientHandler\\ClientHandler.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\izana\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\abarr\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": []
 }
