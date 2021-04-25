@@ -8,13 +8,21 @@
 
 using namespace std;
 
+/// <summary>
+/// Represents an edit to a cell
+/// </summary>
 class CellEdit
 {
 private:
 	/// <summary>
 	/// Previous state of the cell before the change
 	/// </summary>
-	Cell PriorState;
+	Formula PriorState;
+
+	/// <summary>
+	/// Name of the cell
+	/// </summary>
+	string name;
 
 public:
 
@@ -22,7 +30,7 @@ public:
 	/// Creates a new CellEdit
 	/// </summary>
 	/// <param name="state">State of the cell BEFORE this edit</param>
-	CellEdit(Cell state);
+	CellEdit(const string name, const Formula state);
 
 	/// <summary>
 	/// Gets the contents of the prior state of the cell stored here

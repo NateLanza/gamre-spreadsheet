@@ -1,13 +1,13 @@
 #include "CellEdit.h"
 
-CellEdit::CellEdit(Cell state): PriorState(state)
+CellEdit::CellEdit(string name, Formula state): PriorState(state), name(name)
 {
 }
 
 Formula CellEdit::GetPriorContents() const {
-	return PriorState.GetContents();
+	return PriorState;
 }
 
 const string CellEdit::GetName() const {
-	return PriorState.GetName();
+	return name;
 }

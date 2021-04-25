@@ -79,7 +79,7 @@ bool SpreadsheetState::EditCell(const string name, const string content, const i
 		string oldContents = CellNotEmpty(name) ? cells[name].GetContents() : "";
 
 		// No circular dependencies found, add cell
-		edits.push_front(* new CellEdit(cells[name])); // Add cellEdit
+		edits.push_front(* new CellEdit(name, oldContents)); // Add cellEdit
 		AddOrUpdateCell(name, f, false); // Modify cell
 		dependencies.ReplaceDependents(name, f.GetVariables()); // Modify dependencies
 		WriteUnlock();
@@ -126,8 +126,8 @@ const bool SpreadsheetState::CheckCircularDependencies(unordered_set<string>& vi
 
 bool SpreadsheetState::RevertCell(const string cell, const int ClientID) {
 	WriteLock();
-	// Make sure client has the cell selected
-	if (!ClientSelectedCell(cell, ClientID)) {
+	// Make sure client has the cell selected && cell can be reverted
+	if (!ClientSelectedCell(cell, ClientID) || !cells[cell].CanRevert()) {
 		WriteUnlock();
 		return false;
 	}
@@ -142,7 +142,7 @@ bool SpreadsheetState::RevertCell(const string cell, const int ClientID) {
 	}
 
 	// No circular dependencies found, go through with revert
-	edits.push_front(* new CellEdit(cells[cell])); // Add cellEdit
+	edits.push_front(* new CellEdit(cell, cells[cell].GetContents())); // Add cellEdit
 	bool result = cells[cell].Revert(); // Revert cell
 	dependencies.ReplaceDependents(cell, oldState.GetVariables()); // Modify dependencies
 	WriteUnlock();
