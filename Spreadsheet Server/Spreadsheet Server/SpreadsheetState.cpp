@@ -191,9 +191,14 @@ list<CellEdit> SpreadsheetState::GetEditHistory() {
 
 list<Cell> SpreadsheetState::GetPopulatedCells() {
 	list<Cell> result = list<Cell>();
+	// Prune empty cells
+	for (auto cellEntry : cells) {
+		// Will use a write lock
+		RemoveCellIfEmpty(cellEntry.first, true);
+	}
+
 	ReadLock();
-	// Put all cells in list
-	// TODO: Remove cell if empty
+	// Put all cells in result list
 	for (pair<string, Cell> cellEntry : cells)
 		result.push_back(cellEntry.second);
 	ReadUnlock();
@@ -222,7 +227,7 @@ void SpreadsheetState::RemoveCellIfEmpty(const string cell, const bool lock) {
 		WriteLock();
 	if (cells.count(cell) == 1 && 
 		cells[cell].GetContents() == "" && 
-		cells[cell].GetPreviousState().ToString() == "") {
+		!cells[cell].CanRevert()) {
 		cells.erase(cell);
 	}
 	if (lock)

@@ -187,7 +187,8 @@ public:
 
 	/// <summary>
 	/// Gets all non-empty cells in this spreadsheet
-	/// Will use a read lock
+	/// Also prunes all empty cells from the spreadsheet's map
+	/// Will use a read lock and multiple write locks
 	/// </summary>
 	/// <returns>Cells, as a list</returns>
 	list<Cell> GetPopulatedCells();
