@@ -1,6 +1,6 @@
 #pragma once
 #include <list>
-#include <map>
+#include <unordered_map>
 #include <set>
 #include <stack>
 #include <windows.data.json.h>
@@ -27,7 +27,7 @@ private:
 	/// <summary>
 	/// All cells in this spreadsheet
 	/// </summary>
-	set<Cell> spreadsheetCells;
+	unordered_map<string, Cell> cells;
 
 	/// <summary>
 	/// All edits made to this spreadsheet, in order of recency.
@@ -51,9 +51,6 @@ public:
 	/// </summary>
 	/// <param name="cells">Cells to initialize into spreadsheets</param>
 	SpreadsheetState(set<Cell>& cells, stack<CellEdit>& edits);
-
-	// Destructor
-	~SpreadsheetState();
 
 	/// <summary>
 	/// Edits the content of a cell and adds the edit to the edit stack

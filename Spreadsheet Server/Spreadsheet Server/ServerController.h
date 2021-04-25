@@ -29,6 +29,12 @@ public:
 	/// </summary>
 	void StopServer();
 
+	/// <summary>
+	/// Processes an edit request from the client
+	/// </summary>
+	/// <param name="request">EditRequest sent by client</param>
+	void ProcessClientRequest(EditRequest request);
+
 private:
 
 	/// <summary>
