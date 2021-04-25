@@ -1,30 +1,53 @@
 #pragma once
 #include <string>
-//#include "Formula.h"
+#include "Formula.h"
 
 #ifndef Cell_H
 #define Cell_H
 
 using namespace std;
 
+/// <summary>
+/// Represents one cell in the spreadsheet
+/// </summary>
 class Cell
 {
 private:
+	/// <summary>
+	/// Name of this cell
+	/// </summary>
 	string name;
-	string formula;
-
-	// possible contents
-	string stringContent;
-	double doubleContent;
-
-	void ParseContents(string content); // determine if content is string, double or formula
+	/// <summary>
+	/// Contents of this cell
+	/// </summary>
+	Formula contents;
 
 public:
-	Cell(string name); // contents of cell get set through method
+	/// <summary>
+	/// Create a new cell
+	/// </summary>
+	/// <param name="name">Name of cell, should be [A-Z][0-9]</param>
+	/// <param name="contents">Contents of cell. Should be a valid formula, string, or double</param>
+	Cell(string name, string contents); // contents of cell get set through method
 
-	// setters and getters
-	string GetName();
+	/// <summary>
+	/// Get cell name
+	/// </summary>
+	/// <returns>Name of cell</returns>
+	const string GetName();
+
+	/// <summary>
+	/// Get cell contents
+	/// </summary>
+	/// <returns>Contents of cell, converted to a string</returns>
+	const string GetContents();
+
+	/// <summary>
+	/// Sets the contents of this cell.
+	/// Throws an exception with an appropriate message if there is an issue with the new contents
+	/// </summary>
+	/// <param name="newContents">New contents of cell</param>
+	void SetContents(const string newContents);
 };
 
-bool is_number(const string s);
 #endif

@@ -1,11 +1,6 @@
 #include "CellEdit.h"
 
-CellEdit::CellEdit()
+CellEdit::CellEdit(string cellName, Formula PriorContents)
 {
 
-}
-
-void CellEdit::NotifyClients()
-{
-	
 }
