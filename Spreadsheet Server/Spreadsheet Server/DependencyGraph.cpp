@@ -1,6 +1,7 @@
 //Source file for dependency graph class
 //Produce for CS 3505 final project. 
 #include "DependencyGraph.h"
+#include <iostream>
 
 /// <summary>
 /// Constructs a new, empty dependency graph
@@ -13,7 +14,7 @@ DependencyGraph::DependencyGraph() : size(0), dependees(), dependents()
 /// 
 /// </summary>
 /// <returns></returns>
-const int DependencyGraph::Size() const
+int DependencyGraph::Size() const
 {
 	return size;
 }
@@ -23,7 +24,7 @@ const int DependencyGraph::Size() const
 /// </summary>
 /// <param name="s"></param>
 /// <returns></returns>
-const bool DependencyGraph::HasDependents(const string& s)
+bool DependencyGraph::HasDependents(const string& s)
 {
 	return dependents[s].size() > 0;
 }
@@ -33,7 +34,7 @@ const bool DependencyGraph::HasDependents(const string& s)
 /// </summary>
 /// <param name="s"></param>
 /// <returns></returns>
-const bool DependencyGraph::HasDependees(const string& s)
+bool DependencyGraph::HasDependees(const string& s)
 {
 	return dependees[s].size() > 0;
 }
@@ -43,7 +44,7 @@ const bool DependencyGraph::HasDependees(const string& s)
 /// </summary>
 /// <param name="s"></param>
 /// <returns></returns>
-const vector<string> DependencyGraph::GetDependees(const string& s)
+vector<string> DependencyGraph::GetDependees(const string& s)
 {
 	vector<string> output = vector<string>();
 	for (auto iter = dependees[s].begin(); iter != dependees[s].end(); ++iter)
@@ -58,7 +59,7 @@ const vector<string> DependencyGraph::GetDependees(const string& s)
 /// </summary>
 /// <param name="s"></param>
 /// <returns></returns>
-const vector<string> DependencyGraph::GetDependents(const string& s)
+vector<string> DependencyGraph::GetDependents(const string& s)
 {
 	vector<string> output = vector<string>();
 	for (auto iter = dependents[s].begin(); iter != dependents[s].end(); ++iter)
@@ -83,9 +84,7 @@ void DependencyGraph::AddDependency(const string& s, const string& t)
 	else
 		return;
 
-	dependents[s].insert(t);
-
-
+	dependees[t].insert(s);
 }
 
 /// <summary>
@@ -95,12 +94,17 @@ void DependencyGraph::AddDependency(const string& s, const string& t)
 /// <param name="t"></param>
 void DependencyGraph::RemoveDependency(const string& s, const string& t)
 {
+	//this is necessary, since while erasing we might
+	//delete the memory address for s or t
+	string s_ = s;
+	string t_ = t;
 	if (dependents[s].count(t) == 0)
 		return;
 
-	dependents[s].erase(t);
+	dependents[s_].erase(t_);
+	dependees[t_].erase(s_);
 
-	dependees[t].erase(s);
+	size--;
 }
 
 /// <summary>
@@ -117,7 +121,7 @@ void DependencyGraph::ReplaceDependents(const string& s, const vector<string>& n
 	}
 
 	// adds the provided new dependents of s
-	for (int i = 0; i < newDependents.size(); i++) 
+	for (int i = 0; i < newDependents.size(); i++)
 		AddDependency(s, newDependents[i]);
 }
 
@@ -130,7 +134,7 @@ void DependencyGraph::ReplaceDependees(const string& s, const vector<string>& ne
 {
 	while (HasDependees(s))
 	{
-		const string& s_ = *dependents[s].begin();
+		const string& s_ = *dependees[s].begin();
 		RemoveDependency(s_, s);
 	}
 

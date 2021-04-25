@@ -32,19 +32,19 @@ Formula::Formula(string formula)
 	int closedParens = 0;
 	int openParens = 0;
 	vector<string> allTokens = GetTokens(formula);
-	for (auto itr = allTokens.begin(); itr != allTokens.end(); ++itr)
+	for (int itr = 0; itr < allTokens.size(); itr++)
 	{
-		Token newToken = Token(*itr);
+		Token newToken = Token(allTokens[itr]);
 		// Validate based on previous token
 		if (newToken.Type == "op")
 		{
-			if (newToken.Content == "(")
+			if (newToken.Content.compare("(") == 0)
 			{
 				openParens++;
 				lastWasOpeningOrOperator = true;
 				if (lastWasClosingNumberOrVar)
 				{
-					throw new exception("( cannot follow a number, variable, or closing parenthesis");
+					throw exception("( cannot follow a number, variable, or closing parenthesis");
 				}
 			}
 			else if (newToken.Content == ")")
@@ -130,32 +130,38 @@ vector<string> Formula::GetTokens(string s) {
 		s[i] = toupper(s[i]);
 
 	for (int i = 0; i < s.size(); i++) {
-		s[i] = toupper(s[i]);
 		//parse as an operator
 		if (s[i] == '(' || s[i] == ')' || s[i] == '*' || s[i] == '/' || s[i] == '+' || s[i] == '-')
-			output.push_back(s.substr(i, i + 1)); continue;
+		{
+			output.push_back(string(1, s[i])); continue;
+		}
 
 		//parse as a variable
 		//65 is ascii for 'A', 90 is ascii for 'Z'
 		if ((int)s[i] >= 65 && (int)s[i] <= 90) {
 			int j = i + 1;
-			while (j < s.size() && (((int)s[i] >= 65 && (int)s[i] <= 90) || ((int)s[j] >= 48 && (int)s[j] <= 57)))
+
+			while (j < s.size() && (((int)s[j] >= 65 && (int)s[j] <= 90) || ((int)s[j] >= 48 && (int)s[j] <= 57)))
 				j++;
 
-			output.push_back(s.substr(i, j));
+			output.push_back(s.substr(i, j - i));
+			i = j - 1;
+			continue;
 		}
 
 		//parse as a double
 		//48 is ascii for '0', 57 is ascii for '9', 46 is ascii for '.'
 		if ((int)s[i] == 46 || ((int)s[i] >= 48 && (int)s[i] <= 57))
 		{
+
 			int j = i + 1;
 			while (j < s.size() && ((int)s[j] == 46 || ((int)s[j] >= 48 && (int)s[j] <= 57)))
 				j++;
 
-			output.push_back(s.substr(i, j));
+			output.push_back(s.substr(i, j - i));
+			i = j - 1;
 		}
-		
+
 		//if s[i] was none of the above, we just ignore it and move on
 	}
 
@@ -165,30 +171,18 @@ vector<string> Formula::GetTokens(string s) {
 /// <summary>
 /// Evaluates this Formula, using the lookup delegate to determine the values of
 /// variables.  When a variable symbol v needs to be determined, it should be looked up
-/// via lookup(normalize(v)). (Here, normalize is the normalizer that was passed to 
-/// the constructor.)
-/// 
-/// For example, if L("x") is 2, L("X") is 4, and N is a method that converts all the letters 
-/// in a string to upper case:
-/// 
-/// new Formula("x+7", N, s => true).Evaluate(L) is 11
-/// new Formula("x+7").Evaluate(L) is 9
-/// 
-/// Given a variable symbol as its parameter, lookup returns the variable's value 
-/// (if it has one) or throws an ArgumentException (otherwise).
+/// via lookup[v].
 /// 
 /// If no undefined variables or divisions by zero are encountered when evaluating 
-/// this Formula, the value is returned.  Otherwise, a FormulaError is returned.  
-/// The Reason property of the FormulaError should have a meaningful explanation.
-///
-/// This method should never throw an exception.
+/// this Formula, the value is returned. Otherwise, an error is THROWN - this is different
+/// than original behavior, since I didn't wanna deal with a formula error class.
 /// </summary>
 double Formula::Evaluate(map<string, double> lookup) {
 	// Init stacks
 	vector<double> values;
 	vector<char> ops;
-	for (auto itr = tokens.begin(); itr != tokens.end(); ++itr) {
-		Token s = *itr;
+	for (int itr = 0; itr < tokens.size(); ++itr) {
+		Token s = tokens[itr];
 		double value;
 		// Evaluate if token is a number or variable
 		if (s.Type != "op") {
@@ -313,17 +307,10 @@ double Formula::applyOperation(double a, double b, char op) {
 }
 
 /// <summary>
-/// Enumerates the normalized versions of all of the variables that occur in this 
-/// formula.  No normalization may appear more than once in the enumeration, even 
-/// if it appears more than once in this Formula.
-/// 
-/// For example, if N is a method that converts all the letters in a string to upper case:
-/// 
-/// new Formula("x+y*z", N, s => true).GetVariables() should enumerate "X", "Y", and "Z"
-/// new Formula("x+X*z", N, s => true).GetVariables() should enumerate "X" and "Z".
-/// new Formula("x+X*z").GetVariables() should enumerate "x", "X", and "z".
+/// Returns a list of the variables that occur in this 
+/// formula. Variables are tokens that are not operations or doubles.
 /// </summary>
-const vector<string> Formula::GetVariables() const {
+vector<string> Formula::GetVariables() {
 	vector<string> result;
 
 	// Loop through tokens, add vars to result
@@ -339,7 +326,7 @@ const vector<string> Formula::GetVariables() const {
 /// <summary>
 /// Returns a string containing no spaces which represents the formula.
 /// </summary>
-const string Formula::ToString() const {
+string Formula::ToString() {
 	string result("=");
 
 	// Loop through tokens, add each to result
@@ -361,6 +348,7 @@ Token::Token(string token) {
 	double output;
 	try {
 		output = stod(token);
+		Content = token;
 		Type = "val";
 		return;
 	}
@@ -375,6 +363,7 @@ Token::Token(string token) {
 	}
 	else if (IsValid(token)) {
 		Type = "var";
+		Content = token;
 	}
 	else {
 		throw new exception(("Token " + token + " is not a valid double, operator, or variable").c_str());
@@ -382,7 +371,9 @@ Token::Token(string token) {
 }
 
 /// <summary>
-/// Returns whether the given token is a valid variable
+/// Returns whether the given token is a valid variable.
+/// For this spreadsheet application, this means it is some number of upper case letters
+/// followed by a sequence of digits.
 /// </summary>
 /// <param name="token"></param>
 /// <returns></returns>
@@ -394,12 +385,12 @@ bool Token::IsValid(string token) {
 		return false;
 
 	int i = 1;
-	while (i < token.size() && (int)token[0] >= 65 && (int)token[0] <= 90)
+	while (i < token.size() && (int)token[i] >= 65 && (int)token[i] <= 90)
 		i++;
 
 	for (; i < token.size(); i++)
 		//48 is ascii for '0', 57 is ascii for '9'
-		if (token[i] < 48 || token[i] > 57)
+		if ((int)token[i] < 48 || (int)token[i] > 57)
 			return false;
 
 	return true;
