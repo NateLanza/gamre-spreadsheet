@@ -18,6 +18,6 @@ void Cell::SetContents(const Formula newContents) {
 	contents = newContents;
 }
 
-const list<string> Cell::GetVariables() const {
-	return contents.
+const vector<string> Cell::GetVariables() const {
+	return contents.GetVariables();
 }

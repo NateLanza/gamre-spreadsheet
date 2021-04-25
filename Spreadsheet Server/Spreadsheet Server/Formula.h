@@ -29,7 +29,7 @@ private:
 public:
 	Formula(const string formula);
 	double Evaluate(map<string, double> lookup);
-	vector<string> GetVariables();
+	const vector<string> GetVariables() const;
 	const string ToString() const;
 };
 

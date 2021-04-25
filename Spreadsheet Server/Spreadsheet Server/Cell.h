@@ -46,7 +46,7 @@ public:
 	/// Gets all other cells referenced by this cell (variables)
 	/// </summary>
 	/// <returns>Variables (cells) in this cell's contents</returns>
-	const list<string> GetVariables() const;
+	const vector<string> GetVariables() const;
 
 	/// <summary>
 	/// Sets the contents of this cell.

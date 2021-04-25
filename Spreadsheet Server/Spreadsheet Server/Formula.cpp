@@ -120,7 +120,7 @@ Formula::Formula(string formula)
 /// </summary>
 /// <param name="s"></param>
 /// <returns></returns>
-vector<string> GetTokens(string s) {
+vector<string> Formula::GetTokens(string s) {
 	//I would LOVE to use the regex that kopta provided last semeseter,
 	//but i think it will be easier and more understandable to just 
 	//use lots of conditionals instead
@@ -323,7 +323,7 @@ double Formula::applyOperation(double a, double b, char op) {
 /// new Formula("x+X*z", N, s => true).GetVariables() should enumerate "X" and "Z".
 /// new Formula("x+X*z").GetVariables() should enumerate "x", "X", and "z".
 /// </summary>
-vector<string> Formula::GetVariables() {
+const vector<string> Formula::GetVariables() const {
 	vector<string> result;
 
 	// Loop through tokens, add vars to result
