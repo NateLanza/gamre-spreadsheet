@@ -154,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h" />
+    <ClInclude Include="Client.h" />
     <ClInclude Include="EditRequest.h" />
     <ClInclude Include="DependencyGraph.h" />
     <ClInclude Include="CellEdit.h" />
