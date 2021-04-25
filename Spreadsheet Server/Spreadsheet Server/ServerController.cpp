@@ -8,9 +8,14 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 
 }
 
+void Assert(bool val, string message) {
+	if (!val)
+		cout << message << endl;
+}
+
 // Lil tester function
 int main() {
-	SpreadsheetState ss = SpreadsheetState();
+	SpreadsheetState ss;
 	// Make sure we can only edit when selected
 	Assert(!ss.EditCell("A1", "3.1", 1), "1 failed");
 	ss.SelectCell("A1", 1);
@@ -53,9 +58,4 @@ int main() {
 
 	// End of test
 	cout << "End of testing" << endl;
-}
-
-void Assert(bool val, string message) {
-	if (!val)
-		cout << message << endl;
 }
