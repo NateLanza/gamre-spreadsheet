@@ -31,22 +31,17 @@ public:
 	/// </summary>
 	/// <param name="cells">Non-empty cells in the spreadsheet</param>
 	/// <param name="edits">Edit history; most recent edit at the top</param>
-	StoredSpreadsheet(set<Cell>& cells, stack<CellEdit>& edits);
+	StoredSpreadsheet(set<Cell> cells, stack<CellEdit> edits);
 };
 
-/// <summary>
-/// Handles storing of spreadsheets to files
-/// </summary>
-class Storage
-{
-public:
+
 	/// <summary>
 	/// Opens a spreadsheet from file if it exists. 
 	/// If not, returns an empty list of cells & empty stack of CellEdits
 	/// </summary>
 	/// <param name="spreadsheetName">Spreadsheet to open (provided by client)</param>
 	/// <returns>Spreadsheet data</returns>
-	StoredSpreadsheet Open(const string spreadsheetName);
+	StoredSpreadsheet Open(string spreadsheetName);
 
 	/// <summary>
 	/// Saves a spreadsheet to file
@@ -60,6 +55,10 @@ public:
 	/// </summary>
 	/// <returns>A list of names of files which can be opened</returns>
 	list<string> GetSavedSpreadsheetNames();
-};
+
+	//friend std::istream& operator >> (istream in, StoredSpreadsheet ss);
+
+	/*friend ostream& operator << (ostream& out, const StoredSpreadsheet ss);
+	friend istream& operator >> (istream& in, StoredSpreadsheet ss);*/
 
 #endif
