@@ -22,6 +22,7 @@ const string Cell::GetContents() const {
 }
 
 void Cell::SetContents(const Formula newContents) {
+	previousContents.push_front(contents);
 	contents = newContents;
 }
 
@@ -29,12 +30,18 @@ const vector<string> Cell::GetVariables() const {
 	return contents.GetVariables();
 }
 
-void Cell::Revert() {
-	Formula temp = contents;
-	contents = previousContents;
-	previousContents = temp;
+bool Cell::Revert() {
+	if (previousContents.empty())
+		return false;
+	contents = previousContents.front();
+	previousContents.pop_front();
+	return true;
 }
 
 const Formula Cell::GetPreviousState() const {
+	return previousContents.front();
+}
+
+const list<Formula> Cell::GetPreviousStates() const {
 	return previousContents;
 }

@@ -81,14 +81,19 @@ public:
 	const Formula GetPreviousState() const;
 
 	/// <summary>
-	/// Reverts this cell to its previous content.
-	/// Cells only store one previous state. On revert, the current state
-	/// and previous state of this cell are swapped. Two reverts in a row 
-	/// does not change the state of the cell
-	/// Caller should check that this does not create a circular dependency
-	/// before reverting
+	/// Gets a list of all prior states of this cell
+	/// Current state is not included
 	/// </summary>
-	void Revert();
+	/// <returns>A list of formulas, with front() being the most recent state of
+	/// the cell and back() being the least recent state</returns>
+	const list<Formula> GetPreviousStates() const;
+
+	/// <summary>
+	/// Reverts this cell to its previous content.
+	/// If no previous content exists, returns false
+	/// </summary>
+	/// <returns>True on successful revert, else false</returns>
+	bool Revert();
 };
 
 #endif
