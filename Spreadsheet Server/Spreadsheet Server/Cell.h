@@ -28,7 +28,7 @@ public:
 	/// </summary>
 	/// <param name="name">Name of cell, should be [A-Z][0-9]</param>
 	/// <param name="contents">Contents of cell. Should be a valid formula, string, or double</param>
-	Cell(const string name, const Formula contents); // contents of cell get set through method
+	Cell(const string name, const Formula& contents); // contents of cell get set through method
 
 	/// <summary>
 	/// Get cell name
