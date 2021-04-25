@@ -1,23 +1,11 @@
+#include "Client.h"
+#include "Connection.h"
+#include <boost/asio.hpp> 
 
 #ifndef SERVER_CONNECTION_H
 #define SERVER_CONNECTION_H
 
 
-
-/// <summary>
-/// Represents a single network connection. This contains the user's socket and its state.
-/// Similar to SocketState from CS3500
-/// </summary>
-struct Connection {
-	boost::asio::ip::tcp::socket socket;				// The socket
-	boost::asio::streambuf read_buffer;					// The data received 
-
-	Connection(boost::asio::io_service& io_service)		// Creates a Connection with io_service, which facilitates ansynchrony. 
-		: socket(io_service), read_buffer() { }
-
-	Connection(boost::asio::io_service& io_service, size_t max_buffer_size) // Creates the connection with an additional buffer_size, if specified.
-		: socket(io_service), read_buffer(max_buffer_size) { }
-};
 
 class ServerConnection 
 {
@@ -27,7 +15,6 @@ class ServerConnection
 	using it_connection = std::list<Connection>::iterator;	// Iterator for each connection
 
 public:
-
 							/*See ServerConnetion.cpp for method definitions and comments*/
 
 	ServerConnection();
@@ -46,7 +33,7 @@ public:
 
 	void listen(uint16_t port);
 
-	void broadcast(std::list<Connection> clients, std::string message);
+	void broadcast(std::list<Client> clients, std::string message);
 };
 
 

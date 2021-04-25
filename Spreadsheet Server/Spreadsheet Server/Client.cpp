@@ -1,9 +1,11 @@
 #include "Client.h"
+#include "Connection.h"
 
 // See client.h for method docs
 
-Client::Client(const int ID, const string username) : username(username), ID(ID) {
-
+Client::Client(const int ID, const string username, const Connection state) 
+				: username(username), ID(ID) {
+	
 }
 
 const int Client::GetID() const {
