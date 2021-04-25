@@ -24,16 +24,15 @@ public:
 	/// <summary>
 	/// Edit history
 	/// </summary>
-	stack<CellEdit> edits;
+	list<CellEdit> edits;
 
 	/// <summary>
 	/// Creates a new StoredSpreadsheet from cells & edits
 	/// </summary>
 	/// <param name="cells">Non-empty cells in the spreadsheet</param>
 	/// <param name="edits">Edit history; most recent edit at the top</param>
-	StoredSpreadsheet(set<Cell> cells, stack<CellEdit> edits);
+	StoredSpreadsheet(set<Cell> cells, list<CellEdit> edits);
 };
-
 
 	/// <summary>
 	/// Opens a spreadsheet from file if it exists. 
@@ -55,10 +54,5 @@ public:
 	/// </summary>
 	/// <returns>A list of names of files which can be opened</returns>
 	list<string> GetSavedSpreadsheetNames();
-
-	//friend std::istream& operator >> (istream in, StoredSpreadsheet ss);
-
-	/*friend ostream& operator << (ostream& out, const StoredSpreadsheet ss);
-	friend istream& operator >> (istream& in, StoredSpreadsheet ss);*/
 
 #endif
