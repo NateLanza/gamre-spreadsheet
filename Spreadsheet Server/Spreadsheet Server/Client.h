@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Connection.h"
 
 using namespace std;
 
@@ -10,13 +11,16 @@ using namespace std;
 /// Represents a client currently connected to the server
 /// </summary>
 class Client {
+
+	friend class ServerConnection;		// Allows ServerConnection to access Client networking data
+
 public:
 	/// <summary>
 	/// Creates a new client
 	/// </summary>
 	/// <param name="ID">Unique ID of the client</param>
 	/// <param name="username">Client username</param>
-	Client(const int ID, const string username);
+	Client(const int ID, const string username, const Connection state);
 
 	/// <summary>
 	/// Gets ID
@@ -40,6 +44,11 @@ private:
 	/// Client username
 	/// </summary>
 	string username;
+
+	/// <summary>
+	/// Client networking information
+	/// </summary>
+	Connection state;
 
 };
 

@@ -155,15 +155,15 @@ void ServerConnection::listen(uint16_t port)
 /// </summary>
 /// <param name="clients"></param>
 /// <param name="message"></param>
-void ServerConnection::broadcast(std::list<Connection> clients, std::string message)
+void ServerConnection::broadcast(std::list<Client> clients, std::string message)
 {
 	//Sends the message to each client in the list
 	auto buffer = std::make_shared<std::string>(message);
-	for (std::list<Connection>::iterator it = clients.begin(); it != clients.end(); ++it) {
-		if (it->socket.is_open())
+	for (std::list<Client>::iterator it = clients.begin(); it != clients.end(); ++it) {
+		if (it->state.socket.is_open())
 		{
 			auto handler = boost::bind(&ServerConnection::mng_send, this, it, buffer, boost::asio::placeholders::error);
-			boost::asio::async_write(it->socket, boost::asio::buffer(*buffer), handler);
+			boost::asio::async_write(it->state.socket, boost::asio::buffer(*buffer), handler);
 		}
 	}
 }
