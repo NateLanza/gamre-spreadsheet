@@ -113,13 +113,12 @@ private:
 	void AddOrUpdateCell(const string cellName, const Formula& content, const bool lock);
 
 	/// <summary>
-	/// Validates that a client has a cell selected
-	/// Uses a read lock
+	/// Checks whether a cell exists in this object's map
+	/// Should be encased in a read or write lock, does not use one
 	/// </summary>
-	/// <param name="cell">Cell name</param>
-	/// <param name="ClientID">ID of client</param>
-	/// <returns>True if the client has the cell selected, else false</returns>
-	bool ClientSelectedCell(const string cell, const int ClientID);
+	/// <param name="cell">Cell to check for</param>
+	/// <returns>True if cell exists, else false</returns>
+	const bool CellExists(const string cell) const;
 
 public:
 	/// <summary>
@@ -139,14 +138,22 @@ public:
 	SpreadsheetState(set<Cell>& cells, list<CellEdit>& edits);
 
 	/// <summary>
-	/// Tries to have a client select a cell. Will fail if another client has
-	/// already selected that cell
+	/// Marks a cell as selected by a client
 	/// Uses a write lock
 	/// </summary>
 	/// <param name="cell">Cell to select</param>
 	/// <param name="ClientID">ID of client</param>
 	/// <returns></returns>
-	bool SelectCell(const string cell, const int ClientID);
+	void SelectCell(const string cell, const int ClientID);
+
+	/// <summary>
+	/// Validates that a client has a cell selected
+	/// Uses a read lock
+	/// </summary>
+	/// <param name="cell">Cell name</param>
+	/// <param name="ClientID">ID of client</param>
+	/// <returns>True if the client has the cell selected, else false</returns>
+	bool ClientSelectedCell(const string cell, const int ClientID);
 
 	/// <summary>
 	/// Edits the content of a cell and adds the edit to the edit stack
@@ -168,7 +175,7 @@ public:
 	/// <param name="cell">Cell to revert</param>
 	/// <param name="ClientID">ID of client</param>
 	/// <returns>True if revert successfull, 
-	/// false if revert would create a circular dependency or client does not have the cell selected</returns>
+	/// false if revert would create a circular dependency</returns>
 	bool RevertCell(const string cell, const int ClientID);
 
 	/// <summary>
