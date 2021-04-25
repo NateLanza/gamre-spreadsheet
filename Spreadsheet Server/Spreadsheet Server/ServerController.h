@@ -16,6 +16,9 @@ public:
 	/// </summary>
 	ServerController();
 
+	// Destructor
+	~ServerController();
+
 	/// <summary>
 	/// Starts the server and starts listening to clients
 	/// </summary>

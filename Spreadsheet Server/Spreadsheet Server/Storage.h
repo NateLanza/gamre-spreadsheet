@@ -31,7 +31,7 @@ public:
 	/// </summary>
 	/// <param name="cells">Non-empty cells in the spreadsheet</param>
 	/// <param name="edits">Edit history; most recent edit at the top</param>
-	StoredSpreadsheet(set<Cell> cells, stack<CellEdit> edits);
+	StoredSpreadsheet(set<Cell>& cells, stack<CellEdit>& edits);
 };
 
 /// <summary>
@@ -46,14 +46,14 @@ public:
 	/// </summary>
 	/// <param name="spreadsheetName">Spreadsheet to open (provided by client)</param>
 	/// <returns>Spreadsheet data</returns>
-	StoredSpreadsheet Open(string spreadsheetName);
+	StoredSpreadsheet Open(const string spreadsheetName);
 
 	/// <summary>
 	/// Saves a spreadsheet to file
 	/// </summary>
 	/// <param name="spreadsheetName">Filename</param>
 	/// <param name="ss">Spreadsheet data</param>
-	void Save(string spreadsheetName, StoredSpreadsheet ss);
+	void Save(const string spreadsheetName, const StoredSpreadsheet& ss);
 
 	/// <summary>
 	/// Gets all spreadsheets on file

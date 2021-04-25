@@ -1,9 +1,10 @@
-// Spreadsheet Server.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
-#include <iostream>
-
+/// <summary>
+/// Entry point for the program
+/// </summary>
+/// <returns>Error code</returns>
 int main()
 {
 
 }
+

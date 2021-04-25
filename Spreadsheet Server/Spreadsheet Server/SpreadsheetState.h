@@ -44,7 +44,10 @@ public:
 	/// Cell set is usually provided by the storage class, retreiving from a file
 	/// </summary>
 	/// <param name="cells">Cells to initialize into spreadsheets</param>
-	SpreadsheetState(set<Cell> cells, stack<CellEdit> edits);
+	SpreadsheetState(set<Cell>& cells, stack<CellEdit>& edits);
+
+	// Destructor
+	~SpreadsheetState();
 
 	/// <summary>
 	/// Edits the content of a cell and adds the edit to the edit stack
@@ -53,14 +56,14 @@ public:
 	/// <param name="content">New content</param>
 	/// <returns>True if cell contents were edited successfully,
 	/// false if content format was invalid or the edit would create a circular dependency</returns>
-	bool EditCell(string name, string content);
+	bool EditCell(const string name, const string content);
 
 	/// <summary>
 	/// Reverts most recent change to a certain cell and adds the revert to the edit stack
 	/// </summary>
 	/// <param name="cell">Cell to revert</param>
 	/// <returns>True if revert successfull, false if revert would create a circular dependency</returns>
-	bool RevertCell(string cell);
+	bool RevertCell(const string cell);
 
 	/// <summary>
 	/// Undoes the last edit to the spreadsheet
