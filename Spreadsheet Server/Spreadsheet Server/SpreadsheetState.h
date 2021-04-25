@@ -9,6 +9,7 @@
 #include "Cell.h"
 #include "CellEdit.h"
 #include "EditRequest.h"
+#include <shared_mutex>
 
 #include "DependencyGraph.h"
 
@@ -39,6 +40,35 @@ private:
 	/// </summary>
 	DependencyGraph dependencies;
 
+	/// <summary>
+	/// Checks cells for circular dependencies.
+	/// Should be used before implementing a cell change, by feeding
+	/// the list of variables for the new cell to toVisit.
+	/// This should be encased in a shared lock
+	/// </summary>
+	/// <param name="visited">Cells visited so far</param>
+	/// <param name="toVisit">Cells to visit</param>
+	/// <returns>True if circular dependency is found, else false</returns>
+	const bool CheckCircularDependencies(unordered_set<string>& visited, const vector<string> toVisit);
+
+	/// <summary>
+	/// Checks whether a hypothetical new cell would create a circular dependency
+	/// Will use a shared lock
+	/// </summary>
+	/// <param name="name">Name of cell</param>
+	/// <param name="f">New formula for cell</param>
+	/// <returns>True if a circular dependency would be created, else false</returns>
+	const bool CheckNewCellCircular(const string name, const Formula& f);
+
+	/// <summary>
+	/// Used to lock critical sections of code when the spreadsheet is being read/written
+	/// A shared mutex can allow multiple reads simultaneously while forcing writes to
+	/// occur sequentially with reads and other writes.
+	/// Read operations should use lock_shared and unlock_shared
+	/// Write operations should use lock and unlock
+	/// </summary>
+	shared_mutex threadkey;
+
 public:
 	/// <summary>
 	/// Creates a new, blank spreadsheet
@@ -54,6 +84,7 @@ public:
 
 	/// <summary>
 	/// Edits the content of a cell and adds the edit to the edit stack
+	/// Will use a shared and exclusive lock. Do NOT encase in any locks
 	/// </summary>
 	/// <param name="name">Cell name</param>
 	/// <param name="content">New content</param>
@@ -85,6 +116,13 @@ public:
 	/// </summary>
 	/// <returns>Cells, as a list</returns>
 	const list<Cell> GetPopulatedCells() const;
+
+	/// <summary>
+	/// Checks whether a cell has content
+	/// </summary>
+	/// <param name="cell">Cell to check for content</param>
+	/// <returns>True if cell is not empty (has content), else false</returns>
+	const bool CellNotEmpty(const string cell) const;
 
 };
 

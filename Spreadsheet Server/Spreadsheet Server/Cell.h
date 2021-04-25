@@ -22,6 +22,11 @@ private:
 	/// </summary>
 	Formula contents;
 
+	/// <summary>
+	/// Previous contents of this cell
+	/// </summary>
+	Formula previousContents;
+
 public:
 	/// <summary>
 	/// Create a new cell
@@ -54,6 +59,22 @@ public:
 	/// </summary>
 	/// <param name="newContents">New contents of cell</param>
 	void SetContents(const Formula newContents);
+
+	/// <summary>
+	/// Gets the state of this cell prior to the most recent edit
+	/// </summary>
+	/// <returns></returns>
+	Formula GetPreviousState() const;
+
+	/// <summary>
+	/// Reverts this cell to its previous content.
+	/// Cells only store one previous state. On revert, the current state
+	/// and previous state of this cell are swapped. Two reverts in a row 
+	/// does not change the state of the cell
+	/// Caller should check that this does not create a circular dependency
+	/// before reverting
+	/// </summary>
+	void Revert();
 };
 
 #endif
