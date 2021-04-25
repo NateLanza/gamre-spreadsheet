@@ -44,7 +44,7 @@ private:
 	/// Checks cells for circular dependencies.
 	/// Should be used before implementing a cell change, by feeding
 	/// the list of variables for the new cell to toVisit.
-	/// This should be encased in a shared lock
+	/// This should be encased in a read lock
 	/// </summary>
 	/// <param name="visited">Cells visited so far</param>
 	/// <param name="toVisit">Cells to visit</param>
@@ -53,12 +53,32 @@ private:
 
 	/// <summary>
 	/// Checks whether a hypothetical new cell would create a circular dependency
-	/// Will use a shared lock
+	/// Can use a read lock, or not if already encased in one
 	/// </summary>
 	/// <param name="name">Name of cell</param>
 	/// <param name="f">New formula for cell</param>
+	/// <param name="readLock">Whether to use an internal read lock. Set to false if encased in a lock</param>
 	/// <returns>True if a circular dependency would be created, else false</returns>
-	const bool CheckNewCellCircular(const string name, const Formula& f);
+	const bool CheckNewCellCircular(const string name, Formula& f, const bool readLock);
+
+	/// <summary>
+	/// Locks a critical section for writing
+	/// For use when writing any part of this object
+	/// </summary>
+	void WriteLock();
+	/// <summary>
+	/// Locks a critical section for reading
+	/// For use when reading any part of this object
+	/// </summary>
+	void ReadLock();
+	/// <summary>
+	/// Unlocks this object for writing. For use at the end of critical sections
+	/// </summary>
+	void WriteUnlock();
+	/// <summary>
+	/// Unlocks this object for reading. For use at the end of any critical sections
+	/// </summary>
+	void ReadUnlock();
 
 	/// <summary>
 	/// Used to lock critical sections of code when the spreadsheet is being read/written
@@ -69,6 +89,14 @@ private:
 	/// </summary>
 	shared_mutex threadkey;
 
+	/// <summary>
+	/// Removes a cell from the cell list if it is empty and
+	/// has no prior state to revert to
+	/// Uses a write lock
+	/// </summary>
+	/// <param name="cell">Cell to maybe remove</param>
+	void RemoveCellIfEmpty(const string cell);
+
 public:
 	/// <summary>
 	/// Creates a new, blank spreadsheet
@@ -78,13 +106,14 @@ public:
 	/// <summary>
 	/// Creates a spreadsheet from a set of cells
 	/// Cell set is usually provided by the storage class, retreiving from a file
+	/// Uses a write lock
 	/// </summary>
 	/// <param name="cells">Cells to initialize into spreadsheets</param>
 	SpreadsheetState(set<Cell>& cells, stack<CellEdit>& edits);
 
 	/// <summary>
 	/// Edits the content of a cell and adds the edit to the edit stack
-	/// Will use a shared and exclusive lock. Do NOT encase in any locks
+	/// Will use a write lock. Do NOT encase in any locks
 	/// </summary>
 	/// <param name="name">Cell name</param>
 	/// <param name="content">New content</param>
@@ -94,6 +123,7 @@ public:
 
 	/// <summary>
 	/// Reverts most recent change to a certain cell and adds the revert to the edit stack
+	/// Will use a write lock. Do NOT encase in any locks
 	/// </summary>
 	/// <param name="cell">Cell to revert</param>
 	/// <returns>True if revert successfull, false if revert would create a circular dependency</returns>
@@ -101,28 +131,32 @@ public:
 
 	/// <summary>
 	/// Undoes the last edit to the spreadsheet
+	/// Will use a write lock. Do NOT encase in any locks
 	/// </summary>
 	/// <returns>True if edit undone, false if edit would create a circular dependency</returns>
 	bool UndoLastEdit();
 
 	/// <summary>
 	/// Returns all edits made to this spreadsheet as a stack, with most recent at the top
+	/// Will use a read lock
 	/// </summary>
 	/// <returns>Stack of edits</returns>
-	const stack<CellEdit> GetEditHistory() const;
+	stack<CellEdit> GetEditHistory();
 
 	/// <summary>
 	/// Gets all non-empty cells in this spreadsheet
+	/// Will use a read lock
 	/// </summary>
 	/// <returns>Cells, as a list</returns>
-	const list<Cell> GetPopulatedCells() const;
+	list<Cell> GetPopulatedCells();
 
 	/// <summary>
 	/// Checks whether a cell has content
+	/// Will use a read lock
 	/// </summary>
 	/// <param name="cell">Cell to check for content</param>
 	/// <returns>True if cell is not empty (has content), else false</returns>
-	const bool CellNotEmpty(const string cell) const;
+	const bool CellNotEmpty(const string cell);
 
 };
 

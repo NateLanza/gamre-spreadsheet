@@ -28,12 +28,26 @@ private:
 	Formula previousContents;
 
 public:
+
 	/// <summary>
-	/// Create a new cell
+	/// Default constructor- throws error
+	/// </summary>
+	Cell();
+
+	/// <summary>
+	/// Create a new cell with no prior state
 	/// </summary>
 	/// <param name="name">Name of cell, should be [A-Z][0-9]</param>
 	/// <param name="contents">Contents of cell. Should be a valid formula, string, or double</param>
 	Cell(const string name, const Formula contents); // contents of cell get set through method
+
+	/// <summary>
+	/// Creates a new cell with a prior state
+	/// </summary>
+	/// <param name="name">Cell name, should be [A-Z][0-9]</param>
+	/// <param name="contents">Contents of cell. Should be a valid formula, string, or double</param>
+	/// <param name="priorContents">Prior contents of cell before last edit. Should be a valid formula, string, or double</param>
+	Cell(const string name, const Formula contents, const Formula priorContents);
 
 	/// <summary>
 	/// Get cell name
@@ -64,7 +78,7 @@ public:
 	/// Gets the state of this cell prior to the most recent edit
 	/// </summary>
 	/// <returns></returns>
-	Formula GetPreviousState() const;
+	const Formula GetPreviousState() const;
 
 	/// <summary>
 	/// Reverts this cell to its previous content.
