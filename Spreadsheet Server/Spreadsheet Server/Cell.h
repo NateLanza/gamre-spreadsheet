@@ -25,7 +25,7 @@ private:
 	/// <summary>
 	/// Previous contents of this cell
 	/// </summary>
-	Formula previousContents;
+	list<Formula> previousContents;
 
 public:
 

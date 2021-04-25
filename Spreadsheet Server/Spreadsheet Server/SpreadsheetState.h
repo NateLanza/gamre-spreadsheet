@@ -38,6 +38,11 @@ private:
 	DependencyGraph dependencies;
 
 	/// <summary>
+	/// Maps clients IDs to the cell they've selected
+	/// </summary>
+	unordered_map<int, string> selections;
+
+	/// <summary>
 	/// Checks cells for circular dependencies.
 	/// Should be used before implementing a cell change, by feeding
 	/// the list of variables for the new cell to toVisit.
@@ -107,6 +112,15 @@ private:
 	/// <param name="content">Cell content</param>
 	void AddOrUpdateCell(const string cellName, const Formula& content, const bool lock);
 
+	/// <summary>
+	/// Validates that a client has a cell selected
+	/// Uses a read lock
+	/// </summary>
+	/// <param name="cell">Cell name</param>
+	/// <param name="ClientID">ID of client</param>
+	/// <returns>True if the client has the cell selected, else false</returns>
+	bool ClientSelectedCell(const string cell, const int ClientID);
+
 public:
 	/// <summary>
 	/// Creates a new, blank spreadsheet
@@ -125,22 +139,37 @@ public:
 	SpreadsheetState(set<Cell>& cells, list<CellEdit>& edits);
 
 	/// <summary>
+	/// Tries to have a client select a cell. Will fail if another client has
+	/// already selected that cell
+	/// Uses a write lock
+	/// </summary>
+	/// <param name="cell">Cell to select</param>
+	/// <param name="ClientID">ID of client</param>
+	/// <returns></returns>
+	bool SelectCell(const string cell, const int ClientID);
+
+	/// <summary>
 	/// Edits the content of a cell and adds the edit to the edit stack
 	/// Will use a write lock. Do NOT encase in any locks
 	/// </summary>
 	/// <param name="name">Cell name</param>
 	/// <param name="content">New content</param>
+	/// <param name="ClientID">ID of client</param>
 	/// <returns>True if cell contents were edited successfully,
-	/// false if content format was invalid or the edit would create a circular dependency</returns>
-	bool EditCell(const string name, const string content);
+	/// false if content format was invalid,
+	///  the edit would create a circular dependency,
+	/// or the client does not currently have that cell selected</returns>
+	bool EditCell(const string name, const string content, const int ClientID);
 
 	/// <summary>
 	/// Reverts most recent change to a certain cell and adds the revert to the edit stack
 	/// Will use a write lock. Do NOT encase in any locks
 	/// </summary>
 	/// <param name="cell">Cell to revert</param>
-	/// <returns>True if revert successfull, false if revert would create a circular dependency</returns>
-	bool RevertCell(const string cell);
+	/// <param name="ClientID">ID of client</param>
+	/// <returns>True if revert successfull, 
+	/// false if revert would create a circular dependency or client does not have the cell selected</returns>
+	bool RevertCell(const string cell, const int ClientID);
 
 	/// <summary>
 	/// Undoes the last edit to the spreadsheet

@@ -5,11 +5,11 @@
 /// <summary>
 /// Default constructor. Initializes all fields to empty values
 /// </summary>
-SpreadsheetState::SpreadsheetState(): cells(), edits(), dependencies()
+SpreadsheetState::SpreadsheetState(): cells(), edits(), dependencies(), selections(), threadkey()
 {
 }
 
-SpreadsheetState::SpreadsheetState(set<Cell>& cells, list<CellEdit>& edits) : cells(), edits(edits), dependencies(), threadkey() {
+SpreadsheetState::SpreadsheetState(set<Cell>& cells, list<CellEdit>& edits) : cells(), edits(edits), dependencies(), threadkey(), selections() {
 	// Edits are set by the initializer list, now we just need to map dependencies & cells
 	WriteLock();
 	for (Cell cell : cells) {
@@ -27,11 +27,42 @@ SpreadsheetState::~SpreadsheetState() {
 	cells.clear();
 	while (!edits.empty())
 		edits.pop_front();
-	delete &dependencies;
+	selections.clear();
+	// Destructors are called automatically
 }
 
-bool SpreadsheetState::EditCell(const string name, const string content) {
+bool SpreadsheetState::SelectCell(const string cell, const int ClientID) {
 	WriteLock();
+	// Check current selections
+	for (pair<int, string> selection : selections) {
+		// The cell has already been selected
+		if (selection.second == cell) {
+			bool result = selection.first == ClientID; // True if client has this selected, else false
+			WriteUnlock();
+			return result;
+		}
+	}
+
+	// Cell hasn't been selected, select it
+	selections[ClientID] = cell;
+}
+
+bool SpreadsheetState::ClientSelectedCell(const string cell, const int ClientID) {
+	ReadLock();
+	bool result = selections.count(ClientID) == 1 && selections[ClientID] == cell;
+	ReadUnlock();
+	return result;
+}
+
+bool SpreadsheetState::EditCell(const string name, const string content, const int ClientID) {
+	WriteLock();
+	// Make sure the client has this cell selected
+	if (!ClientSelectedCell(name, ClientID)) {
+		WriteUnlock();
+		return false;
+	}
+
+
 	// Check whether the new content is valid
 	try {
 		// This will throw on an invalid format
@@ -93,8 +124,13 @@ const bool SpreadsheetState::CheckCircularDependencies(unordered_set<string>& vi
 	return false;
 }
 
-bool SpreadsheetState::RevertCell(const string cell) {
+bool SpreadsheetState::RevertCell(const string cell, const int ClientID) {
 	WriteLock();
+	// Make sure client has the cell selected
+	if (!ClientSelectedCell(cell, ClientID)) {
+		WriteUnlock();
+		return false;
+	}
 
 	// Get cell's old state
 	Formula oldState = cells[cell].GetPreviousState();
@@ -157,6 +193,7 @@ list<Cell> SpreadsheetState::GetPopulatedCells() {
 	list<Cell> result = list<Cell>();
 	ReadLock();
 	// Put all cells in list
+	// TODO: Remove cell if empty
 	for (pair<string, Cell> cellEntry : cells)
 		result.push_back(cellEntry.second);
 	ReadUnlock();
