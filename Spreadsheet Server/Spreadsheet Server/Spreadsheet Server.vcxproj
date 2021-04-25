@@ -159,6 +159,7 @@
     <ClInclude Include="DependencyGraph.h" />
     <ClInclude Include="CellEdit.h" />
     <ClInclude Include="Formula.h" />
+    <ClInclude Include="ServerConnection.h" />
     <ClInclude Include="ServerController.h" />
     <ClInclude Include="SpreadsheetState.h" />
     <ClInclude Include="Storage.h" />
