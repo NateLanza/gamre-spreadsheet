@@ -25,15 +25,29 @@ private:
 	/// <summary>
 	/// Previous contents of this cell
 	/// </summary>
-	Formula previousContents;
+	list<Formula> previousContents;
 
 public:
+
 	/// <summary>
-	/// Create a new cell
+	/// Default constructor- throws error
+	/// </summary>
+	Cell();
+
+	/// <summary>
+	/// Create a new cell with no prior state
 	/// </summary>
 	/// <param name="name">Name of cell, should be [A-Z][0-9]</param>
 	/// <param name="contents">Contents of cell. Should be a valid formula, string, or double</param>
 	Cell(const string name, const Formula contents); // contents of cell get set through method
+
+	/// <summary>
+	/// Creates a new cell with a prior state
+	/// </summary>
+	/// <param name="name">Cell name, should be [A-Z][0-9]</param>
+	/// <param name="contents">Contents of cell. Should be a valid formula, string, or double</param>
+	/// <param name="priorContents">Prior contents of cell before last edit. Should be a valid formula, string, or double</param>
+	Cell(const string name, const Formula contents, const Formula priorContents);
 
 	/// <summary>
 	/// Get cell name
@@ -64,17 +78,22 @@ public:
 	/// Gets the state of this cell prior to the most recent edit
 	/// </summary>
 	/// <returns></returns>
-	Formula GetPreviousState() const;
+	const Formula GetPreviousState() const;
+
+	/// <summary>
+	/// Gets a list of all prior states of this cell
+	/// Current state is not included
+	/// </summary>
+	/// <returns>A list of formulas, with front() being the most recent state of
+	/// the cell and back() being the least recent state</returns>
+	const list<Formula> GetPreviousStates() const;
 
 	/// <summary>
 	/// Reverts this cell to its previous content.
-	/// Cells only store one previous state. On revert, the current state
-	/// and previous state of this cell are swapped. Two reverts in a row 
-	/// does not change the state of the cell
-	/// Caller should check that this does not create a circular dependency
-	/// before reverting
+	/// If no previous content exists, returns false
 	/// </summary>
-	void Revert();
+	/// <returns>True on successful revert, else false</returns>
+	bool Revert();
 };
 
 #endif

@@ -2,9 +2,6 @@
 #include <list>
 #include <unordered_map>
 #include <set>
-#include <stack>
-#include <windows.data.json.h>
-#include <windows.networking.sockets.h>
 
 #include "Cell.h"
 #include "CellEdit.h"
@@ -33,7 +30,7 @@ private:
 	/// <summary>
 	/// All edits made to this spreadsheet, in order of recency.
 	/// </summary>
-	stack<CellEdit> edits;
+	list<CellEdit> edits;
 
 	/// <summary>
 	/// Stores all dependencies in this SpreadsheetState
@@ -41,10 +38,15 @@ private:
 	DependencyGraph dependencies;
 
 	/// <summary>
+	/// Maps clients IDs to the cell they've selected
+	/// </summary>
+	unordered_map<int, string> selections;
+
+	/// <summary>
 	/// Checks cells for circular dependencies.
 	/// Should be used before implementing a cell change, by feeding
 	/// the list of variables for the new cell to toVisit.
-	/// This should be encased in a shared lock
+	/// This should be encased in a read lock
 	/// </summary>
 	/// <param name="visited">Cells visited so far</param>
 	/// <param name="toVisit">Cells to visit</param>
@@ -53,12 +55,32 @@ private:
 
 	/// <summary>
 	/// Checks whether a hypothetical new cell would create a circular dependency
-	/// Will use a shared lock
+	/// Can use a read lock, or not if already encased in one
 	/// </summary>
 	/// <param name="name">Name of cell</param>
 	/// <param name="f">New formula for cell</param>
+	/// <param name="readLock">Whether to use an internal read lock. Set to false if encased in a lock</param>
 	/// <returns>True if a circular dependency would be created, else false</returns>
-	const bool CheckNewCellCircular(const string name, const Formula& f);
+	const bool CheckNewCellCircular(const string name, Formula& f, const bool readLock);
+
+	/// <summary>
+	/// Locks a critical section for writing
+	/// For use when writing any part of this object
+	/// </summary>
+	void WriteLock();
+	/// <summary>
+	/// Locks a critical section for reading
+	/// For use when reading any part of this object
+	/// </summary>
+	void ReadLock();
+	/// <summary>
+	/// Unlocks this object for writing. For use at the end of critical sections
+	/// </summary>
+	void WriteUnlock();
+	/// <summary>
+	/// Unlocks this object for reading. For use at the end of any critical sections
+	/// </summary>
+	void ReadUnlock();
 
 	/// <summary>
 	/// Used to lock critical sections of code when the spreadsheet is being read/written
@@ -69,60 +91,114 @@ private:
 	/// </summary>
 	shared_mutex threadkey;
 
+	/// <summary>
+	/// Removes a cell from the cell list if it is empty and
+	/// has no prior state to revert to
+	/// Uses a write lock if lock = true. Otherwise, should be encapsulated in a write lock
+	/// </summary>
+	/// <param name="lock">Whether to use a write lock</param>
+	/// <param name="cell">Cell to maybe remove</param>
+	void RemoveCellIfEmpty(const string cell, const bool lock);
+
+	/// <summary>
+	/// Adds a cell to cells if it doesn't already exist,
+	/// or updates the existing entry if it does.
+	/// Once finished, calls RemoveCellIfEmpty on the cell
+	/// to remove it if the update emptied it.
+	/// Uses a write lock if lock == true. Otherwise, should be encapsulated in a write lock
+	/// </summary>
+	/// <param name="lock">Whether to use a write lock</param>
+	/// <param name="cellName">Name of cell</param>
+	/// <param name="content">Cell content</param>
+	void AddOrUpdateCell(const string cellName, const Formula& content, const bool lock);
+
+	/// <summary>
+	/// Validates that a client has a cell selected
+	/// Uses a read lock
+	/// </summary>
+	/// <param name="cell">Cell name</param>
+	/// <param name="ClientID">ID of client</param>
+	/// <returns>True if the client has the cell selected, else false</returns>
+	bool ClientSelectedCell(const string cell, const int ClientID);
+
 public:
 	/// <summary>
 	/// Creates a new, blank spreadsheet
 	/// </summary>
 	SpreadsheetState();
 
+	// Destructor
+	~SpreadsheetState();
+
 	/// <summary>
 	/// Creates a spreadsheet from a set of cells
 	/// Cell set is usually provided by the storage class, retreiving from a file
+	/// Uses a write lock
 	/// </summary>
 	/// <param name="cells">Cells to initialize into spreadsheets</param>
-	SpreadsheetState(set<Cell>& cells, stack<CellEdit>& edits);
+	SpreadsheetState(set<Cell>& cells, list<CellEdit>& edits);
+
+	/// <summary>
+	/// Tries to have a client select a cell. Will fail if another client has
+	/// already selected that cell
+	/// Uses a write lock
+	/// </summary>
+	/// <param name="cell">Cell to select</param>
+	/// <param name="ClientID">ID of client</param>
+	/// <returns></returns>
+	bool SelectCell(const string cell, const int ClientID);
 
 	/// <summary>
 	/// Edits the content of a cell and adds the edit to the edit stack
-	/// Will use a shared and exclusive lock. Do NOT encase in any locks
+	/// Will use a write lock. Do NOT encase in any locks
 	/// </summary>
 	/// <param name="name">Cell name</param>
 	/// <param name="content">New content</param>
+	/// <param name="ClientID">ID of client</param>
 	/// <returns>True if cell contents were edited successfully,
-	/// false if content format was invalid or the edit would create a circular dependency</returns>
-	bool EditCell(const string name, const string content);
+	/// false if content format was invalid,
+	///  the edit would create a circular dependency,
+	/// or the client does not currently have that cell selected</returns>
+	bool EditCell(const string name, const string content, const int ClientID);
 
 	/// <summary>
 	/// Reverts most recent change to a certain cell and adds the revert to the edit stack
+	/// Will use a write lock. Do NOT encase in any locks
 	/// </summary>
 	/// <param name="cell">Cell to revert</param>
-	/// <returns>True if revert successfull, false if revert would create a circular dependency</returns>
-	bool RevertCell(const string cell);
+	/// <param name="ClientID">ID of client</param>
+	/// <returns>True if revert successfull, 
+	/// false if revert would create a circular dependency or client does not have the cell selected</returns>
+	bool RevertCell(const string cell, const int ClientID);
 
 	/// <summary>
 	/// Undoes the last edit to the spreadsheet
+	/// Will use a write lock. Do NOT encase in any locks
 	/// </summary>
 	/// <returns>True if edit undone, false if edit would create a circular dependency</returns>
 	bool UndoLastEdit();
 
 	/// <summary>
 	/// Returns all edits made to this spreadsheet as a stack, with most recent at the top
+	/// Will use a read lock
 	/// </summary>
 	/// <returns>Stack of edits</returns>
-	const stack<CellEdit> GetEditHistory() const;
+	list<CellEdit> GetEditHistory();
 
 	/// <summary>
 	/// Gets all non-empty cells in this spreadsheet
+	/// Will use a read lock
 	/// </summary>
 	/// <returns>Cells, as a list</returns>
-	const list<Cell> GetPopulatedCells() const;
+	list<Cell> GetPopulatedCells();
 
 	/// <summary>
 	/// Checks whether a cell has content
+	/// Will use a read lock
 	/// </summary>
 	/// <param name="cell">Cell to check for content</param>
 	/// <returns>True if cell is not empty (has content), else false</returns>
-	const bool CellNotEmpty(const string cell) const;
+	const bool CellNotEmpty(const string cell);
 
 };
 

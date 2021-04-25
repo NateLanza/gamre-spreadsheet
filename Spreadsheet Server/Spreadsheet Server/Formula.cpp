@@ -310,7 +310,7 @@ double Formula::applyOperation(double a, double b, char op) {
 /// Returns a list of the variables that occur in this 
 /// formula. Variables are tokens that are not operations or doubles.
 /// </summary>
-vector<string> Formula::GetVariables() {
+const vector<string> Formula::GetVariables() const {
 	vector<string> result;
 
 	// Loop through tokens, add vars to result
@@ -326,7 +326,7 @@ vector<string> Formula::GetVariables() {
 /// <summary>
 /// Returns a string containing no spaces which represents the formula.
 /// </summary>
-string Formula::ToString() {
+string Formula::ToString() const {
 	string result("=");
 
 	// Loop through tokens, add each to result

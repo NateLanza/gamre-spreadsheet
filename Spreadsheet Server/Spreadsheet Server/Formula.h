@@ -29,8 +29,8 @@ private:
 public:
 	Formula(const string formula);
 	double Evaluate(map<string, double> lookup);
-	vector<string> GetVariables();
-	string ToString();
+	const vector<string> GetVariables() const;
+	string ToString() const;
 };
 
 #endif

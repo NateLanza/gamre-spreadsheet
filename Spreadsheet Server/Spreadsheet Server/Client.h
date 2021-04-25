@@ -18,14 +18,11 @@ public:
 	/// <param name="username">Client username</param>
 	Client(const int ID, const string username);
 
-	// Destructor
-	~Client();
-
 	/// <summary>
 	/// Gets ID
 	/// </summary>
 	/// <returns>ID of this client</returns>
-	int GetID();
+	const int GetID() const;
 
 	/// <summary>
 	/// Gets username
