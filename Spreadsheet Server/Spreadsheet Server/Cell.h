@@ -28,7 +28,7 @@ public:
 	/// </summary>
 	/// <param name="name">Name of cell, should be [A-Z][0-9]</param>
 	/// <param name="contents">Contents of cell. Should be a valid formula, string, or double</param>
-	Cell(string name, string contents); // contents of cell get set through method
+	Cell(const string name, const Formula contents); // contents of cell get set through method
 
 	/// <summary>
 	/// Get cell name
@@ -47,7 +47,7 @@ public:
 	/// Throws an exception with an appropriate message if there is an issue with the new contents
 	/// </summary>
 	/// <param name="newContents">New contents of cell</param>
-	void SetContents(const string newContents);
+	void SetContents(const Formula newContents);
 };
 
 #endif
