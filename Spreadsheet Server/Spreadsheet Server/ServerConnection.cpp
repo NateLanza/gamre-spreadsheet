@@ -15,7 +15,6 @@ struct Connection {
 	boost::asio::ip::tcp::socket socket;				// The socket
 	boost::asio::streambuf read_buffer;					// The data received 
 
-	EditRequest *s_request = new EditRequest;
 	Connection(boost::asio::io_service& io_service)		// Creates a Connection with io_service, which facilitates ansynchrony. 
 		: socket(io_service), read_buffer() { }
 
@@ -29,21 +28,13 @@ struct Connection {
 /// </summary>
 class ServerConnection {
 
-	
+
 	boost::asio::io_service s_ioservice;					// Boost class that supports asynchronous functions
 	boost::asio::ip::tcp::acceptor s_acceptor;				// Boost class that accepts clients
 	std::list<Connection> connections;						// List of Connected clients 
 	using it_connection = std::list<Connection>::iterator;	// Iterator for each connection
 
 public:
-
-	//This is how you send a message to every client
-			/*auto buff = std::make_shared<std::string>("Message sent to all!\r\n\r\n");
-			for (std::list<Connection>::iterator it = s_connections.begin(); it != s_connections.end(); ++it) {
-				if (it->socket.is_open()) {
-					boost::asio::write(it->socket, boost::asio::buffer(*buff));
-				}
-			}*/
 
 	// Creates a new server connection, initializes the members of the Connection
 	ServerConnection() : s_ioservice(), s_acceptor(s_ioservice), connections() { }
@@ -63,16 +54,16 @@ public:
 	/// <param name="err"></param>
 	void mng_send(it_connection state, std::shared_ptr<std::string> msg_buffer, boost::system::error_code const& error) {
 		// Reports an error message, if present
-		if (error) 
+		if (error)
 		{
 			std::cout << error.message() << std::endl;
 			connections.erase(state);
-			
+
 		}
 		else {
 			std::cout << "Finished sending message\n";
 			//TO:DO ! SEND DATA!!
-			if (state->socket.is_open()) 
+			if (state->socket.is_open())
 			{
 			}
 		}
@@ -109,8 +100,8 @@ public:
 
 		// Starts asynchronous read again
 		else
-			async_rcv(state);
-		
+			async_receive(state);
+
 	}
 
 	/// <summary>
@@ -118,23 +109,26 @@ public:
 	/// </summary>
 	/// <param name="state"></param>
 	/// <param name="err"></param>
-	void mng_accept(it_connection state, boost::system::error_code const& error) {
+	void mng_accept(it_connection state, boost::system::error_code const& error)
+	{
 		// Reports an error, if present
-		if (error) {
+		if (error)
+		{
 			std::cout << error.message() << std::endl;
 			connections.erase(state);
-			
+
 		}
 		// On receiving a connection, starts ansyncronous read process with the connected socket. 
-		else {
+		else
+		{
 
 			//TODO: COMPLETE THE PROCESS AS DESCRIBED IN THE PROTOCOL, DO NOT SEND A GREETING
 			std::cout << "Received Connection" << std::endl;
 
 			auto buffer = std::make_shared<std::string>("Hello World! \n");
-			auto handler = boost::bind(&ServerConnection::mng_accept, this, state, buffer, boost::asio::placeholders::error);
+			auto handler = boost::bind(&ServerConnection::mng_send, this, state, buffer, boost::asio::placeholders::error);
 			boost::asio::async_write(state->socket, boost::asio::buffer(*buffer), handler);
-			async_rcv(state);
+			async_receive(state);
 		}
 		// Begin accepting more clients
 		begin_accept();
@@ -144,22 +138,19 @@ public:
 	/// Starts asynchronous process of reading data
 	/// </summary>
 	/// <param name="state">The state of the connection</param>
-	void async_rcv(it_connection state) {
+	void async_receive(it_connection state)
+	{
 		auto handler = boost::bind(&ServerConnection::mng_receive, this, state, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred);
 		boost::asio::async_read_until(state->socket, state->read_buffer, "\n", handler);
-	}			
+	}
 
 	/// <summary>
 	/// Begins accepting new clients
 	/// </summary>
-	void begin_accept() {
+	void begin_accept()
+	{
 		auto state = connections.emplace(connections.begin(), s_ioservice);
 		auto handler = boost::bind(&ServerConnection::mng_accept, this, state, boost::asio::placeholders::error);
-
-		//TODO: FIGURE WHAT TO SET NAME AND ID TO
-		EditRequest request;
-		request.SetName("");
-		state->s_request = &request;
 
 		s_acceptor.async_accept(state->socket, handler);
 	}
@@ -168,7 +159,8 @@ public:
 	/// Listens for connections on the specified ports. Creates an endpoint used to open an acceptor and begin listening
 	/// </summary>
 	/// <param name="port">Specified port to listen</param>
-	void listen(uint16_t port) {
+	void listen(uint16_t port)
+	{
 		auto endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port);
 		s_acceptor.open(endpoint.protocol());
 		s_acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
@@ -177,8 +169,19 @@ public:
 		begin_accept();
 	}
 
-	//void broadcast(std::list<>)
-	
+	void broadcast(std::list<Connection> clients, std::string message)
+	{		
+		//Sends the message to each client in the list
+		auto buffer = std::make_shared<std::string>(message);
+		for (std::list<Connection>::iterator it = clients.begin(); it != clients.end(); ++it) {
+			if (it->socket.is_open())
+			{
+				auto handler = boost::bind(&ServerConnection::mng_send, this, it, buffer, boost::asio::placeholders::error);
+				boost::asio::async_write(it->socket, boost::asio::buffer(*buffer), handler);
+			}
+		}
+	}
+
 };
 
 /// <summary>
