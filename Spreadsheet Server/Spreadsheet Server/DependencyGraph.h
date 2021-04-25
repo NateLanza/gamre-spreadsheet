@@ -20,13 +20,13 @@ public:
 	DependencyGraph();
 
 	// indexer not included
-	int Size() const;
+	const int Size() const;
 
-	bool HasDependents(const string& s);
-	bool HasDependees(const string& s);
+	const bool HasDependents(const string& s);
+	const bool HasDependees(const string& s);
 
-	vector<string> GetDependees(const string& s);
-	vector<string> GetDependents(const string& s);
+	const vector<string> GetDependees(const string& s);
+	const vector<string> GetDependents(const string& s);
 
 	void AddDependency(const string& s, const string& t);
 	void RemoveDependency(const string& s, const string& t);

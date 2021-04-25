@@ -13,7 +13,7 @@ DependencyGraph::DependencyGraph() : size(0), dependees(), dependents()
 /// 
 /// </summary>
 /// <returns></returns>
-int DependencyGraph::Size() const
+const int DependencyGraph::Size() const
 {
 	return size;
 }
@@ -23,7 +23,7 @@ int DependencyGraph::Size() const
 /// </summary>
 /// <param name="s"></param>
 /// <returns></returns>
-bool DependencyGraph::HasDependents(const string& s)
+const bool DependencyGraph::HasDependents(const string& s)
 {
 	return dependents[s].size() > 0;
 }
@@ -33,7 +33,7 @@ bool DependencyGraph::HasDependents(const string& s)
 /// </summary>
 /// <param name="s"></param>
 /// <returns></returns>
-bool DependencyGraph::HasDependees(const string& s)
+const bool DependencyGraph::HasDependees(const string& s)
 {
 	return dependees[s].size() > 0;
 }
@@ -43,7 +43,7 @@ bool DependencyGraph::HasDependees(const string& s)
 /// </summary>
 /// <param name="s"></param>
 /// <returns></returns>
-vector<string> DependencyGraph::GetDependees(const string& s)
+const vector<string> DependencyGraph::GetDependees(const string& s)
 {
 	vector<string> output = vector<string>();
 	for (auto iter = dependees[s].begin(); iter != dependees[s].end(); ++iter)
@@ -58,7 +58,7 @@ vector<string> DependencyGraph::GetDependees(const string& s)
 /// </summary>
 /// <param name="s"></param>
 /// <returns></returns>
-vector<string> DependencyGraph::GetDependents(const string& s)
+const vector<string> DependencyGraph::GetDependents(const string& s)
 {
 	vector<string> output = vector<string>();
 	for (auto iter = dependents[s].begin(); iter != dependents[s].end(); ++iter)

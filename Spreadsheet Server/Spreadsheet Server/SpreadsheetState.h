@@ -75,13 +75,13 @@ public:
 	/// Returns all edits made to this spreadsheet as a stack, with most recent at the top
 	/// </summary>
 	/// <returns>Stack of edits</returns>
-	stack<CellEdit> GetEditHistory();
+	const stack<CellEdit> GetEditHistory() const;
 
 	/// <summary>
 	/// Gets all non-empty cells in this spreadsheet
 	/// </summary>
 	/// <returns>Cells, as a list</returns>
-	list<Cell> GetPopulatedCells();
+	const list<Cell> GetPopulatedCells() const;
 
 };
 

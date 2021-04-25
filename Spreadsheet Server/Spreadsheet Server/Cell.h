@@ -34,13 +34,13 @@ public:
 	/// Get cell name
 	/// </summary>
 	/// <returns>Name of cell</returns>
-	const string GetName();
+	const string GetName() const;
 
 	/// <summary>
 	/// Get cell contents
 	/// </summary>
 	/// <returns>Contents of cell, converted to a string</returns>
-	const string GetContents();
+	const string GetContents() const;
 
 	/// <summary>
 	/// Sets the contents of this cell.

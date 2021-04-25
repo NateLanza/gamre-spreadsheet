@@ -31,7 +31,7 @@ public:
 	/// Gets username
 	/// </summary>
 	/// <returns>Username of this client</returns>
-	string GetUsername();
+	const string GetUsername() const;
 	
 private:
 	/// <summary>
