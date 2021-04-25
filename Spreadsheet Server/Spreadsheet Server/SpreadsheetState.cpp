@@ -31,20 +31,10 @@ SpreadsheetState::~SpreadsheetState() {
 	// Destructors are called automatically
 }
 
-bool SpreadsheetState::SelectCell(const string cell, const int ClientID) {
+void SpreadsheetState::SelectCell(const string cell, const int ClientID) {
 	WriteLock();
-	// Check current selections
-	for (pair<int, string> selection : selections) {
-		// The cell has already been selected
-		if (selection.second == cell) {
-			bool result = selection.first == ClientID; // True if client has this selected, else false
-			WriteUnlock();
-			return result;
-		}
-	}
-
-	// Cell hasn't been selected, select it
 	selections[ClientID] = cell;
+	WriteUnlock();
 }
 
 bool SpreadsheetState::ClientSelectedCell(const string cell, const int ClientID) {
@@ -124,10 +114,10 @@ const bool SpreadsheetState::CheckCircularDependencies(unordered_set<string>& vi
 	return false;
 }
 
-bool SpreadsheetState::RevertCell(const string cell, const int ClientID) {
+bool SpreadsheetState::RevertCell(const string cell, const int ClientID) {	
 	WriteLock();
-	// Make sure client has the cell selected && cell can be reverted
-	if (!ClientSelectedCell(cell, ClientID) || !cells[cell].CanRevert()) {
+	// Make sure cell exists & can be reverted
+	if (!CellExists(cell) || !cells[cell].CanRevert()) {
 		WriteUnlock();
 		return false;
 	}
@@ -172,7 +162,7 @@ bool SpreadsheetState::UndoLastEdit() {
 void SpreadsheetState::AddOrUpdateCell(const string cellName, const Formula& content, const bool lock) {
 	if (lock)
 		WriteLock();
-	if (cells.count(cellName) == 1) {
+	if (CellExists(cellName)) {
 		cells[cellName].SetContents(content);
 	} else {
 		cells[cellName] = *(new Cell(cellName, content));
@@ -180,6 +170,10 @@ void SpreadsheetState::AddOrUpdateCell(const string cellName, const Formula& con
 	RemoveCellIfEmpty(cellName, false);
 	if (lock)
 		WriteUnlock();
+}
+
+const bool SpreadsheetState::CellExists(const string cell) const {
+	return cells.count(cell) == 1;
 }
 
 list<CellEdit> SpreadsheetState::GetEditHistory() {
@@ -207,7 +201,7 @@ list<Cell> SpreadsheetState::GetPopulatedCells() {
 
 const bool SpreadsheetState::CellNotEmpty(const string cell) {
 	ReadLock();
-	if (cells.count(cell) == 1) {
+	if (CellExists(cell)) {
 		if (cells[cell].GetContents() != "") {
 			ReadUnlock();
 			return true;
@@ -225,7 +219,7 @@ const bool SpreadsheetState::CellNotEmpty(const string cell) {
 void SpreadsheetState::RemoveCellIfEmpty(const string cell, const bool lock) {
 	if (lock)
 		WriteLock();
-	if (cells.count(cell) == 1 && 
+	if (CellExists(cell) && 
 		cells[cell].GetContents() == "" && 
 		!cells[cell].CanRevert()) {
 		cells.erase(cell);
