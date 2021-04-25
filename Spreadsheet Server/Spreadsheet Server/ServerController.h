@@ -27,6 +27,13 @@ public:
 	void StopServer();
 
 	/// <summary>
+	/// Marks a client as disconnected. 
+	/// Should be called before the Client object is deleted
+	/// </summary>
+	/// <param name="client">Client who disconnected</param>
+	void DisconnectClient(Client* client);
+
+	/// <summary>
 	/// Processes an edit request from the client
 	/// </summary>
 	/// <param name="request">EditRequest sent by client</param>
@@ -38,7 +45,7 @@ public:
 	/// <param name="client">Client to connect</param>
 	/// <param name="spreadsheet">Spreadsheet name</param>
 	/// <returns>All cells in this spreadsheet, to be sent to the client</returns>
-	const set<Cell> ConnectClientToSpreadsheet(Client client, string spreadsheet);
+	const set<Cell> ConnectClientToSpreadsheet(Client* client, string spreadsheet);
 
 private:
 
