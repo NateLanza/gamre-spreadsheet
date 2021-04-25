@@ -147,7 +147,7 @@
     <ClCompile Include="CellEdit.cpp" />
     <ClCompile Include="Formula.cpp" />
     <ClCompile Include="ServerConnection.cpp" />
-    <ClCompile Include="Spreadsheet Server.cpp" />
+    <ClCompile Include="ServerController.cpp" />
     <ClCompile Include="SpreadsheetState.cpp" />
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="EditRequest.cpp" />
@@ -158,6 +158,7 @@
     <ClInclude Include="DependencyGraph.h" />
     <ClInclude Include="CellEdit.h" />
     <ClInclude Include="Formula.h" />
+    <ClInclude Include="ServerController.h" />
     <ClInclude Include="SpreadsheetState.h" />
     <ClInclude Include="Storage.h" />
   </ItemGroup>
