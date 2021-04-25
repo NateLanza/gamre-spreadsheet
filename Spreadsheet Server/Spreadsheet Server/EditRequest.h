@@ -6,6 +6,8 @@
 #ifndef EditRequest_H
 #define EditRequest_H
 
+using namespace std;
+
 /// <summary>
 /// Represents a request to edit a spreadsheet, received from a client
 /// </summary>
@@ -55,4 +57,4 @@ public:
 	string GetContent();
 };
 
-#endif 
+#endif // EDITREQUEST_H

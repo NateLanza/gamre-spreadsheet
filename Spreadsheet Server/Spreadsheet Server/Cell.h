@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <list>
 #include "Formula.h"
 
 #ifndef Cell_H

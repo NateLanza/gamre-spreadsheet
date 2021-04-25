@@ -173,10 +173,9 @@ public:
 	/// Will use a write lock. Do NOT encase in any locks
 	/// </summary>
 	/// <param name="cell">Cell to revert</param>
-	/// <param name="ClientID">ID of client</param>
 	/// <returns>True if revert successfull, 
 	/// false if revert would create a circular dependency</returns>
-	bool RevertCell(const string cell, const int ClientID);
+	bool RevertCell(const string cell);
 
 	/// <summary>
 	/// Undoes the last edit to the spreadsheet
@@ -202,11 +201,21 @@ public:
 
 	/// <summary>
 	/// Checks whether a cell has content
-	/// Will use a read lock
+	/// Will use a read lock if lock == true, otherwise should be encased in a lock
 	/// </summary>
 	/// <param name="cell">Cell to check for content</param>
+	/// <param name="lock">Whether to use a read lock. MUST be true if used outside this class</param>
 	/// <returns>True if cell is not empty (has content), else false</returns>
-	const bool CellNotEmpty(const string cell);
+	const bool CellNotEmpty(const string cell, const bool lock);
+
+	/// <summary>
+	/// Gets the contents of a cell
+	/// Will use a read lock
+	/// Throws an exception if cell is empty
+	/// </summary>
+	/// <param name="name">Cell to get</param>
+	/// <returns>Current contents of the cell</returns>
+	const string GetCell(const string name);
 
 };
 
