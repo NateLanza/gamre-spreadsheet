@@ -3,6 +3,9 @@
 
 using namespace std;
 
+#ifndef CLIENT_H
+#define CLIENT_H
+
 /// <summary>
 /// Represents a client currently connected to the server
 /// </summary>
@@ -13,7 +16,7 @@ public:
 	/// </summary>
 	/// <param name="ID">Unique ID of the client</param>
 	/// <param name="username">Client username</param>
-	Client(int ID, string username);
+	Client(const int ID, const string username);
 
 	/// <summary>
 	/// Gets ID
@@ -39,3 +42,5 @@ private:
 	string username;
 
 };
+
+#endif // !CLIENT_H
