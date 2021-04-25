@@ -1,4 +1,5 @@
 #include "Cell.h"
+#include <list>
 
 // See Cell.h for function documentation
 
@@ -15,4 +16,8 @@ const string Cell::GetContents() const {
 
 void Cell::SetContents(const Formula newContents) {
 	contents = newContents;
+}
+
+const list<string> Cell::GetVariables() const {
+	return contents.
 }

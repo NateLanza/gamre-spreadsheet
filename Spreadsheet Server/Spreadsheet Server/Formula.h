@@ -30,7 +30,7 @@ public:
 	Formula(const string formula);
 	double Evaluate(map<string, double> lookup);
 	vector<string> GetVariables();
-	string ToString() const;
+	const string ToString() const;
 };
 
 #endif

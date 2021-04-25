@@ -339,7 +339,7 @@ vector<string> Formula::GetVariables() {
 /// <summary>
 /// Returns a string containing no spaces which represents the formula.
 /// </summary>
-string Formula::ToString() {
+const string Formula::ToString() const {
 	string result("=");
 
 	// Loop through tokens, add each to result

@@ -10,7 +10,8 @@
 #include "CellEdit.h"
 #include "EditRequest.h"
 
-using namespace ABI::Windows::Data::Json;
+#include "DependencyGraph.h"
+
 using namespace std;
 
 #ifndef SpreadsheetState_H
@@ -32,6 +33,11 @@ private:
 	/// All edits made to this spreadsheet, in order of recency.
 	/// </summary>
 	stack<CellEdit> edits;
+
+	/// <summary>
+	/// Stores all dependencies in this SpreadsheetState
+	/// </summary>
+	DependencyGraph dependencies;
 
 public:
 	/// <summary>

@@ -43,6 +43,12 @@ public:
 	const string GetContents() const;
 
 	/// <summary>
+	/// Gets all other cells referenced by this cell (variables)
+	/// </summary>
+	/// <returns>Variables (cells) in this cell's contents</returns>
+	const list<string> GetVariables() const;
+
+	/// <summary>
 	/// Sets the contents of this cell.
 	/// Throws an exception with an appropriate message if there is an issue with the new contents
 	/// </summary>
