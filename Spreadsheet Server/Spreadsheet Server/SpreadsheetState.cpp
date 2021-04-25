@@ -18,9 +18,16 @@ SpreadsheetState::SpreadsheetState(set<Cell>& cells, stack<CellEdit>& edits) : c
 			dependencies.AddDependency(var, cell.GetName());
 		}
 		// Add to cell list
-		this->cells[cell.GetName()] = cell;
+		this->cells[cell.GetName()] = *new Cell(cell.GetName(), Formula(cell.GetContents()));
 	}
 	WriteUnlock();
+}
+
+SpreadsheetState::~SpreadsheetState() {
+	cells.clear();
+	while (!edits.empty())
+		edits.pop();
+	delete &dependencies;
 }
 
 bool SpreadsheetState::EditCell(const string name, const string content) {
@@ -41,8 +48,8 @@ bool SpreadsheetState::EditCell(const string name, const string content) {
 		string oldContents = CellNotEmpty(name) ? cells[name].GetContents() : "";
 
 		// No circular dependencies found, add cell
-		edits.push(cells[name]); // Add cellEdit
-		cells[name].SetContents(f); // Modify cell
+		edits.push(* new CellEdit(cells[name])); // Add cellEdit
+		AddOrUpdateCell(name, f, false); // Modify cell
 		dependencies.ReplaceDependents(name, f.GetVariables()); // Modify dependencies
 		WriteUnlock();
 		return true;
@@ -99,7 +106,7 @@ bool SpreadsheetState::RevertCell(const string cell) {
 	}
 
 	// No circular dependencies found, go through with revert
-	edits.push(CellEdit(cells[cell])); // Add cellEdit
+	edits.push(* new CellEdit(cells[cell])); // Add cellEdit
 	cells[cell].Revert(); // Revert cell
 	dependencies.ReplaceDependents(cell, oldState.GetVariables()); // Modify dependencies
 	WriteUnlock();
@@ -118,12 +125,25 @@ bool SpreadsheetState::UndoLastEdit() {
 	}
 
 	// Undo validated, implement it
-	cells[name].SetContents(f);
+	AddOrUpdateCell(name, f, false);
 	dependencies.ReplaceDependents(name, f.GetVariables());
 	edits.pop();
 	WriteUnlock();
 
 	return true;
+}
+
+void SpreadsheetState::AddOrUpdateCell(const string cellName, const Formula& content, const bool lock) {
+	if (lock)
+		WriteLock();
+	if (cells.count(cellName) == 1) {
+		cells[cellName].SetContents(content);
+	} else {
+		cells[cellName] = *(new Cell(cellName, content));
+	}
+	RemoveCellIfEmpty(cellName, false);
+	if (lock)
+		WriteUnlock();
 }
 
 stack<CellEdit> SpreadsheetState::GetEditHistory() {
@@ -151,7 +171,7 @@ const bool SpreadsheetState::CellNotEmpty(const string cell) {
 			return true;
 		} else {
 			ReadUnlock();
-			RemoveCellIfEmpty(cell);
+			RemoveCellIfEmpty(cell, true);
 			return false;
 		}
 	} else {
@@ -160,14 +180,16 @@ const bool SpreadsheetState::CellNotEmpty(const string cell) {
 	}
 }
 
-void SpreadsheetState::RemoveCellIfEmpty(const string cell) {
-	WriteLock();
+void SpreadsheetState::RemoveCellIfEmpty(const string cell, const bool lock) {
+	if (lock)
+		WriteLock();
 	if (cells.count(cell) == 1 && 
 		cells[cell].GetContents() == "" && 
 		cells[cell].GetPreviousState().ToString() == "") {
 		cells.erase(cell);
 	}
-	WriteUnlock();
+	if (lock)
+		WriteUnlock();
 }
 
 void SpreadsheetState::WriteLock() {

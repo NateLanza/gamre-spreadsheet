@@ -3,9 +3,7 @@
 #include <unordered_map>
 #include <set>
 #include <stack>
-#include <windows.data.json.h>
-#include <windows.networking.sockets.h>
-
+=
 #include "Cell.h"
 #include "CellEdit.h"
 #include "EditRequest.h"
@@ -92,16 +90,32 @@ private:
 	/// <summary>
 	/// Removes a cell from the cell list if it is empty and
 	/// has no prior state to revert to
-	/// Uses a write lock
+	/// Uses a write lock if lock = true. Otherwise, should be encapsulated in a write lock
 	/// </summary>
+	/// <param name="lock">Whether to use a write lock</param>
 	/// <param name="cell">Cell to maybe remove</param>
-	void RemoveCellIfEmpty(const string cell);
+	void RemoveCellIfEmpty(const string cell, const bool lock);
+
+	/// <summary>
+	/// Adds a cell to cells if it doesn't already exist,
+	/// or updates the existing entry if it does.
+	/// Once finished, calls RemoveCellIfEmpty on the cell
+	/// to remove it if the update emptied it.
+	/// Uses a write lock if lock == true. Otherwise, should be encapsulated in a write lock
+	/// </summary>
+	/// <param name="lock">Whether to use a write lock</param>
+	/// <param name="cellName">Name of cell</param>
+	/// <param name="content">Cell content</param>
+	void AddOrUpdateCell(const string cellName, const Formula& content, const bool lock);
 
 public:
 	/// <summary>
 	/// Creates a new, blank spreadsheet
 	/// </summary>
 	SpreadsheetState();
+
+	// Destructor
+	~SpreadsheetState();
 
 	/// <summary>
 	/// Creates a spreadsheet from a set of cells

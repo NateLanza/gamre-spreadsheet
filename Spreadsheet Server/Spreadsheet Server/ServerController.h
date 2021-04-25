@@ -16,9 +16,6 @@ public:
 	/// </summary>
 	ServerController();
 
-	// Destructor
-	~ServerController();
-
 	/// <summary>
 	/// Starts the server and starts listening to clients
 	/// </summary>
@@ -35,6 +32,14 @@ public:
 	/// <param name="request">EditRequest sent by client</param>
 	void ProcessClientRequest(EditRequest request);
 
+	/// <summary>
+	/// Connects a client to a spreadsheet
+	/// </summary>
+	/// <param name="client">Client to connect</param>
+	/// <param name="spreadsheet">Spreadsheet name</param>
+	/// <returns>All cells in this spreadsheet, to be sent to the client</returns>
+	const set<Cell> ConnectClientToSpreadsheet(Client client, string spreadsheet);
+
 private:
 
 	/// <summary>
@@ -46,7 +51,7 @@ private:
 	/// <summary>
 	/// Maps each spreadsheet name to the list of clients connected to it
 	/// </summary>
-	unordered_map <string, list<Client>> clientConnections;
+	unordered_map<string, list<Client*>> clientConnections;
 
 };
 

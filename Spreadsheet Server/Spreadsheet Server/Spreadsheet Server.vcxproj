@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="DependencyGraph.cpp" />
     <ClCompile Include="CellEdit.cpp" />
     <ClCompile Include="Formula.cpp" />

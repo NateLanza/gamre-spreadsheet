@@ -1,10 +1,6 @@
+#include "ServerController.h"
+// See ServerController.h for method documentation
 
-/// <summary>
-/// Entry point for the program
-/// </summary>
-/// <returns>Error code</returns>
-int main()
-{
+void ServerController::ProcessClientRequest(EditRequest request) {
 
 }
-
