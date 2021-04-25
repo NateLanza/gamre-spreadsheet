@@ -9,7 +9,7 @@ SpreadsheetState::SpreadsheetState(): cells(), edits(), dependencies()
 {
 }
 
-SpreadsheetState::SpreadsheetState(set<Cell>& cells, stack<CellEdit>& edits) : cells(), edits(edits), dependencies(), threadkey() {
+SpreadsheetState::SpreadsheetState(set<Cell>& cells, list<CellEdit>& edits) : cells(), edits(edits), dependencies(), threadkey() {
 	// Edits are set by the initializer list, now we just need to map dependencies & cells
 	WriteLock();
 	for (Cell cell : cells) {
@@ -26,7 +26,7 @@ SpreadsheetState::SpreadsheetState(set<Cell>& cells, stack<CellEdit>& edits) : c
 SpreadsheetState::~SpreadsheetState() {
 	cells.clear();
 	while (!edits.empty())
-		edits.pop();
+		edits.pop_front();
 	delete &dependencies;
 }
 
@@ -48,7 +48,7 @@ bool SpreadsheetState::EditCell(const string name, const string content) {
 		string oldContents = CellNotEmpty(name) ? cells[name].GetContents() : "";
 
 		// No circular dependencies found, add cell
-		edits.push(* new CellEdit(cells[name])); // Add cellEdit
+		edits.push_front(* new CellEdit(cells[name])); // Add cellEdit
 		AddOrUpdateCell(name, f, false); // Modify cell
 		dependencies.ReplaceDependents(name, f.GetVariables()); // Modify dependencies
 		WriteUnlock();
@@ -106,7 +106,7 @@ bool SpreadsheetState::RevertCell(const string cell) {
 	}
 
 	// No circular dependencies found, go through with revert
-	edits.push(* new CellEdit(cells[cell])); // Add cellEdit
+	edits.push_front(* new CellEdit(cells[cell])); // Add cellEdit
 	cells[cell].Revert(); // Revert cell
 	dependencies.ReplaceDependents(cell, oldState.GetVariables()); // Modify dependencies
 	WriteUnlock();
@@ -117,8 +117,8 @@ bool SpreadsheetState::UndoLastEdit() {
 	// Writelock the method so that the edit stack doesn't change
 	WriteLock();
 	// Validate undo
-	string name = edits.top().GetName();
-	Formula f = edits.top().GetPriorContents();
+	string name = edits.front().GetName();
+	Formula f = edits.front().GetPriorContents();
 	if (CheckNewCellCircular(name, f, false)) {
 		WriteUnlock();
 		return false;
@@ -127,7 +127,7 @@ bool SpreadsheetState::UndoLastEdit() {
 	// Undo validated, implement it
 	AddOrUpdateCell(name, f, false);
 	dependencies.ReplaceDependents(name, f.GetVariables());
-	edits.pop();
+	edits.pop_front();
 	WriteUnlock();
 
 	return true;
@@ -146,9 +146,9 @@ void SpreadsheetState::AddOrUpdateCell(const string cellName, const Formula& con
 		WriteUnlock();
 }
 
-stack<CellEdit> SpreadsheetState::GetEditHistory() {
+list<CellEdit> SpreadsheetState::GetEditHistory() {
 	ReadLock();
-	stack<CellEdit> result(edits);
+	list<CellEdit> result(edits);
 	ReadUnlock();
 	return result;
 }

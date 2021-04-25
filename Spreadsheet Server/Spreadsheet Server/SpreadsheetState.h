@@ -2,8 +2,7 @@
 #include <list>
 #include <unordered_map>
 #include <set>
-#include <stack>
-=
+
 #include "Cell.h"
 #include "CellEdit.h"
 #include "EditRequest.h"
@@ -31,7 +30,7 @@ private:
 	/// <summary>
 	/// All edits made to this spreadsheet, in order of recency.
 	/// </summary>
-	stack<CellEdit> edits;
+	list<CellEdit> edits;
 
 	/// <summary>
 	/// Stores all dependencies in this SpreadsheetState
@@ -123,7 +122,7 @@ public:
 	/// Uses a write lock
 	/// </summary>
 	/// <param name="cells">Cells to initialize into spreadsheets</param>
-	SpreadsheetState(set<Cell>& cells, stack<CellEdit>& edits);
+	SpreadsheetState(set<Cell>& cells, list<CellEdit>& edits);
 
 	/// <summary>
 	/// Edits the content of a cell and adds the edit to the edit stack
@@ -155,7 +154,7 @@ public:
 	/// Will use a read lock
 	/// </summary>
 	/// <returns>Stack of edits</returns>
-	stack<CellEdit> GetEditHistory();
+	list<CellEdit> GetEditHistory();
 
 	/// <summary>
 	/// Gets all non-empty cells in this spreadsheet
