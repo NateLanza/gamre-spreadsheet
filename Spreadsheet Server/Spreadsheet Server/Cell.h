@@ -47,7 +47,7 @@ public:
 	/// <param name="name">Cell name, should be [A-Z][0-9]</param>
 	/// <param name="contents">Contents of cell. Should be a valid formula, string, or double</param>
 	/// <param name="priorContents">Prior contents of cell before last edit. Should be a valid formula, string, or double</param>
-	Cell(const string name, const Formula contents, const Formula priorContents);
+	Cell(const string name, const Formula contents, const list<Formula> priorContents);
 
 	/// <summary>
 	/// Get cell name
@@ -87,6 +87,14 @@ public:
 	/// <returns>A list of formulas, with front() being the most recent state of
 	/// the cell and back() being the least recent state</returns>
 	const list<Formula> GetPreviousStates() const;
+
+	/// <summary>
+	/// Whether a previous state exists for this cell
+	/// In other words: true if we can revert this cell
+	/// </summary>
+	/// <returns>True if we have a previous state to rever to,
+	/// false if the previous state was empty</returns>
+	const bool CanRevert() const;
 
 	/// <summary>
 	/// Reverts this cell to its previous content.

@@ -143,7 +143,7 @@ bool SpreadsheetState::RevertCell(const string cell, const int ClientID) {
 
 	// No circular dependencies found, go through with revert
 	edits.push_front(* new CellEdit(cells[cell])); // Add cellEdit
-	cells[cell].Revert(); // Revert cell
+	bool result = cells[cell].Revert(); // Revert cell
 	dependencies.ReplaceDependents(cell, oldState.GetVariables()); // Modify dependencies
 	WriteUnlock();
 	return true;

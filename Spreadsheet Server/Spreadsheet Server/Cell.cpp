@@ -3,14 +3,14 @@
 
 // See Cell.h for function documentation
 
-Cell::Cell() : name(), contents(""), previousContents("") {
+Cell::Cell() : name(), contents(""), previousContents() {
 	throw new exception("Do not use Cell's default constructor");
 }
 
-Cell::Cell(const string name, const Formula contents) : name(name), contents(contents.ToString()), previousContents("") {
+Cell::Cell(const string name, const Formula contents) : name(name), contents(contents.ToString()), previousContents() {
 }
 
-Cell::Cell(const string name, const Formula contents, const Formula priorContents) : name(name), contents(contents.ToString()), previousContents(priorContents) {
+Cell::Cell(const string name, const Formula contents, const list<Formula> priorContents) : name(name), contents(contents.ToString()), previousContents(priorContents) {
 }
 
 const string Cell::GetName() const {
@@ -31,11 +31,15 @@ const vector<string> Cell::GetVariables() const {
 }
 
 bool Cell::Revert() {
-	if (previousContents.empty())
+	if (!CanRevert())
 		return false;
 	contents = previousContents.front();
 	previousContents.pop_front();
 	return true;
+}
+
+const bool Cell::CanRevert() const {
+	return previousContents.empty();
 }
 
 const Formula Cell::GetPreviousState() const {
