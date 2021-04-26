@@ -4,8 +4,9 @@
 // See client.h for method docs
 
 Client::Client(const int ID, const string username, const Connection state) 
-				: username(username), ID(ID) {
-	
+				: username(username), ID(ID) 
+{
+	//state = NULL;
 }
 
 const int Client::GetID() const {

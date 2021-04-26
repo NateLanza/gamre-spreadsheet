@@ -21,6 +21,7 @@ struct Connection {
 		: socket(io_service), read_buffer(max_buffer_size) { }
 
 	Connection();
+
 };
 
 #endif

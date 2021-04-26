@@ -157,16 +157,46 @@ void ServerConnection::listen(uint16_t port)
 /// <param name="message"></param>
 void ServerConnection::broadcast(std::list<Client> clients, std::string message)
 {
+	std::list<Connection> cln_con;
 	//Sends the message to each client in the list
-	auto buffer = std::make_shared<std::string>(message);
+	auto buffer = std::make_shared<std::string>(" hi hi hi \r\n\r\n");
+
 	for (std::list<Client>::iterator it = clients.begin(); it != clients.end(); ++it) {
 		if (it->state.socket.is_open())
 		{
-			auto handler = boost::bind(&ServerConnection::mng_send, this, it, buffer, boost::asio::placeholders::error);
-			boost::asio::async_write(it->state.socket, boost::asio::buffer(*buffer), handler);
+			cln_con.push_back(it->state);
 		}
 	}
+
+	//it_connection its = clients2.begin();
+
+	for (std::list<Connection>::iterator its = cln_con.begin(); its != cln_con.end(); ++its)
+	{
+		auto handler = boost::bind(&ServerConnection::mng_send, this, its, buffer, boost::asio::placeholders::error);
+		//its->socket.async_send(boost::asio::buffer(*buffer), handler);
+		boost::asio::async_write(its->socket, boost::asio::buffer(*buffer), handler);
+	}
 }
+
+///// <summary>
+///// Sends out the given message to the given list of clients
+///// </summary>
+///// <param name="clients"></param>
+///// <param name="message"></param>
+//void ServerConnection::broadcast(std::list<Client> clients, EditRequest request)
+//{
+//	//Sends the message to each client in the list
+//	auto buffer = std::make_shared<std::string>(message);
+//	for (std::list<Client>::iterator it = clients.begin(); it != clients.end(); ++it) {
+//		if (it->state.socket.is_open())
+//		{
+//			auto handler = boost::bind(&ServerConnection::mng_send, this, it, buffer, boost::asio::placeholders::error);
+//			boost::asio::async_write(it->state.socket, boost::asio::buffer(*buffer), handler);
+//
+//
+//		}
+//	}
+//}
 
 
 
