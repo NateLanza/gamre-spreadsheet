@@ -33,6 +33,11 @@ public:
 	/// </summary>
 	/// <returns>Username of this client</returns>
 	const string GetUsername() const;
+
+	/// <summary>
+	/// Spreadsheet that this client is connected to
+	/// </summary>
+	string spreadsheet;
 	
 private:
 	/// <summary>

@@ -57,6 +57,7 @@ void ServerController::ConnectClientToSpreadsheet(Client* client, string spreads
 	list<Client*> clientList;
 	clientConnections[spreadsheet] = clientList;
 	clientConnections[spreadsheet].push_back(client);
+	client->spreadsheet = spreadsheet;
 
 	// Send ID to client
 	network.broadcast(sendTo, client->GetID() + "\n");
