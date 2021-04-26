@@ -2,7 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
-#include <filesystem>
+#include <experimental/filesystem>
+
+namespace fs = std::experimental::filesystem;
 
 /// <summary>
 /// The constructor for a StoredSpreadsheet()
@@ -103,7 +105,7 @@ void Storage::Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 	try
 	{
 		string filename = spreadsheetName + ".sprd";
-		ofstream file("/spreadsheet/" + filename);
+		ofstream file("../spreadsheet/" + filename);
 
 		for (Cell cell : ss.cells)
 		{
@@ -140,6 +142,21 @@ void Storage::Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 /// <returns>List of files that contain .sprd extension</returns>
 list<string> Storage::GetSavedSpreadsheetNames()
 {
-	string path = "/spreadsheet/";
-	string ext(".sprd");
+	try
+	{
+		list<string> spreadsheets;
+		string path = "/spreadsheet/";
+		string ext(".sprd");
+
+		for (auto& p : fs::recursive_directory_iterator(path))
+		{
+			if (p.path().extension() == ext)
+				spreadsheets.push_back(p.path().stem().string());
+		}
+		return spreadsheets;
+	}
+	catch (exception e)
+	{
+		throw e;
+	}
 }
