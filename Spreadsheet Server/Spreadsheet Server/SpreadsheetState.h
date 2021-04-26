@@ -197,7 +197,7 @@ public:
 	/// Will use a read lock and multiple write locks
 	/// </summary>
 	/// <returns>Cells, as a list</returns>
-	list<Cell> GetPopulatedCells();
+	set<Cell> GetPopulatedCells();
 
 	/// <summary>
 	/// Checks whether a cell has content
