@@ -20,3 +20,7 @@ string EditRequest::GetContent()
 {
 	return content;
 }
+
+Client* EditRequest::GetClient() {
+	return client;
+}

@@ -152,6 +152,7 @@
     <ClCompile Include="SpreadsheetState.cpp" />
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="EditRequest.cpp" />
+    <ClCompile Include="TestSpreadsheetState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h" />
