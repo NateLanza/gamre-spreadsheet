@@ -66,7 +66,7 @@ bool SpreadsheetState::EditCell(const string name, const string content, const i
 			
 		
 		// Save old contents of cell
-		string oldContents = CellNotEmpty(name) ? cells[name].GetContents() : "";
+		string oldContents = CellNotEmpty(name, false) ? cells[name].GetContents() : "";
 
 		// No circular dependencies found, add cell
 		edits.push_front(* new CellEdit(name, oldContents)); // Add cellEdit
@@ -106,7 +106,7 @@ const bool SpreadsheetState::CheckCircularDependencies(unordered_set<string>& vi
 			return true;
 		// Visit this cell
 		visited.emplace(cell);
-		if (CellNotEmpty(cell) && CheckCircularDependencies(visited, cells[cell].GetVariables())) {
+		if (CellNotEmpty(cell, false) && CheckCircularDependencies(visited, cells[cell].GetVariables())) {
 			return true;
 		}
 	}
@@ -114,7 +114,7 @@ const bool SpreadsheetState::CheckCircularDependencies(unordered_set<string>& vi
 	return false;
 }
 
-bool SpreadsheetState::RevertCell(const string cell, const int ClientID) {	
+bool SpreadsheetState::RevertCell(const string cell) {	
 	WriteLock();
 	// Make sure cell exists & can be reverted
 	if (!CellExists(cell) || !cells[cell].CanRevert()) {
@@ -199,19 +199,23 @@ list<Cell> SpreadsheetState::GetPopulatedCells() {
 	return result;
 }
 
-const bool SpreadsheetState::CellNotEmpty(const string cell) {
-	ReadLock();
+const bool SpreadsheetState::CellNotEmpty(const string cell, const bool lock) {
+	if (lock)
+		ReadLock();
 	if (CellExists(cell)) {
 		if (cells[cell].GetContents() != "") {
-			ReadUnlock();
+			if (lock)
+				ReadUnlock();
 			return true;
 		} else {
-			ReadUnlock();
+			if (lock)
+				ReadUnlock();
 			RemoveCellIfEmpty(cell, true);
 			return false;
 		}
 	} else {
-		ReadUnlock();
+		if (lock)
+			ReadUnlock();
 		return false;
 	}
 }
@@ -242,4 +246,16 @@ void SpreadsheetState::WriteUnlock() {
 
 void SpreadsheetState::ReadUnlock() {
 	threadkey.unlock_shared();
+}
+
+const string SpreadsheetState::GetCell(const string name) {
+	ReadLock();
+	if (CellNotEmpty(name, false)) {
+		string result = cells[name].GetContents();
+		ReadUnlock();
+		return result;
+	} else {
+		ReadUnlock();
+		throw new runtime_error(string("Cell " + name + " has no content to get"));
+	}
 }
