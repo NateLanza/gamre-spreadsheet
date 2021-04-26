@@ -54,7 +54,17 @@ public:
 	/// </summary>
 	/// <returns>Name of a cell</returns>
 	string GetName();
+	/// <summary>
+	/// Gets cell content
+	/// </summary>
+	/// <returns>Cell content</returns>
 	string GetContent();
+
+	/// <summary>
+	/// Gets client
+	/// </summary>
+	/// <returns>Pointer to client object that sent request</returns>
+	Client* GetClient();
 };
 
 #endif // EDITREQUEST_H
