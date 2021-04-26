@@ -155,3 +155,11 @@ void ServerController::DisconnectClient(Client* client) {
 			NULL
 		));
 }
+
+void ServerController::Lock() {
+	threadkey.lock();
+}
+
+void ServerController::Unlock() {
+	threadkey.unlock();
+}
