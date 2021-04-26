@@ -10,6 +10,7 @@ using namespace std;
 
 #ifndef Storage_H
 #define Storage_H
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
 
 /// <summary>
 /// Simple wrapper struct for the list of Cells and stack of CellEdits 
@@ -36,12 +37,16 @@ public:
 
 class Storage
 {
+public:
 	/// <summary>
-	/// Opens a spreadsheet from file if it exists. 
-	/// If not, returns an empty list of cells & empty stack of CellEdits
+	/// This method opens a spreadsheet for a new client by opening the 
+	/// file pertaining to said spreadsheet. Once opened, the contents of 
+	/// the file will be parsed into Cells and CellEdits to then be added 
+	/// to a StoredSpreadsheet object.
 	/// </summary>
-	/// <param name="spreadsheetName">Spreadsheet to open (provided by client)</param>
-	/// <returns>Spreadsheet data</returns>
+	/// <param name="filename">The name of the file to be opened</param>
+	/// <returns>Returns the StoredSpreadsheet object containing the cells and cell edits of some spreadsheet</returns>
+
 	StoredSpreadsheet Open(string spreadsheetName);
 
 	/// <summary>

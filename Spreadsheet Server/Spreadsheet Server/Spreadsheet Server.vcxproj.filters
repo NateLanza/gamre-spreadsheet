@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Tester Files">
+      <UniqueIdentifier>{4f9fe679-924d-4fd8-aa96-41bc449dbe74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ServerController.cpp">
@@ -44,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="Client.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSpreadsheetState.cpp">
+      <Filter>Tester Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
