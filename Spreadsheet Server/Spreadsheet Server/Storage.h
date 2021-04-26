@@ -34,6 +34,8 @@ public:
 	StoredSpreadsheet(set<Cell> cells, list<CellEdit> edits);
 };
 
+class Storage
+{
 	/// <summary>
 	/// Opens a spreadsheet from file if it exists. 
 	/// If not, returns an empty list of cells & empty stack of CellEdits
@@ -54,5 +56,5 @@ public:
 	/// </summary>
 	/// <returns>A list of names of files which can be opened</returns>
 	list<string> GetSavedSpreadsheetNames();
-
+};
 #endif

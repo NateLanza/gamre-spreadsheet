@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
+#include <filesystem>
 
 /// <summary>
 /// The constructor for a StoredSpreadsheet()
@@ -10,6 +11,8 @@
 /// <param name="edits">The list of edits in the stored spreadsheet</param>
 StoredSpreadsheet::StoredSpreadsheet(set<Cell> cells, list<CellEdit> edits)
 {
+	this->cells = cells;
+	this->edits = edits;
 }
 
 /// <summary>
@@ -20,7 +23,7 @@ StoredSpreadsheet::StoredSpreadsheet(set<Cell> cells, list<CellEdit> edits)
 /// </summary>
 /// <param name="filename">The name of the file to be opened</param>
 /// <returns>Returns the StoredSpreadsheet object containing the cells and cell edits of some spreadsheet</returns>
-StoredSpreadsheet Open(string filename)
+StoredSpreadsheet Storage::Open(string filename)
 {
 	try
 	{
@@ -95,12 +98,12 @@ StoredSpreadsheet Open(string filename)
 /// </summary>
 /// <param name="spreadsheetName">The name of the spreadsheet to be saved</param>
 /// <param name="ss">The stored spreadsheet that contains the list of cells and edits of a certain spreadsheet</param>
-void Save(const string spreadsheetName, const StoredSpreadsheet& ss)
+void Storage::Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 {
 	try
 	{
 		string filename = spreadsheetName + ".sprd";
-		ofstream file(filename);
+		ofstream file("/spreadsheet/" + filename);
 
 		for (Cell cell : ss.cells)
 		{
@@ -128,4 +131,15 @@ void Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 	{
 		throw invalid_argument("File could not open or writing to file failed.");
 	}
+}
+
+/// <summary>
+/// Search through filesystem and return list of all files
+/// with the .sprd extension.
+/// </summary>
+/// <returns>List of files that contain .sprd extension</returns>
+list<string> Storage::GetSavedSpreadsheetNames()
+{
+	string path = "/spreadsheet/";
+	string ext(".sprd");
 }
