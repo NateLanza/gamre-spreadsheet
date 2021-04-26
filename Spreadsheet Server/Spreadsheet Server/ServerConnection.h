@@ -33,7 +33,7 @@ public:
 
 	void listen(uint16_t port);
 
-	void broadcast(std::list<Client> clients, std::string message);
+	void broadcast(std::list<Client*> clients, std::string message);
 };
 
 

@@ -155,17 +155,16 @@ void ServerConnection::listen(uint16_t port)
 /// </summary>
 /// <param name="clients"></param>
 /// <param name="message"></param>
-void ServerConnection::broadcast(std::list<Client> clients, std::string message)
+void ServerConnection::broadcast(std::list<Client*> clients, std::string message)
 {
 	std::list<Connection> cln_con;
 	//Sends the message to each client in the list
 	auto buffer = std::make_shared<std::string>(" hi hi hi \r\n\r\n");
-
-	for (std::list<Client>::iterator it = clients.begin(); it != clients.end(); ++it) {
-		if (it->state.socket.is_open())
-		{
-			cln_con.push_back(it->state);
-		}
+	
+	for (Client* client : clients)
+	{
+		if (client->state->socket.is_open())
+			cln_con.push_back(*(client->state));
 	}
 
 	//it_connection its = clients2.begin();
@@ -174,8 +173,15 @@ void ServerConnection::broadcast(std::list<Client> clients, std::string message)
 	{
 		auto handler = boost::bind(&ServerConnection::mng_send, this, its, buffer, boost::asio::placeholders::error);
 		//its->socket.async_send(boost::asio::buffer(*buffer), handler);
-		boost::asio::async_write(its->socket, boost::asio::buffer(*buffer), handler);
+		boost::asio::async_write((its->socket), boost::asio::buffer(*buffer), handler);
 	}
+
+	//for (Connection con : cln_con) 
+	//{
+	//	auto handler = boost::bind(&ServerConnection::mng_send, this, con, buffer, boost::asio::placeholders::error);
+	//	//its->socket.async_send(boost::asio::buffer(*buffer), handler);
+	//	boost::asio::async_write((con->socket), boost::asio::buffer(*buffer), handler);
+	//}
 }
 
 ///// <summary>

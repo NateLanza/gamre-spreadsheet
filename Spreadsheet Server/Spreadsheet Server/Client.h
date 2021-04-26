@@ -20,7 +20,7 @@ public:
 	/// </summary>
 	/// <param name="ID">Unique ID of the client</param>
 	/// <param name="username">Client username</param>
-	Client(const int ID, const string username, const Connection state);
+	Client(const int ID, const string username, const Connection *state);
 
 	/// <summary>
 	/// Gets ID
@@ -48,7 +48,7 @@ private:
 	/// <summary>
 	/// Client networking information
 	/// </summary>
-	Connection state;
+	const Connection *state;
 
 };
 
