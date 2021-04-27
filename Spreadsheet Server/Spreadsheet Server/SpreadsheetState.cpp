@@ -183,8 +183,8 @@ list<CellEdit> SpreadsheetState::GetEditHistory() {
 	return result;
 }
 
-list<Cell> SpreadsheetState::GetPopulatedCells() {
-	list<Cell> result = list<Cell>();
+set<Cell> SpreadsheetState::GetPopulatedCells() {
+	set<Cell> result = set<Cell>();
 	// Prune empty cells
 	for (auto cellEntry : cells) {
 		// Will use a write lock
@@ -194,7 +194,7 @@ list<Cell> SpreadsheetState::GetPopulatedCells() {
 	ReadLock();
 	// Put all cells in result list
 	for (pair<string, Cell> cellEntry : cells)
-		result.push_back(cellEntry.second);
+		result.insert(cellEntry.second);
 	ReadUnlock();
 	return result;
 }
