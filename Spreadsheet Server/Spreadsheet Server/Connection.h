@@ -13,16 +13,14 @@
 struct Connection {
 	boost::asio::ip::tcp::socket socket;				// The socket
 	boost::asio::streambuf read_buffer;					// The data received 
-	
-	Connection(boost::asio::io_service& io_service)		// Creates a Connection with io_service, which facilitates ansynchrony. 
-		: socket(io_service), read_buffer() { }
+	boost::asio::io_service& stored_service;				// Stored for copy constructor
+
+	Connection(boost::asio::io_service& io_service);		// Creates a Connection with io_service, which facilitates ansynchrony. 
 
 	
-	Connection(boost::asio::io_service& io_service, size_t max_buffer_size) // Creates the connection with an additional buffer_size, if specified.
-		: socket(io_service), read_buffer(max_buffer_size) { }
-
-	//Connection();
-
+	Connection(boost::asio::io_service& io_service, size_t max_buffer_size); // Creates the connection with an additional buffer_size, if specified.
+	
+	Connection(const Connection& copy);
 };
 
 #endif
