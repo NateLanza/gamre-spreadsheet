@@ -7,7 +7,7 @@
 
 #include "EditRequest.h"
 #include "ServerConnection.h"
-#include "ServerController.h"
+//#include "ServerController.h"
 
 
 /// <summary>
@@ -25,6 +25,7 @@ ServerConnection::ServerConnection() : s_ioservice(), s_acceptor(s_ioservice), c
 void ServerConnection::run() 
 {
 	s_ioservice.run();
+	
 }
 
 /// <summary>
@@ -48,6 +49,7 @@ void ServerConnection::mng_send(it_connection state, std::shared_ptr<std::string
 		if (state->socket.is_open())
 		{
 		}
+		
 	}
 }
 

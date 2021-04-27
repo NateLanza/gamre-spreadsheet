@@ -150,6 +150,7 @@
     <ClCompile Include="ServerConnection.cpp" />
     <ClCompile Include="ServerController.cpp" />
     <ClCompile Include="SpreadsheetState.cpp" />
+    <ClCompile Include="StartServer.cpp" />
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="EditRequest.cpp" />
     <ClCompile Include="TestSpreadsheetState.cpp" />

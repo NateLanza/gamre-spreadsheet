@@ -1,5 +1,8 @@
+#pragma once
+
 #include "Client.h"
 #include "Connection.h"
+#include "ServerController.h"
 #include <boost/asio.hpp> 
 
 #ifndef SERVER_CONNECTION_H
@@ -7,11 +10,14 @@
 
 
 
+
 class ServerConnection 
 {
 	boost::asio::io_service s_ioservice;					// Boost class that supports asynchronous functions
 	boost::asio::ip::tcp::acceptor s_acceptor;				// Boost class that accepts clients
-	std::list<Connection> connections;						// List of Connected clients 
+	std::list<Connection> connections;						// List of Connected clients
+	//ServerController control;
+
 	using it_connection = std::list<Connection>::iterator;	// Iterator for each connection
 
 public:

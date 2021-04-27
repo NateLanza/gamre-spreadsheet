@@ -1,3 +1,4 @@
+#pragma once
 #include <list>
 #include "SpreadsheetState.h"
 #include <unordered_map>
@@ -8,6 +9,7 @@
 
 #ifndef SERVERCONTROLLER_H
 #define SERVERCONTROLLER_H
+
 
 /// <summary>
 /// Coordinates between networking/clients, spreadsheet models (SpreadsheetState), and storage
@@ -81,7 +83,7 @@ private:
 	/// <summary>
 	/// Handles connections with clients
 	/// </summary>
-	ServerConnection network;
+	ServerConnection *network;
 
 	/// <summary>
 	/// Handles storing files

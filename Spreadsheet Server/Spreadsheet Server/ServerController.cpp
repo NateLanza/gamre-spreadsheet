@@ -1,18 +1,20 @@
 #include "ServerController.h"
 #include "Storage.h"
-#include <windows.data.json.h>
-#include <boost/json.hpp>
+//#include <windows.data.json.h>
+//#include <boost/json.hpp>
 
 //using windows.data.json;
 using namespace std;
 // See ServerController.h for method documentation
 
-ServerController::ServerController() : openSpreadsheets(), clientConnections(), network(), storage() {
+ServerController::ServerController() : openSpreadsheets(), clientConnections(), storage() {
+	network = new ServerConnection;
 }
 
-void ServerController::StartServer() {
-	network.listen(1100);
-	network.run();
+void ServerController::StartServer() {	
+	
+	network->listen(1100);
+	network->run();
 }
 
 void ServerController::ConnectClientToSpreadsheet(Client* client, string spreadsheet) {
@@ -32,7 +34,7 @@ void ServerController::ConnectClientToSpreadsheet(Client* client, string spreads
 	list<Client*> sendTo;
 	sendTo.push_back(client);
 	for (Cell cell : openSpreadsheets[spreadsheet]->GetPopulatedCells()) {
-		network.broadcast(sendTo, SerializeMessage(
+		network->broadcast(sendTo, SerializeMessage(
 			"cellUpdated",
 			cell.GetName(),
 			cell.GetContents(),
@@ -49,7 +51,7 @@ void ServerController::ConnectClientToSpreadsheet(Client* client, string spreads
 	client->spreadsheet = spreadsheet;
 
 	// Send ID to client
-	network.broadcast(sendTo, client->GetID() + "\n");
+	network->broadcast(sendTo, client->GetID() + "\n");
 
 	Unlock();
 }
@@ -63,7 +65,7 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 			SelectCell(request.GetName(), request.GetClient()->GetID());
 
 		// Broadcast select
-		network.broadcast(clientConnections[request.GetClient()->spreadsheet],
+		network->broadcast(clientConnections[request.GetClient()->spreadsheet],
 			SerializeMessage(
 				"cellSelected",
 				request.GetName(),
@@ -91,7 +93,7 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 
 	// If request successful, send out the new cell
 	if (requestSuccess) 	{
-		network.broadcast(clientConnections[request.GetClient()->spreadsheet],
+		network->broadcast(clientConnections[request.GetClient()->spreadsheet],
 			SerializeMessage(
 				"cellUpdated",
 				request.GetName(),
@@ -104,7 +106,7 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 		// Send error message to client for bad request
 		list<Client*> toSend;
 		toSend.push_back(request.GetClient());
-		network.broadcast(toSend, SerializeMessage(
+		network->broadcast(toSend, SerializeMessage(
 			"requestError",
 			request.GetName(),
 			NULL,
@@ -134,7 +136,7 @@ void ServerController::DisconnectClient(Client* client) {
 	Unlock();
 
 	// Broadcast disconnect to other clients
-	network.broadcast(clientConnections[client->spreadsheet],
+	network->broadcast(clientConnections[client->spreadsheet],
 		SerializeMessage(
 			"disconnected",
 			NULL,

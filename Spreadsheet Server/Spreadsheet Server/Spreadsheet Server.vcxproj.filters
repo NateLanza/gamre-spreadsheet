@@ -54,6 +54,9 @@
     <ClCompile Include="Connection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StartServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h">
