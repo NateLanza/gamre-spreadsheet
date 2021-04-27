@@ -1,12 +1,13 @@
-//#include "Connection.h"
-//
-//Connection::Connection(const Connection& c)
-//{
-//	*this = c;
-//}
-//
-//
-//Connection& Connection::operator=(const Connection* c) 
-//{
-//
-//}
+#include "Connection.h"
+
+Connection::Connection(boost::asio::io_service& io_service)		// Creates a Connection with io_service, which facilitates ansynchrony. 
+	: socket(io_service), read_buffer(), stored_service(io_service) {
+}
+
+Connection::Connection(boost::asio::io_service& io_service, size_t max_buffer_size) // Creates the connection with an additional buffer_size, if specified.
+	: socket(io_service), read_buffer(max_buffer_size), stored_service(io_service) {
+}
+
+Connection::Connection(const Connection& copy) 
+	: socket(copy.stored_service), read_buffer(copy.read_buffer.size()), stored_service(copy.stored_service) {
+}
