@@ -38,6 +38,8 @@
             this.OpenButton = new System.Windows.Forms.Button();
             this.UsernameBox = new System.Windows.Forms.TextBox();
             this.UsernameLabel = new System.Windows.Forms.Label();
+            this.revert_button = new System.Windows.Forms.Button();
+            this.undo_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // SpreadsheetGrid
@@ -86,7 +88,7 @@
             // 
             // helpButton
             // 
-            this.helpButton.Location = new System.Drawing.Point(898, 56);
+            this.helpButton.Location = new System.Drawing.Point(771, 19);
             this.helpButton.Name = "helpButton";
             this.helpButton.Size = new System.Drawing.Size(75, 23);
             this.helpButton.TabIndex = 6;
@@ -172,11 +174,33 @@
             this.UsernameLabel.TabIndex = 14;
             this.UsernameLabel.Text = "Username";
             // 
+            // revert_button
+            // 
+            this.revert_button.Location = new System.Drawing.Point(765, 55);
+            this.revert_button.Name = "revert_button";
+            this.revert_button.Size = new System.Drawing.Size(75, 23);
+            this.revert_button.TabIndex = 15;
+            this.revert_button.Text = "Revert Cell";
+            this.revert_button.UseVisualStyleBackColor = true;
+            this.revert_button.Click += new System.EventHandler(this.revert_button_Click);
+            // 
+            // undo_button
+            // 
+            this.undo_button.Location = new System.Drawing.Point(847, 55);
+            this.undo_button.Name = "undo_button";
+            this.undo_button.Size = new System.Drawing.Size(75, 23);
+            this.undo_button.TabIndex = 16;
+            this.undo_button.Text = "Undo";
+            this.undo_button.UseVisualStyleBackColor = true;
+            this.undo_button.Click += new System.EventHandler(this.undo_button_Click);
+            // 
             // SpreadsheetForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1601, 554);
+            this.Controls.Add(this.undo_button);
+            this.Controls.Add(this.revert_button);
             this.Controls.Add(this.UsernameLabel);
             this.Controls.Add(this.UsernameBox);
             this.Controls.Add(this.OpenButton);
@@ -215,6 +239,8 @@
         private System.Windows.Forms.Button OpenButton;
         private System.Windows.Forms.TextBox UsernameBox;
         private System.Windows.Forms.Label UsernameLabel;
+        private System.Windows.Forms.Button revert_button;
+        private System.Windows.Forms.Button undo_button;
     }
 }
 

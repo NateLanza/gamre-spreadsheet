@@ -302,5 +302,15 @@ namespace SpreadsheetGUI {
             SpreadsheetNameList.Enabled = false;
             Controller.ConnectToSpreadsheet(SpreadsheetNameList.Text);
         }
+
+        private void revert_button_Click(object sender, EventArgs e) {
+            SpreadsheetGrid.GetSelection(out int col, out int row);
+            String cell = RowColToCell(row, col);
+            Controller.SendRevertRequest(cell);
+        }
+
+        private void undo_button_Click(object sender, EventArgs e) {
+            Controller.SendUndoRequest();
+        }
     }
 }
