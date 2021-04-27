@@ -23,24 +23,10 @@ void ServerController::ConnectClientToSpreadsheet(Client* client, string spreads
 		return;
 	}
 
-	bool foundFile = false;
 	// No clients have this spreadsheet open, so open it
-	// See if we have it stored on file first
-	for (string ssName : storage.GetSavedSpreadsheetNames()) {
-		// Got it, open the spreadsheet
-		if (ssName == spreadsheet) {
-			StoredSpreadsheet newSS = storage.Open(ssName);
-			SpreadsheetState* toAdd = new SpreadsheetState(newSS.cells, newSS.edits);
-			openSpreadsheets[ssName] = toAdd;
-			foundFile = true;
-			break;
-		}
-	}
-
-	// Not stored on file, create a blank one
-	if (!foundFile) {
-		openSpreadsheets[spreadsheet] = new SpreadsheetState();
-	}
+	StoredSpreadsheet newSS = storage.Open(spreadsheet);
+	SpreadsheetState* toAdd = new SpreadsheetState(newSS.cells, newSS.edits);
+	openSpreadsheets[spreadsheet] = toAdd;
 
 	// Send spreadsheet cells to client
 	list<Client*> sendTo;
