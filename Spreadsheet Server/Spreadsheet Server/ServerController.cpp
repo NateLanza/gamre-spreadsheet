@@ -1,6 +1,9 @@
 #include "ServerController.h"
 #include "Storage.h"
+#include <windows.data.json.h>
+#include <boost/json.hpp>
 
+//using windows.data.json;
 using namespace std;
 // See ServerController.h for method documentation
 
@@ -154,6 +157,36 @@ void ServerController::DisconnectClient(Client* client) {
 			NULL,
 			NULL
 		));
+}
+
+const string ServerController::SerializeMessage(string messageType, string cellName, string contents, int userID, string username, string message) const {
+	string jsonMessage;
+	
+	jsonMessage += "{ ";
+
+
+	// Run through each type, check if it is empty. If not add it to JsonMessage. 
+	if (messageType.empty())
+		jsonMessage += "\"messageType\": " + '\"' + messageType + "\", ";
+
+	if (cellName.empty())
+		jsonMessage += "\"cellName\": " + '\"' + cellName + "\" ";
+
+	if (contents.empty())
+		jsonMessage += "\"contents\": " + '\"' + contents + "\" ";
+
+	if (userID == NULL)
+		jsonMessage += "\"selector\": <" + '\"' + std::to_string(userID) + "\" ";
+
+	if (username.empty())
+		jsonMessage += "\"selectorName\": " + '\"' + username + "\" ";
+
+	if (message.empty())
+		jsonMessage += "\"message\": " + '\"' + message + "\" ";
+
+	jsonMessage += "}";	
+
+	return jsonMessage;
 }
 
 void ServerController::Lock() {

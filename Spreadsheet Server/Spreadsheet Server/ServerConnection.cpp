@@ -7,6 +7,7 @@
 
 #include "EditRequest.h"
 #include "ServerConnection.h"
+#include "ServerController.h"
 
 
 /// <summary>
@@ -15,7 +16,8 @@
 
 
 	// Creates a new server connection, initializes the members of the Connection
-ServerConnection::ServerConnection() : s_ioservice(), s_acceptor(s_ioservice), connections() { }
+ServerConnection::ServerConnection() : s_ioservice(), s_acceptor(s_ioservice), connections() {
+}
 
 /// <summary>
 /// Starts the server. The io_service allows for asynchrony
