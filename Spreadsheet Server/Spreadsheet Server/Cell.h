@@ -103,6 +103,13 @@ public:
 	/// </summary>
 	/// <returns>True on successful revert, else false</returns>
 	bool Revert();
+
+	/// <summary>
+	/// Less than operator
+	/// </summary>
+	/// <param name="other">Cell to compare to</param>
+	/// <returns>True if this < other</returns>
+	bool operator< (const Cell& other) const;
 };
 
 #endif

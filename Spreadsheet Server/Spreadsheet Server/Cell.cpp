@@ -49,3 +49,7 @@ const Formula Cell::GetPreviousState() const {
 const list<Formula> Cell::GetPreviousStates() const {
 	return previousContents;
 }
+
+bool Cell::operator< (const Cell& other) const {
+	return this->name < other.name;
+}
