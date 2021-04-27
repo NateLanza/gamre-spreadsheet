@@ -33,6 +33,11 @@ public:
 	/// <param name="cells">Non-empty cells in the spreadsheet</param>
 	/// <param name="edits">Edit history; most recent edit at the top</param>
 	StoredSpreadsheet(set<Cell> cells, list<CellEdit> edits);
+
+	/// <summary>
+	/// Default constructor, creates this with empty cell & edit lists
+	/// </summary>
+	StoredSpreadsheet();
 };
 
 class Storage

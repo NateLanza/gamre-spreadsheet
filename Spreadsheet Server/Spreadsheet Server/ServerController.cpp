@@ -196,3 +196,7 @@ void ServerController::Lock() {
 void ServerController::Unlock() {
 	threadkey.unlock();
 }
+
+void ServerController::StopServer() {
+	// TODO: Implement
+}

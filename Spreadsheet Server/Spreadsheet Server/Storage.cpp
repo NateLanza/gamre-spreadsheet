@@ -11,10 +11,10 @@ namespace fs = std::experimental::filesystem;
 /// </summary>
 /// <param name="cells">The set of cells in the stored spreadsheet</param>
 /// <param name="edits">The list of edits in the stored spreadsheet</param>
-StoredSpreadsheet::StoredSpreadsheet(set<Cell> cells, list<CellEdit> edits)
-{
-	this->cells = cells;
-	this->edits = edits;
+StoredSpreadsheet::StoredSpreadsheet(set<Cell> cells, list<CellEdit> edits) : cells(cells), edits(edits)
+{}
+
+StoredSpreadsheet::StoredSpreadsheet() : cells(), edits() {
 }
 
 /// <summary>
@@ -86,8 +86,8 @@ StoredSpreadsheet Storage::Open(string filename)
 	}
 	catch(exception e)
 	{
-		StoredSpreadsheet ss();
-		return ss();
+		StoredSpreadsheet ss;
+		return ss;
 	}
 }
 
