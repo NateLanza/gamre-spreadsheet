@@ -51,6 +51,9 @@
     <ClCompile Include="TestSpreadsheetState.cpp">
       <Filter>Tester Files</Filter>
     </ClCompile>
+    <ClCompile Include="Connection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h">
