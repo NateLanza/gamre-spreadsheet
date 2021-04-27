@@ -17,7 +17,7 @@ int main() {
 	Assert(ss.ClientSelectedCell("A1", 1), "2 failed");
 	Assert(ss.EditCell("A1", "3.1", 1), "3 failed");
 	// Make sure edits are stored properly
-	Assert(ss.GetPopulatedCells().front().GetContents() == "3.1", "4 failed");
+	Assert(ss.GetPopulatedCells().begin()->GetContents() == "3.1", "4 failed");
 	// Test select behavior
 	Assert(!ss.ClientSelectedCell("A1", 2), "5 failed");
 	ss.SelectCell("A1", 2);
@@ -35,10 +35,10 @@ int main() {
 	Assert(ss.GetEditHistory().front().GetPriorContents().ToString() == "3.1", "12 failed");
 	// Make sure undo works
 	Assert(ss.UndoLastEdit(), "13 failed");
-	Assert(ss.GetPopulatedCells().front().GetContents() == "3.1", "14 failed");
+	Assert(ss.GetPopulatedCells().begin()->GetContents() == "3.1", "14 failed");
 	Assert(ss.UndoLastEdit(), "15 failed");
 	Assert(ss.GetEditHistory().size() == 2, "16 failed");
-	Assert(ss.GetPopulatedCells().front().GetContents() == "=3+1", "17 failed");
+	Assert(ss.GetPopulatedCells().begin()->GetContents() == "=3+1", "17 failed");
 	// Make sure we can have multiple cells
 	ss.SelectCell("A2", 1);
 	Assert(ss.EditCell("A2", "hello", 1), "18 failed");
