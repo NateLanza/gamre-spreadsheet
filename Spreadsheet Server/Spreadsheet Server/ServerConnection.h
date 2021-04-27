@@ -3,20 +3,19 @@
 #include "Client.h"
 #include "Connection.h"
 #include "ServerController.h"
+#include <stack>
 #include <boost/asio.hpp> 
 
 #ifndef SERVER_CONNECTION_H
 #define SERVER_CONNECTION_H
-
-
-
 
 class ServerConnection 
 {
 	boost::asio::io_service s_ioservice;					// Boost class that supports asynchronous functions
 	boost::asio::ip::tcp::acceptor s_acceptor;				// Boost class that accepts clients
 	std::list<Connection> connections;						// List of Connected clients
-	//ServerController control;
+	//ServerController *control;
+	std::stack<Client*> dlt_clients;
 
 	using it_connection = std::list<Connection>::iterator;	// Iterator for each connection
 
@@ -24,6 +23,10 @@ public:
 							/*See ServerConnetion.cpp for method definitions and comments*/
 
 	ServerConnection();
+
+	int dlt_size();
+
+	Client* get_dlt();
 
 	void run();
 
@@ -40,6 +43,8 @@ public:
 	void listen(uint16_t port);
 
 	void broadcast(std::list<Client*> clients, std::string message);
+
+	
 };
 
 

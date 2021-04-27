@@ -17,6 +17,18 @@
 
 	// Creates a new server connection, initializes the members of the Connection
 ServerConnection::ServerConnection() : s_ioservice(), s_acceptor(s_ioservice), connections() {
+	//control = new ServerController();
+}
+
+int ServerConnection::dlt_size() {
+	return dlt_clients.size();
+}
+
+Client* ServerConnection::get_dlt() {
+	Client* deleted = dlt_clients.top();
+	dlt_clients.pop();
+	
+	return deleted;
 }
 
 /// <summary>
