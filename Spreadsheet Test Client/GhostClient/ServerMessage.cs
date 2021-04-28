@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace SS {
+namespace TestHandler {
 
     /// <summary>
     /// Represents a message received from the server
