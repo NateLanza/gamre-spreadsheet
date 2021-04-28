@@ -8,7 +8,7 @@ using namespace std;
 // See ServerController.h for method documentation
 
 ServerController::ServerController() : openSpreadsheets(), clientConnections(), storage() {
-	network = new ServerConnection;
+	network = new ServerConnection(this);
 }
 
 void ServerController::StartServer() {	

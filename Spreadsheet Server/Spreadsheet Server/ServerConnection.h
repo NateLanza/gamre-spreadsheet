@@ -2,7 +2,6 @@
 
 #include "Client.h"
 #include "Connection.h"
-#include "ServerController.h"
 #include "EditRequest.h"
 
 #include <stack>
@@ -13,14 +12,15 @@
 #ifndef SERVER_CONNECTION_H
 #define SERVER_CONNECTION_H
 
+// Forward declare so we can use ptrs to it
+class ServerController;
+
 class ServerConnection 
 {
 	boost::asio::io_service s_ioservice;					// Boost class that supports asynchronous functions
 	boost::asio::ip::tcp::acceptor s_acceptor;				// Boost class that accepts clients
 	std::list<Connection> connections;						// List of Connected clients
 	ServerController *control;
-	std::stack<Client*> dlt_clients;
-	std::stack<EditRequest> requests;
 		
 	unordered_map<int, Client*> connected_clients;
 	int ids = 0;
@@ -30,15 +30,7 @@ class ServerConnection
 public:
 							/*See ServerConnetion.cpp for method definitions and comments*/
 
-	ServerConnection();
-
-	int dlt_size();
-
-	Client* get_dlt();
-
-	int request_size();
-
-	EditRequest get_request();
+	ServerConnection(ServerController* control);
 
 	void run();
 
