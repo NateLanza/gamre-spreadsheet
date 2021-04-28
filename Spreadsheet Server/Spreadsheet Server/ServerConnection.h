@@ -2,7 +2,6 @@
 
 #include "Client.h"
 #include "Connection.h"
-#include "ServerController.h"
 #include "EditRequest.h"
 
 #include <stack>
@@ -12,6 +11,8 @@
 
 #ifndef SERVER_CONNECTION_H
 #define SERVER_CONNECTION_H
+
+class ServerController;
 
 class ServerConnection 
 {
@@ -30,7 +31,7 @@ class ServerConnection
 public:
 							/*See ServerConnetion.cpp for method definitions and comments*/
 
-	ServerConnection();
+	ServerConnection(ServerController* control);
 
 	int dlt_size();
 

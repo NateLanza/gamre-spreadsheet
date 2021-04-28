@@ -23,8 +23,7 @@ using boost::property_tree::write_json;
 
 class ServerController;
 	// Creates a new server connection, initializes the members of the Connection
-ServerConnection::ServerConnection() : s_ioservice(), s_acceptor(s_ioservice), connections() {
-	control = new ServerController();
+ServerConnection::ServerConnection(ServerController* control) : s_ioservice(), s_acceptor(s_ioservice), connections(), control(control) {
 }
 
 int ServerConnection::dlt_size() {
