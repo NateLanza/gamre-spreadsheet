@@ -16,3 +16,12 @@ C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\Formula\obj\Debug\net
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\Formula\obj\Debug\netstandard2.0\Formula.csproj.CoreCompileInputs.cache
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\Formula\obj\Debug\netstandard2.0\Formula.dll
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\Formula\obj\Debug\netstandard2.0\Formula.pdb
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.deps.json
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.dll
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.pdb
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.csprojAssemblyReference.cache
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.AssemblyInfoInputs.cache
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.AssemblyInfo.cs
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.csproj.CoreCompileInputs.cache
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.dll
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.pdb

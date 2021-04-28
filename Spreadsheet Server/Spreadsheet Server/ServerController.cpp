@@ -1,9 +1,9 @@
 #include "ServerController.h"
 #include "Storage.h"
-//#include <windows.data.json.h>
+
 //#include <boost/json.hpp>
 
-//using windows.data.json;
+
 using namespace std;
 // See ServerController.h for method documentation
 
@@ -200,6 +200,30 @@ void ServerController::Unlock() {
 }
 
 void ServerController::StopServer() {
-	// TODO: Implement
+	// Save spreadsheet
+	for (pair<string, SpreadsheetState*> ssPair : openSpreadsheets) {
+		SpreadsheetState* ss = ssPair.second;
+		StoredSpreadsheet toStore(ss->GetPopulatedCells(), ss->GetEditHistory());
+		storage.Save(ssPair.first, toStore);
+		delete ssPair.second;
+	}
+
+	// Inform clients of disconnect
+	list<Client*> toSend;
+	for (pair<string, list<Client*>> Clients : clientConnections) {
+		// Send message
+		network->broadcast(Clients.second, SerializeMessage(
+			"serverError",
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			"Server closing"
+		));
+
+		// Delete list
+		Clients.second.clear();
+		clientConnections.erase(Clients.first);
+	}
 }
 

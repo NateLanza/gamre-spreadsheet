@@ -16,3 +16,12 @@ C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\NetworkController\obj
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.csproj.CoreCompileInputs.cache
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.dll
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.pdb
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\NetworkController\bin\Debug\netstandard2.0\NetworkController.deps.json
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\NetworkController\bin\Debug\netstandard2.0\NetworkController.dll
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\NetworkController\bin\Debug\netstandard2.0\NetworkController.pdb
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.csprojAssemblyReference.cache
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.AssemblyInfoInputs.cache
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.AssemblyInfo.cs
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.csproj.CoreCompileInputs.cache
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.dll
+C:\Users\izana\Source\Repos\gamre-spreadsheet\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.pdb

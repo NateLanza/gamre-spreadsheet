@@ -4,7 +4,6 @@
 // See Cell.h for function documentation
 
 Cell::Cell() : name(), contents(""), previousContents() {
-	throw new exception("Do not use Cell's default constructor");
 }
 
 Cell::Cell(const string name, const string contents) : name(name), contents(contents), previousContents() {
