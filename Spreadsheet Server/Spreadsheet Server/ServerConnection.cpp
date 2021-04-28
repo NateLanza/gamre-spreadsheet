@@ -95,9 +95,10 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 				ids++;
 
 				state->user_chosen = true;
-
+				std::cout << "Sending spreadsheet names: " << s << std::endl;
 				// Sends the names of available spreadsheets to the client, followed by a newline. 
 				for (auto name : control->GetSpreadsheetNames()) {
+					std::cout << "Spreadsheet: " << s << std::endl;
 					auto buffer = std::make_shared<std::string>(name + "\n");
 					auto handler = boost::bind(&ServerConnection::mng_send, this, state, buffer, boost::asio::placeholders::error);
 					boost::asio::async_write(state->socket, boost::asio::buffer(*buffer), handler);

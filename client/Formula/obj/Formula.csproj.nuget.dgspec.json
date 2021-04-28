@@ -1,7 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj": {}
   },
   "projects": {
@@ -13,31 +12,9 @@
         "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj",
         "packagesPath": "C:\\Users\\izana\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\Formula\\obj\\",
-=======
-    "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Formula\\Formula.csproj": {}
-  },
-  "projects": {
-    "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Formula\\Formula.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Formula\\Formula.csproj",
-        "projectName": "Formula",
-        "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Formula\\Formula.csproj",
-        "packagesPath": "C:\\Users\\dolph\\.nuget\\packages\\",
-        "outputPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Formula\\obj\\",
->>>>>>> 026f474cbffb862158ee7964589ef325049d2423
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-<<<<<<< HEAD
           "C:\\Users\\izana\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
-          "C:\\Users\\dolph\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
->>>>>>> 026f474cbffb862158ee7964589ef325049d2423
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

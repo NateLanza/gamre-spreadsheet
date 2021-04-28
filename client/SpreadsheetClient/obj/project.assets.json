@@ -265,42 +265,19 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
     "C:\\Users\\izana\\.nuget\\packages\\": {}
-=======
-    "C:\\Users\\dolph\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
->>>>>>> 026f474cbffb862158ee7964589ef325049d2423
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
       "projectName": "SpreadsheetClient",
       "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
       "packagesPath": "C:\\Users\\izana\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\obj\\",
-=======
-      "projectUniqueName": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
-      "projectName": "SpreadsheetClient",
-      "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
-      "packagesPath": "C:\\Users\\dolph\\.nuget\\packages\\",
-      "outputPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\SpreadsheetClient\\obj\\",
->>>>>>> 026f474cbffb862158ee7964589ef325049d2423
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-<<<<<<< HEAD
         "C:\\Users\\izana\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
-        "C:\\Users\\dolph\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
->>>>>>> 026f474cbffb862158ee7964589ef325049d2423
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -314,7 +291,6 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "projectReferences": {
-<<<<<<< HEAD
             "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj": {
               "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj"
             },
@@ -323,16 +299,6 @@
             },
             "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {
               "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj"
-=======
-            "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj": {
-              "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj"
-            },
-            "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Formula\\Formula.csproj": {
-              "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Formula\\Formula.csproj"
-            },
-            "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {
-              "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj"
->>>>>>> 026f474cbffb862158ee7964589ef325049d2423
             }
           }
         }
@@ -371,5 +337,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
