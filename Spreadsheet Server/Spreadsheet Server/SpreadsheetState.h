@@ -58,10 +58,10 @@ private:
 	/// Can use a read lock, or not if already encased in one
 	/// </summary>
 	/// <param name="name">Name of cell</param>
-	/// <param name="f">New formula for cell</param>
+	/// <param name="f">New contents for cell</param>
 	/// <param name="readLock">Whether to use an internal read lock. Set to false if encased in a lock</param>
 	/// <returns>True if a circular dependency would be created, else false</returns>
-	const bool CheckNewCellCircular(const string name, Formula& f, const bool readLock);
+	const bool CheckNewCellCircular(const string name, const string& f, const bool readLock);
 
 	/// <summary>
 	/// Locks a critical section for writing
@@ -92,25 +92,14 @@ private:
 	shared_mutex threadkey;
 
 	/// <summary>
-	/// Removes a cell from the cell list if it is empty and
-	/// has no prior state to revert to
-	/// Uses a write lock if lock = true. Otherwise, should be encapsulated in a write lock
-	/// </summary>
-	/// <param name="lock">Whether to use a write lock</param>
-	/// <param name="cell">Cell to maybe remove</param>
-	void RemoveCellIfEmpty(const string cell, const bool lock);
-
-	/// <summary>
 	/// Adds a cell to cells if it doesn't already exist,
 	/// or updates the existing entry if it does.
-	/// Once finished, calls RemoveCellIfEmpty on the cell
-	/// to remove it if the update emptied it.
 	/// Uses a write lock if lock == true. Otherwise, should be encapsulated in a write lock
 	/// </summary>
 	/// <param name="lock">Whether to use a write lock</param>
 	/// <param name="cellName">Name of cell</param>
 	/// <param name="content">Cell content</param>
-	void AddOrUpdateCell(const string cellName, const Formula& content, const bool lock);
+	void AddOrUpdateCell(const string cellName, const string& content, const bool lock);
 
 	/// <summary>
 	/// Checks whether a cell exists in this object's map
@@ -119,6 +108,15 @@ private:
 	/// <param name="cell">Cell to check for</param>
 	/// <returns>True if cell exists, else false</returns>
 	const bool CellExists(const string cell) const;
+
+	/// <summary>
+	/// Static method that returns if the given cell contents are valid or not
+	/// </summary>
+	/// <param name="contents"></param>
+	/// <returns></returns>
+	static bool ValidCellContents(const string contents);
+
+
 
 public:
 	/// <summary>
@@ -192,21 +190,11 @@ public:
 	list<CellEdit> GetEditHistory();
 
 	/// <summary>
-	/// Gets all non-empty cells in this spreadsheet
-	/// Also prunes all empty cells from the spreadsheet's map
+	/// Gets all cells in this spreadsheet
 	/// Will use a read lock and multiple write locks
 	/// </summary>
 	/// <returns>Cells, as a list</returns>
 	set<Cell> GetPopulatedCells();
-
-	/// <summary>
-	/// Checks whether a cell has content
-	/// Will use a read lock if lock == true, otherwise should be encased in a lock
-	/// </summary>
-	/// <param name="cell">Cell to check for content</param>
-	/// <param name="lock">Whether to use a read lock. MUST be true if used outside this class</param>
-	/// <returns>True if cell is not empty (has content), else false</returns>
-	const bool CellNotEmpty(const string cell, const bool lock);
 
 	/// <summary>
 	/// Gets the contents of a cell

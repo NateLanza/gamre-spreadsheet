@@ -1,11 +1,12 @@
 #include "SpreadsheetState.h"
+#include <iostream>
 
 // See SpreadsheetState.h for full method documentation
 
 /// <summary>
 /// Default constructor. Initializes all fields to empty values
 /// </summary>
-SpreadsheetState::SpreadsheetState(): cells(), edits(), dependencies(), selections(), threadkey()
+SpreadsheetState::SpreadsheetState() : cells(), edits(), dependencies(), selections(), threadkey()
 {
 }
 
@@ -18,7 +19,7 @@ SpreadsheetState::SpreadsheetState(set<Cell>& cells, list<CellEdit>& edits) : ce
 			dependencies.AddDependency(var, cell.GetName());
 		}
 		// Add to cell list
-		this->cells[cell.GetName()] = *new Cell(cell.GetName(), Formula(cell.GetContents()));
+		AddOrUpdateCell(cell.GetName(), cell.GetContents(), false);
 	}
 	WriteUnlock();
 }
@@ -45,49 +46,44 @@ bool SpreadsheetState::ClientSelectedCell(const string cell, const int ClientID)
 }
 
 bool SpreadsheetState::EditCell(const string name, const string content, const int ClientID) {
-	WriteLock();
 	// Make sure the client has this cell selected
 	if (!ClientSelectedCell(name, ClientID)) {
-		WriteUnlock();
 		return false;
 	}
 
-
 	// Check whether the new content is valid
 	try {
-		// This will throw on an invalid format
-		Formula f(content);
-		
-		// Check for circular dependencies
-		if (CheckNewCellCircular(name, f, false)) {
-			WriteUnlock();
+		if (!ValidCellContents(content))
 			return false;
-		}
-			
-		
+
+		// Check for circular dependencies
+		if (CheckNewCellCircular(name, content, true))
+			return false;
+
+		WriteLock();
 		// Save old contents of cell
-		string oldContents = CellNotEmpty(name, false) ? cells[name].GetContents() : "";
+		string oldContents = CellExists(name) ? cells[name].GetContents() : "";
 
 		// No circular dependencies found, add cell
-		edits.push_front(* new CellEdit(name, oldContents)); // Add cellEdit
-		AddOrUpdateCell(name, f, false); // Modify cell
-		dependencies.ReplaceDependents(name, f.GetVariables()); // Modify dependencies
+		edits.push_front(CellEdit(name, oldContents)); // Add cellEdit
+		AddOrUpdateCell(name, content, false); // Modify cell
+		dependencies.ReplaceDependents(name, cells[name].GetVariables()); // Modify dependencies
 		WriteUnlock();
 		return true;
 	}
 	catch (exception) {
+		WriteUnlock();
+		return false;
 	}
 
-	WriteUnlock();
-	return false;
 }
 
-const bool SpreadsheetState::CheckNewCellCircular(const string name, Formula& f, const bool readLock) {
+const bool SpreadsheetState::CheckNewCellCircular(const string name, const string& f, const bool readLock) {
 	unordered_set<string> visited = unordered_set<string>();
 	visited.insert(name);
 	if (readLock)
 		ReadLock(); // Read lock
-	if (CheckCircularDependencies(visited, f.GetVariables())) {
+	if (CheckCircularDependencies(visited, Cell(name, f).GetVariables())) {
 		if (readLock)
 			ReadUnlock(); // Read unlock
 		return true;
@@ -106,15 +102,14 @@ const bool SpreadsheetState::CheckCircularDependencies(unordered_set<string>& vi
 			return true;
 		// Visit this cell
 		visited.emplace(cell);
-		if (CellNotEmpty(cell, false) && CheckCircularDependencies(visited, cells[cell].GetVariables())) {
+		if (CellExists(cell) && CheckCircularDependencies(visited, cells[cell].GetVariables()))
 			return true;
-		}
 	}
 
 	return false;
 }
 
-bool SpreadsheetState::RevertCell(const string cell) {	
+bool SpreadsheetState::RevertCell(const string cell) {
 	WriteLock();
 	// Make sure cell exists & can be reverted
 	if (!CellExists(cell) || !cells[cell].CanRevert()) {
@@ -123,7 +118,7 @@ bool SpreadsheetState::RevertCell(const string cell) {
 	}
 
 	// Get cell's old state
-	Formula oldState = cells[cell].GetPreviousState();
+	string oldState = cells[cell].GetPreviousState();
 
 	// Check for circular dependencies
 	if (CheckNewCellCircular(cell, oldState, false)) {
@@ -132,9 +127,10 @@ bool SpreadsheetState::RevertCell(const string cell) {
 	}
 
 	// No circular dependencies found, go through with revert
-	edits.push_front(* new CellEdit(cell, cells[cell].GetContents())); // Add cellEdit
+	//possible error with the new
+	edits.push_front(CellEdit(cell, cells[cell].GetContents())); // Add cellEdit
 	bool result = cells[cell].Revert(); // Revert cell
-	dependencies.ReplaceDependents(cell, oldState.GetVariables()); // Modify dependencies
+	dependencies.ReplaceDependents(cell, cells[cell].GetVariables()); // Modify dependencies
 	WriteUnlock();
 	return true;
 }
@@ -142,9 +138,14 @@ bool SpreadsheetState::RevertCell(const string cell) {
 bool SpreadsheetState::UndoLastEdit() {
 	// Writelock the method so that the edit stack doesn't change
 	WriteLock();
+	if (edits.size() == 0) {
+		WriteUnlock();
+		return false;
+	}
+
 	// Validate undo
 	string name = edits.front().GetName();
-	Formula f = edits.front().GetPriorContents();
+	string f = edits.front().GetPriorContents();
 	if (CheckNewCellCircular(name, f, false)) {
 		WriteUnlock();
 		return false;
@@ -152,28 +153,54 @@ bool SpreadsheetState::UndoLastEdit() {
 
 	// Undo validated, implement it
 	AddOrUpdateCell(name, f, false);
-	dependencies.ReplaceDependents(name, f.GetVariables());
+	dependencies.ReplaceDependents(name, cells[name].GetVariables());
 	edits.pop_front();
 	WriteUnlock();
 
 	return true;
 }
 
-void SpreadsheetState::AddOrUpdateCell(const string cellName, const Formula& content, const bool lock) {
+void SpreadsheetState::AddOrUpdateCell(const string cellName, const string& content, const bool lock) {
 	if (lock)
 		WriteLock();
 	if (CellExists(cellName)) {
 		cells[cellName].SetContents(content);
-	} else {
-		cells[cellName] = *(new Cell(cellName, content));
 	}
-	RemoveCellIfEmpty(cellName, false);
+	else {
+		if (!CellExists(cellName))
+			cells.emplace(cellName, Cell(cellName, ""));
+		cells[cellName].SetContents(content);
+	}
 	if (lock)
 		WriteUnlock();
 }
 
-const bool SpreadsheetState::CellExists(const string cell) const {
+const bool SpreadsheetState::CellExists(const string cell) const
+{
 	return cells.count(cell) == 1;
+}
+
+bool SpreadsheetState::ValidCellContents(const string contents)
+{
+	//if empty string, its fine
+	if (contents.size() == 0)
+		return true;
+
+	//if the first character is '=', we check if its a valid formula
+	if (contents[0] == '=') {
+		try
+		{
+			Formula f = Formula(contents);
+			return true;
+		}
+		catch (exception e)
+		{
+			return false;
+		}
+	}
+
+	//if its not a formula, any valid string is fine
+	return true;
 }
 
 list<CellEdit> SpreadsheetState::GetEditHistory() {
@@ -186,10 +213,8 @@ list<CellEdit> SpreadsheetState::GetEditHistory() {
 set<Cell> SpreadsheetState::GetPopulatedCells() {
 	set<Cell> result = set<Cell>();
 	// Prune empty cells
-	for (auto cellEntry : cells) {
-		// Will use a write lock
-		RemoveCellIfEmpty(cellEntry.first, true);
-	}
+	WriteLock();
+	WriteUnlock();
 
 	ReadLock();
 	// Put all cells in result list
@@ -197,39 +222,6 @@ set<Cell> SpreadsheetState::GetPopulatedCells() {
 		result.insert(cellEntry.second);
 	ReadUnlock();
 	return result;
-}
-
-const bool SpreadsheetState::CellNotEmpty(const string cell, const bool lock) {
-	if (lock)
-		ReadLock();
-	if (CellExists(cell)) {
-		if (cells[cell].GetContents() != "") {
-			if (lock)
-				ReadUnlock();
-			return true;
-		} else {
-			if (lock)
-				ReadUnlock();
-			RemoveCellIfEmpty(cell, true);
-			return false;
-		}
-	} else {
-		if (lock)
-			ReadUnlock();
-		return false;
-	}
-}
-
-void SpreadsheetState::RemoveCellIfEmpty(const string cell, const bool lock) {
-	if (lock)
-		WriteLock();
-	if (CellExists(cell) && 
-		cells[cell].GetContents() == "" && 
-		!cells[cell].CanRevert()) {
-		cells.erase(cell);
-	}
-	if (lock)
-		WriteUnlock();
 }
 
 void SpreadsheetState::WriteLock() {
@@ -250,12 +242,13 @@ void SpreadsheetState::ReadUnlock() {
 
 const string SpreadsheetState::GetCell(const string name) {
 	ReadLock();
-	if (CellNotEmpty(name, false)) {
+	if (CellExists(name)) {
 		string result = cells[name].GetContents();
 		ReadUnlock();
 		return result;
-	} else {
+	}
+	else {
 		ReadUnlock();
-		throw new runtime_error(string("Cell " + name + " has no content to get"));
+		throw runtime_error(string("Cell " + name + " has no content to get"));
 	}
 }
