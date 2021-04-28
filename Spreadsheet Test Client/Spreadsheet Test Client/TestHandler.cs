@@ -5,9 +5,14 @@ namespace TestHandler
 {
     class TestHandler
     {
-        private static int numTests = 1;
+        private static int numTests = 6;
 
         private static string IP;
+
+        // Variables used in testing that the correct server messages are received
+        private static string desiredCell;
+        private static int desiredID;
+        private static bool correctSelectionReceived = false;
 
         static void Main(string[] args)
         {           
@@ -17,33 +22,260 @@ namespace TestHandler
             {
                 IP = args[1];                      // Second main Arg is IP
 
-                if (args[0] == "0")                // First main Arg is Test number
-                {  Test0();  }
-                else if (args[0] == "1")
-                { /*run test 1*/ }
+                if (args[0] == "1")                // First main Arg is Test number
+                {  Test1();  }
+                else if (args[0] == "2")
+                {  Test2();  }
+                else if (args[0] == "3")
+                {  Test3();  }
+                else if (args[0] == "4")
+                {  Test4();  }
+                else if (args[0] == "5")
+                {  Test5();  }
+                else if (args[0] == "6")
+                {  Test6();  }
             }
         }
 
+        /// <summary>
+        /// Default callback for a test which has timed out.
+        /// </summary>
+        /// <param name="source"> The timer which triggered this event </param>
+        /// <param name="e"> Standard event args </param>
         private static void Timeout (Object source, ElapsedEventArgs e)
         {  Console.WriteLine("Test Failed : Timeout");  }
 
-        static void Test0 ()
+        private static void CellSelectionHandler (string cell, string name, int ID)
         {
-            Console.WriteLine("Max runtime: 4 seconds");
+            if (cell == desiredCell && ID == desiredID)
+                correctSelectionReceived = true;
 
+            correctSelectionReceived = false;
+        }
+
+        /// <summary>
+        /// Tests that a client can connect to the server.
+        /// </summary>
+        public static void Test1 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
             Console.WriteLine("Basic Connection Test");
 
+            // Setup ghost client
             GhostClient client1 = new GhostClient(IP);
 
+            // Setup timer
             Timer time = new Timer(4000);
             time.Elapsed += Timeout;
 
+            // BEGIN TEST
             time.Start();
             client1.Connect();
 
             while (time.Enabled)
             {
                 if (client1.HasReceivedSpreadsheets())
+                {
+                    Console.WriteLine("Test Passed");
+                    time.Stop();
+                    time.Close();
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that a client can connect to a spreadsheet
+        /// </summary>
+        public static void Test2 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Spreadsheet Connection Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.ConnectToSpreadsheet("sheet");
+
+            while (time.Enabled)
+            {
+                if (client1.HasConnectedToSheet())
+                {
+                    Console.WriteLine("Test Passed");
+                    time.Stop();
+                    time.Close();
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+        
+        /// <summary>
+        /// Expands on Test1 to test that multiple clients can be connected to a server at once.
+        /// </summary>
+        public static void Test3 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Multi-Client Server Connection Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            GhostClient client2 = new GhostClient(IP);
+            GhostClient client3 = new GhostClient(IP);
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.Connect();
+            client2.Connect();
+            client3.Connect();
+
+            while (time.Enabled)
+            {
+                if (client1.HasReceivedSpreadsheets() && client2.HasReceivedSpreadsheets() && client3.HasReceivedSpreadsheets())
+                {
+                    Console.WriteLine("Test Passed");
+                    time.Stop();
+                    time.Close();
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Expands on Test2 to test that multiple clients can be connected to a spreadsheet at once.
+        /// </summary>
+        public static void Test4 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Multi-Client Spreadsheet Connection Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            GhostClient client2 = new GhostClient(IP);
+            GhostClient client3 = new GhostClient(IP);
+            client1.Connect();
+            client2.Connect();
+            client3.Connect();
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+
+            // BEGIN TEST
+            time.Start();
+            client1.ConnectToSpreadsheet("sheet");
+            client2.ConnectToSpreadsheet("sheet");
+            client3.ConnectToSpreadsheet("sheet");
+
+            while (time.Enabled)
+            {
+                if (client1.HasConnectedToSheet() && client2.HasConnectedToSheet() && client3.HasConnectedToSheet())
+                {
+                    Console.WriteLine("Test Passed");
+                    time.Stop();
+                    time.Close();
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests basic cell selection by ensuring that the proper server message is received after the request is made
+        /// </summary>
+        public static void Test5 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Basic Cell Selection Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredID = client1.ID;
+            client1.SelectionChanged += CellSelectionHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendSelectRequest("A1");
+
+            while (time.Enabled)
+            {
+                if (correctSelectionReceived)
+                {
+                    Console.WriteLine("Test Passed");
+                    time.Stop();
+                    time.Close();
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Expands on Test5 to test that the correct server response to a cell selection is received by multiple clients
+        /// </summary>
+        public static void Test6()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Multi-Client Basic Cell Selection Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            GhostClient client2 = new GhostClient(IP);
+            client1.Connect();
+            client2.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+            client2.ConnectToSpreadsheet("sheet");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredID = client1.ID;
+            client2.SelectionChanged += CellSelectionHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendSelectRequest("A1");
+
+            while (time.Enabled)
+            {
+                if (correctSelectionReceived)
                 {
                     Console.WriteLine("Test Passed");
                     time.Stop();
