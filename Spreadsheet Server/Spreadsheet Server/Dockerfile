@@ -25,4 +25,4 @@ COPY . server/
 EXPOSE 1100
 
 # Compile server source
-RUN g++ -std=c++17 -o server.out server/*.cpp && ./server.out
+RUN g++ -lstdc++fs -std=c++17 -o server.out server/*.cpp -lstdc++fs
