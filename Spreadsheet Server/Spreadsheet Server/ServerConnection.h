@@ -15,7 +15,7 @@
 // Forward declare so we can use ptrs to it
 class ServerController;
 
-class ServerConnection 
+class ServerConnection
 {
 	boost::asio::io_service s_ioservice;					// Boost class that supports asynchronous functions
 	boost::asio::ip::tcp::acceptor s_acceptor;				// Boost class that accepts clients
