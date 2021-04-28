@@ -24,6 +24,7 @@ class ServerConnection
 		
 	unordered_map<int, Client*> connected_clients;
 	int ids = 0;
+	
 
 	using it_connection = std::list<Connection>::iterator;	// Iterator for each connection
 

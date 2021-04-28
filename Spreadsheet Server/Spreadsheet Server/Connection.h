@@ -15,6 +15,7 @@ struct Connection {
 	boost::asio::streambuf read_buffer;					// The data received 
 	boost::asio::io_service& stored_service;				// Stored for copy constructor
 	int ID;
+	bool user_chosen = false;
 
 	Connection(boost::asio::io_service& io_service);		// Creates a Connection with io_service, which facilitates ansynchrony. 
 
