@@ -8,8 +8,6 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
-
-
 #include "EditRequest.h"
 #include "ServerConnection.h"
 #include "ServerController.h"
@@ -52,8 +50,11 @@ void ServerConnection::mng_send(it_connection state, std::shared_ptr<std::string
 
 	}
 	else {
+		std::string s((std::istreambuf_iterator<char>(&state->read_buffer)), std::istreambuf_iterator<char>());
 		std::cout << "Finished sending message\n";
 		//TO:DO ! SEND DATA!!
+
+		std::cout << s << std::endl;
 		if (state->socket.is_open())
 		{
 		}
@@ -74,7 +75,7 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 	{
 
 		std::string s((std::istreambuf_iterator<char>(&state->read_buffer)), std::istreambuf_iterator<char>());
-
+		std::cout << "Received message: " << s << std::endl;
 		// Checks if this JSON and needs to be serialized
 		if (s.at(0) != '{') {
 			
@@ -127,8 +128,8 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 
 			// If the client is already connected, sending an edit request
 
-				//Selector and messageType gone!
-				// Create a client pointer to add to the stack of requests
+			//Selector and messageType gone!
+			// Create a client pointer to add to the stack of requests
 			Client* c = connected_clients.at(state->ID);
 			EditRequest request(requestType, cellName, content, c);
 			control->ProcessClientRequest(request);
