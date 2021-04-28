@@ -70,7 +70,7 @@ namespace TestHandler
 
         private SocketState Connection;
 
-        private int ID;
+        public int ID;
 
         public GhostClient(string _IP)
         {
@@ -291,7 +291,8 @@ namespace TestHandler
                     Disconnected("Connection error occurred");
                 }
             }
-            // Continue look
+
+            // Continue loop
             Networking.GetData(Connection);
         }
 
