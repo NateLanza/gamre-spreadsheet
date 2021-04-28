@@ -56,6 +56,8 @@ public:
 
 	void broadcast(std::list<Client*> clients, std::string message);
 
+	void delete_client(Client* terminate);
+
 	
 };
 

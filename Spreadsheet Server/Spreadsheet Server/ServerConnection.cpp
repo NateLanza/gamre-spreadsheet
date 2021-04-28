@@ -100,20 +100,20 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 		//Params: string type, string cellName, string content, Client* client
 		
 		// Creates a tree and stream to read the json
-		ptree pt2;
-		std::istream is(&state->read_buffer);
-		read_json(is, pt2);
+		//ptree pt2;
+		//std::istream is(&state->read_buffer);
+		//read_json(is, pt2);
 
-		// Extracts value from keys
-		std::string messageType = pt2.get<std::string>("messageType");
-		std::string cellName = pt2.get<std::string>("cellName");
-		std::string content = pt2.get<std::string>("content");
-		std::string selector = pt2.get<std::string>("selector");
+		//// Extracts value from keys
+		//std::string messageType = pt2.get<std::string>("messageType");
+		//std::string cellName = pt2.get<std::string>("cellName");
+		//std::string content = pt2.get<std::string>("content");
+		//std::string selector = pt2.get<std::string>("selector");
 
-		// Create a client pointer to add to the stack of requests
-		Client* c = connected_clients.at(std::stoi(selector));
-		EditRequest request(messageType, cellName, content, c);
-		requests.push(request);
+		//// Create a client pointer to add to the stack of requests
+		//Client* c = connected_clients.at(std::stoi(selector));
+		//EditRequest request(messageType, cellName, content, c);
+		//requests.push(request);
 
 	}
 	// Reports an error, if one is present
@@ -235,6 +235,17 @@ void ServerConnection::broadcast(std::list<Client*> clients, std::string message
 	//	//its->socket.async_send(boost::asio::buffer(*buffer), handler);
 	//	boost::asio::async_write((con->socket), boost::asio::buffer(*buffer), handler);
 	//}
+}
+
+/// <summary>
+/// Deletes the specified client
+/// </summary>
+/// <param name="terminate"></param>
+void ServerConnection::delete_client(Client* terminate) {
+	
+	
+	connected_clients.erase(terminate->GetID());
+	delete terminate;
 }
 
 ///// <summary>
