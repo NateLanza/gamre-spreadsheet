@@ -12,7 +12,7 @@
 
 #include "EditRequest.h"
 #include "ServerConnection.h"
-//#include "ServerController.h"
+#include "ServerController.h"
 
 using boost::property_tree::ptree;
 using boost::property_tree::read_json;
@@ -21,10 +21,10 @@ using boost::property_tree::write_json;
 /// Networking of the server. Able to establish client / server connections via TCP Listener
 /// </summary>
 
-
+class ServerController;
 	// Creates a new server connection, initializes the members of the Connection
 ServerConnection::ServerConnection() : s_ioservice(), s_acceptor(s_ioservice), connections() {
-	//control = new ServerController();
+	control = new ServerController();
 }
 
 int ServerConnection::dlt_size() {

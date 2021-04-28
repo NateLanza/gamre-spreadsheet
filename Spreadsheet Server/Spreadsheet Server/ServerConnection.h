@@ -18,7 +18,7 @@ class ServerConnection
 	boost::asio::io_service s_ioservice;					// Boost class that supports asynchronous functions
 	boost::asio::ip::tcp::acceptor s_acceptor;				// Boost class that accepts clients
 	std::list<Connection> connections;						// List of Connected clients
-	//ServerController *control;
+	ServerController *control;
 	std::stack<Client*> dlt_clients;
 	std::stack<EditRequest> requests;
 		
