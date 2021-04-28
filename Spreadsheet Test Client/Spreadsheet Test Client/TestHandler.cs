@@ -11,8 +11,10 @@ namespace TestHandler
 
         // Variables used in testing that the correct server messages are received
         private static string desiredCell;
+        private static string desiredContent;
         private static int desiredID;
         private static bool correctSelectionReceived = false;
+        private static bool correctEditReceived = false;
         private static bool correctRejectionReceived = false;
 
         static void Main(string[] args)
@@ -37,6 +39,12 @@ namespace TestHandler
                     Test6();
                 else if (args[0] == "7")
                     Test7();
+                else if (args[0] == "8")
+                    Test8();
+                else if (args[0] == "9")
+                    Test9();
+                else if (args[0] == "10")
+                    Test10();
             }
         }
 
@@ -52,16 +60,18 @@ namespace TestHandler
         {
             if (cell == desiredCell && ID == desiredID)
                 correctSelectionReceived = true;
+        }
 
-            correctSelectionReceived = false;
+        private static void CellEditHandler(string cell, string content)
+        {
+            if (cell == desiredCell && content == desiredContent)
+                correctEditReceived = true;
         }
 
         private static void ChangeRejectedHandler (string cell, string message)
         {
             if (cell == desiredCell)
                 correctSelectionReceived = true;
-
-            correctSelectionReceived = false;
         }
 
         /// <summary>
@@ -214,7 +224,7 @@ namespace TestHandler
         }
 
         /// <summary>
-        /// Tests basic cell selection by ensuring that the proper server message is received after the request is made
+        /// Tests basic cell selections by ensuring that the proper server message is received after the request is made
         /// </summary>
         public static void Test5 ()
         {
@@ -323,6 +333,132 @@ namespace TestHandler
             // BEGIN TEST
             time.Start();
             client1.SendSelectRequest("Incorrect Input");
+
+            while (time.Enabled)
+            {
+                if (correctRejectionReceived)
+                {
+                    Console.WriteLine("Test Passed");
+                    time.Stop();
+                    time.Close();
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests basic cell edits by ensuring that the proper server message is received after the request is made
+        /// </summary>
+        public static void Test8()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Basic Cell Selection Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "New Content";
+            client1.CellChanged += CellEditHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendEditRequest("A1", "New Content");
+
+            while (time.Enabled)
+            {
+                if (correctEditReceived)
+                {
+                    Console.WriteLine("Test Passed");
+                    time.Stop();
+                    time.Close();
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests multi-client cell edits by ensuring that the proper server message is received after the request is made
+        /// </summary>
+        public static void Test9()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Basic Cell Selection Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            GhostClient client2 = new GhostClient(IP);
+            client1.Connect();
+            client2.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+            client2.ConnectToSpreadsheet("sheet");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "New Content";
+            client2.CellChanged += CellEditHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendEditRequest("A1", "New Content");
+
+            while (time.Enabled)
+            {
+                if (correctEditReceived)
+                {
+                    Console.WriteLine("Test Passed");
+                    time.Stop();
+                    time.Close();
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the correct change rejection is received when an invalid input is given to a cell edit request
+        /// </summary>
+        public static void Test10()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Basic Cell Edit Rejection Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            // Setup desired results and register handler
+            desiredCell = "Incorrect Input";
+            client1.ChangeRejected += ChangeRejectedHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendEditRequest("Incorrect Input", "New Content");
+
 
             while (time.Enabled)
             {
