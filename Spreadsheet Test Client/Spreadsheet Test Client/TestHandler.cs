@@ -15,9 +15,9 @@ namespace TestHandler
                 Console.WriteLine(numTests.ToString());
             else
             {
-                IP = args[1];    // Second main Arg is IP
+                IP = args[1];                      // Second main Arg is IP
 
-                if (args[0] == "0")                // First main arg is Test number
+                if (args[0] == "0")                // First main Arg is Test number
                 {  Test0();  }
                 else if (args[0] == "1")
                 { /*run test 1*/ }
