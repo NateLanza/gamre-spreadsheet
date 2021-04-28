@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClientHandler\ClientHandler.csproj" />
+    <ProjectReference Include="..\GhostClient\GhostClient.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Timers;
 
 namespace TestHandler
 {
@@ -6,7 +7,7 @@ namespace TestHandler
     {
         private static int numTests = 1;
 
-        private static ClientHandler c;
+        private static string IP;
 
         static void Main(string[] args)
         {           
@@ -14,27 +15,44 @@ namespace TestHandler
                 Console.WriteLine(numTests.ToString());
             else
             {
-                c = new ClientHandler(args[1]);    // Second main Arg is IP
+                IP = args[1];    // Second main Arg is IP
 
-                if (args[1] == "1")                // First main arg is Test number
+                if (args[0] == "0")                // First main arg is Test number
+                {  Test0();  }
+                else if (args[0] == "1")
                 { /*run test 1*/ }
             }
         }
 
-        static void Test1 ()
+        private static void Timeout (Object source, ElapsedEventArgs e)
+        {  Console.WriteLine("Test Failed : Timeout");  }
+
+        static void Test0 ()
         {
-            Console.WriteLine("Max runtime");
+            Console.WriteLine("Max runtime: 4 seconds");
 
-            Console.WriteLine("Test Name");
+            Console.WriteLine("Basic Connection Test");
 
-            /*
-            *    RUN THE TEST YAAAAAAY
-            */
+            GhostClient client1 = new GhostClient(IP);
 
-            if (true /*test passes*/)
-                Console.WriteLine("Test Passed");
-            else
-                Console.WriteLine("Test Failed");
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            time.Start();
+            client1.Connect();
+
+            while (time.Enabled)
+            {
+                if (client1.HasReceivedSpreadsheets())
+                {
+                    Console.WriteLine("Test Passed");
+                    time.Stop();
+                    time.Close();
+                    return;
+                }
+            }
+
+            time.Close();
         }
     }
 }

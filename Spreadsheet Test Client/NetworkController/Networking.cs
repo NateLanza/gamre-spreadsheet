@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace NetworkUtil
+namespace TestHandler
 {
     /// <summary>
     /// This class encapsulates code required for connecting clients and server via TcpListener.
