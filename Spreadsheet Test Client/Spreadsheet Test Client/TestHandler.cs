@@ -5,7 +5,7 @@ namespace TestHandler
 {
     class TestHandler
     {
-        private static int numTests = 6;
+        private static int numTests = 7;
 
         private static string IP;
 
@@ -13,6 +13,7 @@ namespace TestHandler
         private static string desiredCell;
         private static int desiredID;
         private static bool correctSelectionReceived = false;
+        private static bool correctRejectionReceived = false;
 
         static void Main(string[] args)
         {           
@@ -23,17 +24,19 @@ namespace TestHandler
                 IP = args[1];                      // Second main Arg is IP
 
                 if (args[0] == "1")                // First main Arg is Test number
-                {  Test1();  }
+                    Test1();
                 else if (args[0] == "2")
-                {  Test2();  }
+                    Test2();
                 else if (args[0] == "3")
-                {  Test3();  }
+                    Test3();
                 else if (args[0] == "4")
-                {  Test4();  }
+                    Test4();
                 else if (args[0] == "5")
-                {  Test5();  }
+                    Test5();
                 else if (args[0] == "6")
-                {  Test6();  }
+                    Test6();
+                else if (args[0] == "7")
+                    Test7();
             }
         }
 
@@ -48,6 +51,14 @@ namespace TestHandler
         private static void CellSelectionHandler (string cell, string name, int ID)
         {
             if (cell == desiredCell && ID == desiredID)
+                correctSelectionReceived = true;
+
+            correctSelectionReceived = false;
+        }
+
+        private static void ChangeRejectedHandler (string cell, string message)
+        {
+            if (cell == desiredCell)
                 correctSelectionReceived = true;
 
             correctSelectionReceived = false;
@@ -276,6 +287,46 @@ namespace TestHandler
             while (time.Enabled)
             {
                 if (correctSelectionReceived)
+                {
+                    Console.WriteLine("Test Passed");
+                    time.Stop();
+                    time.Close();
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the correct change rejection is received when an invalid input is given to a cell selection request
+        /// </summary>
+        public static void Test7 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Basic Cell Selection Rejection Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            // Setup desired results and register handler
+            desiredCell = "Incorrect Input";
+            client1.ChangeRejected += ChangeRejectedHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendSelectRequest("Incorrect Input");
+
+            while (time.Enabled)
+            {
+                if (correctRejectionReceived)
                 {
                     Console.WriteLine("Test Passed");
                     time.Stop();
