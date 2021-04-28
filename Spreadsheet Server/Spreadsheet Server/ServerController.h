@@ -15,6 +15,8 @@
 /// Coordinates between networking/clients, spreadsheet models (SpreadsheetState), and storage
 /// </summary>
 class ServerController {
+
+	
 public:
 	/// <summary>
 	/// Creates a new ServerController
@@ -54,6 +56,12 @@ public:
 	/// <returns>All cells in this spreadsheet, to be sent to the client</returns>
 	void ConnectClientToSpreadsheet(Client* client, string spreadsheet);
 
+	/// <summary>
+	/// Returns all of the names of the spreadsheets stored in the server
+	/// </summary>
+	/// <returns></returns>
+	std::list<std::string> GetSpreadsheetNames();
+
 private:
 
 	/// <summary>
@@ -68,12 +76,7 @@ private:
 	/// <param name="message">Jakkpot message</param>
 	/// <returns>Valid JSON string, terminated by \n character & ready to send to clients</returns>
 	const string SerializeMessage(string messageType, string cellName, string contents, int userID, string username, string message) const;
-
-	/// <summary>
-	/// Checks for any clients that have been removed. 
-	/// </summary>	
-	void CheckDeleted();
-
+	
 	/// <summary>
 	/// All spreadsheets which are currently open & being edited by users
 	/// Key is the name of the spreadsheet, value is the state of the spreadsheet

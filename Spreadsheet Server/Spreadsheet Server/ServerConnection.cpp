@@ -72,25 +72,52 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 	// Only process if bytes are received
 	if (bytes > 0)
 	{
-		//TO:DO ! PROCESS STRINGS INSTEAD OF PRINTING THEM OUT!!
-		// Prints out stream
-		//Params: string type, string cellName, string content, Client* client
 		
-		// Creates a tree and stream to read the json
-		//ptree pt2;
-		//std::istream is(&state->read_buffer);
-		//read_json(is, pt2);
+		
+		//Creates a tree and stream to read the json
+		ptree pt2;
+		std::istream is(&state->read_buffer);
+		read_json(is, pt2);
 
-		//// Extracts value from keys
-		//std::string messageType = pt2.get<std::string>("messageType");
-		//std::string cellName = pt2.get<std::string>("cellName");
-		//std::string content = pt2.get<std::string>("content");
-		//std::string selector = pt2.get<std::string>("selector");
+		// Extracts value from keys. Represents all possible client fields
+		std::string cellName = pt2.get<std::string>("cellName", "");
+		std::string content = pt2.get<std::string>("contents", "");
+		std::string userName = pt2.get<std::string>("userName", "");
+		std::string requestType = pt2.get<std::string>("requestType", "");
 
-		//// Create a client pointer to add to the stack of requests
-		//Client* c = connected_clients.at(std::stoi(selector));
-		//EditRequest request(messageType, cellName, content, c);
-		//requests.push(request);
+		// Creates client if only userName is provided
+		if (!userName.empty() && cellName.empty() && content.empty() && requestType.empty()) {
+
+			// Copies over a connection and registers it as the client's state
+			Connection c(state->stored_service);			
+			Client* client = new Client(ids, userName, &c);
+			connected_clients.emplace(ids, client);
+
+			// Sets the id of the client and increments the id count
+			c.setID(ids);
+			ids++;
+
+			// Sends the names of available spreadsheets to the client, followed by a newline. 
+			for (auto name : control->GetSpreadsheetNames()) {
+				auto buffer = std::make_shared<std::string>(name + "\n");
+				auto handler = boost::bind(&ServerConnection::mng_send, this, state, buffer, boost::asio::placeholders::error);
+				boost::asio::async_write(state->socket, boost::asio::buffer(*buffer), handler);
+			}
+
+			auto buffer = std::make_shared<std::string>("\n");
+			auto handler = boost::bind(&ServerConnection::mng_send, this, state, buffer, boost::asio::placeholders::error);
+			boost::asio::async_write(state->socket, boost::asio::buffer(*buffer), handler);
+		}
+		
+		// If the client is already connected, sending an edit request
+		else {
+			//Selector and messageType gone!
+			// Create a client pointer to add to the stack of requests
+			Client* c = connected_clients.at(state->ID);
+			EditRequest request(requestType, cellName, content, c);
+			control->ProcessClientRequest(request);
+		}
+		
 
 	}
 	// Reports an error, if one is present
@@ -122,21 +149,7 @@ void ServerConnection::mng_accept(it_connection state, boost::system::error_code
 	}
 	// On receiving a connection, starts ansyncronous read process with the connected socket. 
 	else
-	{
-
-		//TODO: COMPLETE THE PROCESS AS DESCRIBED IN THE PROTOCOL, DO NOT SEND A GREETING
-		std::string s = "username" + std::to_string(ids);
-
-		Connection c(state->stored_service);
-		Client* client = new Client(ids, s, &c);
-		connected_clients.emplace(ids, client);
-		ids++;
-
-		/*auto buffer = std::make_shared<std::string>("Hello World! \n");
-		auto handler = boost::bind(&ServerConnection::mng_send, this, state, buffer, boost::asio::placeholders::error);
-		boost::asio::async_write(state->socket, boost::asio::buffer(*buffer), handler);*/
-
-
+	{		
 		async_receive(state);
 	}
 	// Begin accepting more clients
@@ -219,7 +232,6 @@ void ServerConnection::broadcast(std::list<Client*> clients, std::string message
 /// </summary>
 /// <param name="terminate"></param>
 void ServerConnection::delete_client(Client* terminate) {
-	
 	
 	connected_clients.erase(terminate->GetID());
 	delete terminate;

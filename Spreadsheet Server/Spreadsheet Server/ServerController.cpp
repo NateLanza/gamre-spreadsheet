@@ -177,6 +177,17 @@ const string ServerController::SerializeMessage(string messageType, string cellN
 	return jsonMessage;
 }
 
+std::list<std::string> ServerController::GetSpreadsheetNames() {
+	std::list<std::string> names;
+
+	for (pair<std::string, SpreadsheetState*> element : openSpreadsheets) {
+		
+		names.push_back(element.first);
+	}
+
+	return names;
+}
+
 void ServerController::Lock() {
 	threadkey.lock();
 }
@@ -189,13 +200,3 @@ void ServerController::StopServer() {
 	// TODO: Implement
 }
 
-void ServerController::CheckDeleted() {
-	
-	while (network->dlt_size() > 0) {
-		Client* removed = network->get_dlt();
-
-		DisconnectClient(removed);
-		delete removed;
-	}
-
-}
