@@ -136,7 +136,7 @@ void ServerController::DisconnectClient(Client* client) {
 	Unlock();
 
 	// Broadcast disconnect to other clients
-	network->broadcast(clientConnections[client->spreadsheet],
+	network->broadcast(clientConnections[client->spreadsheet], 
 		SerializeMessage(
 			"disconnected",
 			NULL,
@@ -187,4 +187,15 @@ void ServerController::Unlock() {
 
 void ServerController::StopServer() {
 	// TODO: Implement
+}
+
+void ServerController::CheckDeleted() {
+	
+	while (network->dlt_size() > 0) {
+		Client* removed = network->get_dlt();
+
+		DisconnectClient(removed);
+		delete removed;
+	}
+
 }

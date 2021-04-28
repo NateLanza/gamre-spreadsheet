@@ -70,6 +70,11 @@ private:
 	const string SerializeMessage(string messageType, string cellName, string contents, int userID, string username, string message) const;
 
 	/// <summary>
+	/// Checks for any clients that have been removed. 
+	/// </summary>	
+	void CheckDeleted();
+
+	/// <summary>
 	/// All spreadsheets which are currently open & being edited by users
 	/// Key is the name of the spreadsheet, value is the state of the spreadsheet
 	/// </summary>
