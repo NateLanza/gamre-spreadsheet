@@ -4,12 +4,19 @@
 #include <iostream>
 #include <list>
 #include <memory>
+#include <sstream>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
+
 
 #include "EditRequest.h"
 #include "ServerConnection.h"
 //#include "ServerController.h"
 
-
+using boost::property_tree::ptree;
+using boost::property_tree::read_json;
+using boost::property_tree::write_json;
 /// <summary>
 /// Networking of the server. Able to establish client / server connections via TCP Listener
 /// </summary>
@@ -29,6 +36,18 @@ Client* ServerConnection::get_dlt() {
 	dlt_clients.pop();
 	
 	return deleted;
+}
+
+int ServerConnection::request_size() {
+	return requests.size();
+}
+
+EditRequest ServerConnection::get_request() {
+	EditRequest request = requests.top();
+	requests.pop();
+
+	return request;
+
 }
 
 /// <summary>
@@ -76,15 +95,25 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 	// Only process if bytes are received
 	if (bytes > 0)
 	{
-
-		// Processes the stream sent to the server
-		std::istream stream(&state->read_buffer);
-		std::string line;
-		std::getline(stream, line);
-
 		//TO:DO ! PROCESS STRINGS INSTEAD OF PRINTING THEM OUT!!
 		// Prints out stream
-		std::cout << line << std::endl;
+		//Params: string type, string cellName, string content, Client* client
+		
+		// Creates a tree and stream to read the json
+		ptree pt2;
+		std::istream is(&state->read_buffer);
+		read_json(is, pt2);
+
+		// Extracts value from keys
+		std::string messageType = pt2.get<std::string>("messageType");
+		std::string cellName = pt2.get<std::string>("cellName");
+		std::string content = pt2.get<std::string>("content");
+		std::string selector = pt2.get<std::string>("selector");
+
+		// Create a client pointer to add to the stack of requests
+		Client* c = connected_clients.at(std::stoi(selector));
+		EditRequest request(messageType, cellName, content, c);
+		requests.push(request);
 
 	}
 	// Reports an error, if one is present
@@ -119,11 +148,18 @@ void ServerConnection::mng_accept(it_connection state, boost::system::error_code
 	{
 
 		//TODO: COMPLETE THE PROCESS AS DESCRIBED IN THE PROTOCOL, DO NOT SEND A GREETING
-		std::cout << "Received Connection" << std::endl;
+		std::string s = "username" + std::to_string(ids);
 
-		auto buffer = std::make_shared<std::string>("Hello World! \n");
+		Connection c(state->stored_service);
+		Client* client = new Client(ids, s, &c);
+		connected_clients.emplace(ids, client);
+		ids++;
+
+		/*auto buffer = std::make_shared<std::string>("Hello World! \n");
 		auto handler = boost::bind(&ServerConnection::mng_send, this, state, buffer, boost::asio::placeholders::error);
-		boost::asio::async_write(state->socket, boost::asio::buffer(*buffer), handler);
+		boost::asio::async_write(state->socket, boost::asio::buffer(*buffer), handler);*/
+
+
 		async_receive(state);
 	}
 	// Begin accepting more clients
@@ -138,6 +174,7 @@ void ServerConnection::async_receive(it_connection state)
 {
 	auto handler = boost::bind(&ServerConnection::mng_receive, this, state, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred);
 	boost::asio::async_read_until(state->socket, state->read_buffer, "\n", handler);
+		
 }
 
 /// <summary>

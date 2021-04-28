@@ -136,7 +136,7 @@ void ServerController::DisconnectClient(Client* client) {
 	Unlock();
 
 	// Broadcast disconnect to other clients
-	network->broadcast(clientConnections[client->spreadsheet],
+	network->broadcast(clientConnections[client->spreadsheet], 
 		SerializeMessage(
 			"disconnected",
 			NULL,

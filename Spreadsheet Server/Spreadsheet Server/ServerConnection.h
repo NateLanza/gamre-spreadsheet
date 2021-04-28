@@ -3,8 +3,12 @@
 #include "Client.h"
 #include "Connection.h"
 #include "ServerController.h"
+#include "EditRequest.h"
+
 #include <stack>
 #include <boost/asio.hpp> 
+#include <unordered_map>
+
 
 #ifndef SERVER_CONNECTION_H
 #define SERVER_CONNECTION_H
@@ -16,6 +20,10 @@ class ServerConnection
 	std::list<Connection> connections;						// List of Connected clients
 	//ServerController *control;
 	std::stack<Client*> dlt_clients;
+	std::stack<EditRequest> requests;
+		
+	unordered_map<int, Client*> connected_clients;
+	int ids = 0;
 
 	using it_connection = std::list<Connection>::iterator;	// Iterator for each connection
 
@@ -27,6 +35,10 @@ public:
 	int dlt_size();
 
 	Client* get_dlt();
+
+	int request_size();
+
+	EditRequest get_request();
 
 	void run();
 
