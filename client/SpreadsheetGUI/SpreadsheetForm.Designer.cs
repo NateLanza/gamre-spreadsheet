@@ -40,6 +40,9 @@
             this.UsernameLabel = new System.Windows.Forms.Label();
             this.revert_button = new System.Windows.Forms.Button();
             this.undo_button = new System.Windows.Forms.Button();
+            this.newSSName = new System.Windows.Forms.TextBox();
+            this.newSSLabel = new System.Windows.Forms.Label();
+            this.newSSButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // SpreadsheetGrid
@@ -88,7 +91,7 @@
             // 
             // helpButton
             // 
-            this.helpButton.Location = new System.Drawing.Point(771, 19);
+            this.helpButton.Location = new System.Drawing.Point(1078, 55);
             this.helpButton.Name = "helpButton";
             this.helpButton.Size = new System.Drawing.Size(75, 23);
             this.helpButton.TabIndex = 6;
@@ -194,11 +197,41 @@
             this.undo_button.UseVisualStyleBackColor = true;
             this.undo_button.Click += new System.EventHandler(this.undo_button_Click);
             // 
+            // newSSName
+            // 
+            this.newSSName.Enabled = false;
+            this.newSSName.Location = new System.Drawing.Point(771, 21);
+            this.newSSName.Name = "newSSName";
+            this.newSSName.Size = new System.Drawing.Size(100, 20);
+            this.newSSName.TabIndex = 17;
+            // 
+            // newSSLabel
+            // 
+            this.newSSLabel.AutoSize = true;
+            this.newSSLabel.Location = new System.Drawing.Point(762, 6);
+            this.newSSLabel.Name = "newSSLabel";
+            this.newSSLabel.Size = new System.Drawing.Size(123, 13);
+            this.newSSLabel.TabIndex = 18;
+            this.newSSLabel.Text = "New Spreadsheet Name";
+            // 
+            // newSSButton
+            // 
+            this.newSSButton.Location = new System.Drawing.Point(877, 19);
+            this.newSSButton.Name = "newSSButton";
+            this.newSSButton.Size = new System.Drawing.Size(75, 23);
+            this.newSSButton.TabIndex = 19;
+            this.newSSButton.Text = "Create";
+            this.newSSButton.UseVisualStyleBackColor = true;
+            this.newSSButton.Click += new System.EventHandler(this.newSSButton_Click);
+            // 
             // SpreadsheetForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1601, 554);
+            this.Controls.Add(this.newSSButton);
+            this.Controls.Add(this.newSSLabel);
+            this.Controls.Add(this.newSSName);
             this.Controls.Add(this.undo_button);
             this.Controls.Add(this.revert_button);
             this.Controls.Add(this.UsernameLabel);
@@ -241,6 +274,9 @@
         private System.Windows.Forms.Label UsernameLabel;
         private System.Windows.Forms.Button revert_button;
         private System.Windows.Forms.Button undo_button;
+        private System.Windows.Forms.TextBox newSSName;
+        private System.Windows.Forms.Label newSSLabel;
+        private System.Windows.Forms.Button newSSButton;
     }
 }
 
