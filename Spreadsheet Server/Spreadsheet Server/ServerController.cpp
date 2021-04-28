@@ -34,6 +34,9 @@ void ServerController::ConnectClientToSpreadsheet(Client* client, string spreads
 	list<Client*> sendTo;
 	sendTo.push_back(client);
 	for (Cell cell : openSpreadsheets[spreadsheet]->GetPopulatedCells()) {
+		// Skip empty cells
+		if (cell.GetContents() == "")
+			continue;
 		network->broadcast(sendTo, SerializeMessage(
 			"cellUpdated",
 			cell.GetName(),
