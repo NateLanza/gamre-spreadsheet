@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SS {
+namespace TestHandler {
     /// <summary>
     /// Defines a series of constants which represent states of server connection.
     /// These are used as values of SpreadsheetController.ConnectionState

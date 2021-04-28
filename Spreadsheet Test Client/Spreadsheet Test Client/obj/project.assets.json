@@ -11,19 +11,6 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
-      "ClientHandler/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "GhostClient": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/ClientHandler.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/ClientHandler.dll": {}
-        }
-      },
       "GhostClient/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -78,11 +65,6 @@
         "packageIcon.png"
       ]
     },
-    "ClientHandler/1.0.0": {
-      "type": "project",
-      "path": "../ClientHandler/ClientHandler.csproj",
-      "msbuildProject": "../ClientHandler/ClientHandler.csproj"
-    },
     "GhostClient/1.0.0": {
       "type": "project",
       "path": "../GhostClient/GhostClient.csproj",
@@ -96,7 +78,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "ClientHandler >= 1.0.0"
+      "GhostClient >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -105,11 +87,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Spreadsheet Test Client\\TestHandler.csproj",
+      "projectUniqueName": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Spreadsheet Test Client\\TestHandler.csproj",
       "projectName": "TestHandler",
-      "projectPath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Spreadsheet Test Client\\TestHandler.csproj",
+      "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Spreadsheet Test Client\\TestHandler.csproj",
       "packagesPath": "C:\\Users\\abarr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Spreadsheet Test Client\\obj\\",
+      "outputPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Spreadsheet Test Client\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\abarr\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -125,8 +107,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\ClientHandler\\ClientHandler.csproj": {
-              "projectPath": "C:\\Users\\abarr\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\ClientHandler\\ClientHandler.csproj"
+            "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj": {
+              "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj"
             }
           }
         }

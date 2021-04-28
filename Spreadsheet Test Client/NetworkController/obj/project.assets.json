@@ -8,19 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\izana\\.nuget\\packages\\": {}
+    "C:\\Users\\abarr\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj",
+      "projectUniqueName": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj",
       "projectName": "NetworkController",
-      "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj",
-      "packagesPath": "C:\\Users\\izana\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\obj\\",
+      "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj",
+      "packagesPath": "C:\\Users\\abarr\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\izana\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\abarr\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -32,7 +32,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -44,7 +43,6 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
-        "targetAlias": "netcoreapp3.1",
         "imports": [
           "net461",
           "net462",
@@ -60,7 +58,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
       }
     }
   }
