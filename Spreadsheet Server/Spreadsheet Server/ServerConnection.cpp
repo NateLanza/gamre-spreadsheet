@@ -22,7 +22,7 @@ using boost::property_tree::write_json;
 /// </summary>
 
 class ServerController;
-	// Creates a new server connection, initializes the members of the Connection
+// Creates a new server connection, initializes the members of the Connection
 ServerConnection::ServerConnection(ServerController* control) : s_ioservice(), s_acceptor(s_ioservice), connections(), control(control) {
 }
 
@@ -30,10 +30,10 @@ ServerConnection::ServerConnection(ServerController* control) : s_ioservice(), s
 /// <summary>
 /// Starts the server. The io_service allows for asynchrony
 /// </summary>
-void ServerConnection::run() 
+void ServerConnection::run()
 {
 	s_ioservice.run();
-	
+
 }
 
 /// <summary>
@@ -57,7 +57,7 @@ void ServerConnection::mng_send(it_connection state, std::shared_ptr<std::string
 		if (state->socket.is_open())
 		{
 		}
-		
+
 	}
 }
 
@@ -72,52 +72,70 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 	// Only process if bytes are received
 	if (bytes > 0)
 	{
-		
-		
-		//Creates a tree and stream to read the json
-		ptree pt2;
-		std::istream is(&state->read_buffer);
-		read_json(is, pt2);
 
-		// Extracts value from keys. Represents all possible client fields
-		std::string cellName = pt2.get<std::string>("cellName", "");
-		std::string content = pt2.get<std::string>("contents", "");
-		std::string userName = pt2.get<std::string>("userName", "");
-		std::string requestType = pt2.get<std::string>("requestType", "");
+		std::string s((std::istreambuf_iterator<char>(&state->read_buffer)), std::istreambuf_iterator<char>());
 
-		// Creates client if only userName is provided
-		if (!userName.empty() && cellName.empty() && content.empty() && requestType.empty()) {
+		// Checks if this JSON and needs to be serialized
+		if (s.at(0) != '{') {
+			
+			
+			if (!state->user_chosen) {
 
-			// Copies over a connection and registers it as the client's state
-			Connection c(state->stored_service);			
-			Client* client = new Client(ids, userName, &c);
-			connected_clients.emplace(ids, client);
+				string userName(s);
+				// Creates client if only userName is provided
 
-			// Sets the id of the client and increments the id count
-			c.setID(ids);
-			ids++;
+				// Copies over a connection and registers it as the client's state
+				Connection c(state->stored_service);
+				Client* client = new Client(ids, userName, &c);
+				connected_clients.emplace(ids, client);
 
-			// Sends the names of available spreadsheets to the client, followed by a newline. 
-			for (auto name : control->GetSpreadsheetNames()) {
-				auto buffer = std::make_shared<std::string>(name + "\n");
+				// Sets the id of the client and increments the id count
+				c.setID(ids);
+				ids++;
+
+				state->user_chosen = true;
+
+				// Sends the names of available spreadsheets to the client, followed by a newline. 
+				for (auto name : control->GetSpreadsheetNames()) {
+					auto buffer = std::make_shared<std::string>(name + "\n");
+					auto handler = boost::bind(&ServerConnection::mng_send, this, state, buffer, boost::asio::placeholders::error);
+					boost::asio::async_write(state->socket, boost::asio::buffer(*buffer), handler);
+				}
+
+				auto buffer = std::make_shared<std::string>("\n");
 				auto handler = boost::bind(&ServerConnection::mng_send, this, state, buffer, boost::asio::placeholders::error);
 				boost::asio::async_write(state->socket, boost::asio::buffer(*buffer), handler);
 			}
 
-			auto buffer = std::make_shared<std::string>("\n");
-			auto handler = boost::bind(&ServerConnection::mng_send, this, state, buffer, boost::asio::placeholders::error);
-			boost::asio::async_write(state->socket, boost::asio::buffer(*buffer), handler);
+			//Spreadsheet to be chosen, client is connected to it
+			else {
+				std::string ss_name(s);
+				Client* c = connected_clients.at(state->ID);
+				control->ConnectClientToSpreadsheet(c, ss_name);
+			}
 		}
-		
-		// If the client is already connected, sending an edit request
 		else {
-			//Selector and messageType gone!
-			// Create a client pointer to add to the stack of requests
+			//Creates a tree and stream to read the json
+			ptree pt2;
+			std::istream is(&state->read_buffer);
+			read_json(is, pt2);
+
+			// Extracts value from keys. Represents all possible client fields
+			std::string cellName = pt2.get<std::string>("cellName", "");
+			std::string content = pt2.get<std::string>("contents", "");
+			std::string requestType = pt2.get<std::string>("requestType", "");
+
+			// If the client is already connected, sending an edit request
+
+				//Selector and messageType gone!
+				// Create a client pointer to add to the stack of requests
 			Client* c = connected_clients.at(state->ID);
 			EditRequest request(requestType, cellName, content, c);
 			control->ProcessClientRequest(request);
+
 		}
-		
+
+
 
 	}
 	// Reports an error, if one is present
@@ -149,7 +167,7 @@ void ServerConnection::mng_accept(it_connection state, boost::system::error_code
 	}
 	// On receiving a connection, starts ansyncronous read process with the connected socket. 
 	else
-	{		
+	{
 		async_receive(state);
 	}
 	// Begin accepting more clients
@@ -164,7 +182,7 @@ void ServerConnection::async_receive(it_connection state)
 {
 	auto handler = boost::bind(&ServerConnection::mng_receive, this, state, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred);
 	boost::asio::async_read_until(state->socket, state->read_buffer, "\n", handler);
-		
+
 }
 
 /// <summary>
@@ -203,7 +221,7 @@ void ServerConnection::broadcast(std::list<Client*> clients, std::string message
 	std::list<Connection> cln_con;
 	//Sends the message to each client in the list
 	auto buffer = std::make_shared<std::string>(" hi hi hi \r\n\r\n");
-	
+
 	for (Client* client : clients)
 	{
 		if (client->state->socket.is_open())
@@ -232,7 +250,7 @@ void ServerConnection::broadcast(std::list<Client*> clients, std::string message
 /// </summary>
 /// <param name="terminate"></param>
 void ServerConnection::delete_client(Client* terminate) {
-	
+
 	connected_clients.erase(terminate->GetID());
 	delete terminate;
 }
