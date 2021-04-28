@@ -39,7 +39,7 @@ StoredSpreadsheet Storage::Open(string filename)
 		{
 			if (line == "CELL")
 			{
-				list<Formula> previousList;
+				list<string> previousList;
 
 				string name;
 				string content;
@@ -54,12 +54,11 @@ StoredSpreadsheet Storage::Open(string filename)
 				for (int i = 0; i < loop; i++)
 				{
 					file >> prevContent;
-					Formula f(prevContent);
-					previousList.push_back(f);
+					previousList.push_back(prevContent);
 				}
 
 				// put variables into fields of new Cell to be added to ss
-				Cell cell(name, Formula(content), previousList);
+				Cell cell(name, content, previousList);
 				ssCells.insert(cell);
 			}
 			else if (line == "CELL_EDIT")
@@ -70,10 +69,8 @@ StoredSpreadsheet Storage::Open(string filename)
 				file >> name;
 				file >> priorState;
 
-				Formula f(priorState);
-
 				// put variables into fields of new CellEdit
-				CellEdit edit(name, f);
+				CellEdit edit(name, priorState);
 				ssEdits.push_back(edit);
 			}
 		}
@@ -124,7 +121,7 @@ void Storage::Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 		{
 			file << "CELL_EDIT";
 			file << edit.GetName();
-			file << edit.GetPriorContents().ToString();
+			file << edit.GetPriorContents();
 		}
 
 		file.close();
