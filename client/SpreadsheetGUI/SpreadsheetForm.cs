@@ -122,6 +122,8 @@ namespace SpreadsheetGUI {
                 IPTextBox.Enabled = true;
                 UsernameBox.Enabled = true;
                 ConnectButton.Enabled = true;
+                OpenButton.Enabled = false;
+                newSSButton.Enabled = false;
             });
         }
 
@@ -267,6 +269,8 @@ namespace SpreadsheetGUI {
             SpreadsheetNameList.Items.AddRange(names.ToArray());
             SpreadsheetNameList.Enabled = true;
             OpenButton.Enabled = true;
+            newSSButton.Enabled = true;
+            newSSName.Enabled = true;
         }
 
         /// <summary>
@@ -300,6 +304,8 @@ namespace SpreadsheetGUI {
         {
             OpenButton.Enabled = false;
             SpreadsheetNameList.Enabled = false;
+            newSSButton.Enabled = false;
+            newSSName.Enabled = false;
             Controller.ConnectToSpreadsheet(SpreadsheetNameList.Text);
         }
 
@@ -311,6 +317,14 @@ namespace SpreadsheetGUI {
 
         private void undo_button_Click(object sender, EventArgs e) {
             Controller.SendUndoRequest();
+        }
+
+        private void newSSButton_Click(object sender, EventArgs e) {
+            OpenButton.Enabled = false;
+            SpreadsheetNameList.Enabled = false;
+            newSSButton.Enabled = false;
+            newSSName.Enabled = false;
+            Controller.ConnectToSpreadsheet(newSSName.Text);
         }
     }
 }

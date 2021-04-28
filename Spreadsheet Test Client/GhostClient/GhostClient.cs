@@ -7,6 +7,56 @@ namespace TestHandler
 {
     public class GhostClient
     {
+
+        //=================================================== Events =================================================//
+
+        /// <summary>
+        /// Fires when a cell change is received from the server
+        /// </summary>
+        /// <param name="cell">Name of cell</param>
+        /// <param name="contents">New contents of cell</param>
+        public delegate void CellChangeHandler(string cell, string contents);
+        public event CellChangeHandler CellChanged;
+
+        /// <summary>
+        /// Fires when a cell selection change is received from the server
+        /// </summary>
+        /// <param name="cell">Name of cell</param>
+        /// <param name="name">Name of client selecting the cell</param>
+        /// <param name="id">ID of client selecting the cell</param>
+        public delegate void SelectionChangeHandler(string cell, string name, int id);
+        public event SelectionChangeHandler SelectionChanged;
+
+        /// <summary>
+        /// Fires when this client receives its unique ID from the server
+        /// </summary>
+        /// <param name="ID">ID of this client</param>
+        public delegate void IDReceivedHandler(int ID);
+        public event IDReceivedHandler IDReceived;
+
+        /// <summary>
+        /// Fires when the server indicates that a change request sent by this client is invalid
+        /// </summary>
+        /// <param name="cellName">Name of the cell that a change was requested for</param>
+        /// <param name="serverMessage">Error message sent by server</param>
+        public delegate void InvalidChangeHandler(string cellName, string serverMessage);
+        public event InvalidChangeHandler ChangeRejected;
+
+        /// <summary>
+        /// Fires when another client connected to the server (not this client) disconnects
+        /// </summary>
+        /// <param name="ID">ID of the disconnected client</param>
+        public delegate void ClientDisconnectHandler(int ID);
+        public event ClientDisconnectHandler OtherClientDisconnected;
+
+        /// <summary>
+        /// Fires when this client disconnects from the server
+        /// </summary>
+        public delegate void DisconnectHandler(string message);
+        public event DisconnectHandler Disconnected;
+
+        //===========================================================================================================//
+
         private string IP;
 
         private List<string> spreadsheets;
@@ -33,10 +83,10 @@ namespace TestHandler
         public bool HasConnectedToSheet ()
         { return connectedToSheet;   }
 
-        ////////////////////////////////////////////////////////////////////////////////
-        /// CONNECTION SEQUENCE BEGINS:                                              ///
+        ////////////////////////////////////////////////////////////////////////
+        /// CONNECTION SEQUENCE BEGINS:                                      ///
         /// Connect --> ServerConnectionCallback --> SpreadsheetListCallback ///
-        ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// Connects the ghost client to the specified server with ServerConnectionCallback
@@ -127,7 +177,7 @@ namespace TestHandler
         /// CONNECTION SEQUENCE ENDS ///
         ////////////////////////////////
 
-        /*----------------------------------------------------------------------------------------------------------------*/
+
 
         //////////////////////////////////////////////////////////////////
         /// SPREADSHEET CONNECTION SEQUENCE BEGINS:                    ///
@@ -238,7 +288,7 @@ namespace TestHandler
             {
                 if (Connection.ErrorOccured)
                 {
-                    Disconnected("Connection error occurred");           //Event!!
+                    Disconnected("Connection error occurred");
                 }
             }
             // Continue look
@@ -294,19 +344,19 @@ namespace TestHandler
             switch (message.Type)
             {
                 case "cellUpdated":
-                    CellChanged(message.Cell, message.Contents);                       //Event!!
+                    CellChanged(message.Cell, message.Contents);
                     break;
                 case "cellSelected":
-                    SelectionChanged(message.Cell, message.Selector, message.ID);      //Event!!
+                    SelectionChanged(message.Cell, message.Selector, message.ID);
                     break;
                 case "disconnected":
-                    OtherClientDisconnected(message.ID);                               //Event!!
+                    OtherClientDisconnected(message.ID);
                     break;
                 case "requestError":
-                    ChangeRejected(message.Cell, message.Message);                     //Event!!
+                    ChangeRejected(message.Cell, message.Message);
                     break;
                 case "serverError":
-                    Disconnected(message.Message);                                     //Event!!
+                    Disconnected(message.Message);
                     break;
             }
         }
@@ -315,5 +365,95 @@ namespace TestHandler
         /// SPREADSHEET CONNECTION SEQUENCE ENDS ///
         ////////////////////////////////////////////
 
+
+
+        //////////////////////////////////
+        /// SENDING CLIENT MESSAGES:   ///
+        /// Edit, Revert, Select, Undo ///
+        //////////////////////////////////
+        
+        /// <summary>
+        /// Sends an edit request to the server
+        /// </summary>
+        /// <param name="cell">Name of the cell</param>
+        /// <param name="contents">New contents of the cell</param>
+        public void SendEditRequest(string cell, string contents)
+        {
+            // Validate current connection state
+            lock (ConnectionThreadKey)
+            {
+                if (ConnectionState != ConnectionStates.Connected)
+                    return;
+            }
+
+            Networking.Send(Connection.TheSocket,
+                "{\"requestType\": \"editCell\", \"cellName\": \"" +
+                cell +
+                "\", \"contents\": \"" +
+                contents +
+                "\"}"
+                );
+        }
+
+        /// <summary>
+        /// Sends a revert request to the server
+        /// </summary>
+        /// <param name="cell">Cell to revert</param>
+        public void SendRevertRequest(string cell)
+        {
+            // Validate current connection state
+            lock (ConnectionThreadKey)
+            {
+                if (ConnectionState != ConnectionStates.Connected)
+                    return;
+            }
+
+            Networking.Send(Connection.TheSocket,
+                "{\"requestType\": \"revertCell\", \"cellName\": \"" +
+                cell +
+                "\"}"
+                );
+        }
+
+        /// <summary>
+        /// Sends a select request to the server
+        /// </summary>
+        /// <param name="cell">Cell to select</param>
+        public void SendSelectRequest(string cell)
+        {
+            // Validate current connection state
+            lock (ConnectionThreadKey)
+            {
+                if (ConnectionState != ConnectionStates.Connected)
+                    return;
+            }
+
+            Networking.Send(Connection.TheSocket,
+                "{\"requestType\": \"selectCell\", \"cellName\": \"" +
+                cell +
+                "\"}"
+                );
+        }
+
+        /// <summary>
+        /// Sends an undo request to the server
+        /// </summary>
+        public void SendUndoRequest()
+        {
+            // Validate current connection state
+            lock (ConnectionThreadKey)
+            {
+                if (ConnectionState != ConnectionStates.Connected)
+                    return;
+            }
+
+            Networking.Send(Connection.TheSocket,
+                "{\"requestType\": \"undo\"}"
+                );
+        }
+
+        ///////////////////////////////////
+        /// SENDING CLIENT MESSAGES END ///
+        ///////////////////////////////////
     }
 }

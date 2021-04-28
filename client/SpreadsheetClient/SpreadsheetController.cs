@@ -173,7 +173,7 @@ namespace SS {
             }
 
             // Ensure we have received a complete list
-            if (!ss.GetData().EndsWith("\n\n")) {
+            if (!ss.GetData().Contains("\n\n")) {
                 Networking.GetData(ss);
                 return;
             }

@@ -7,10 +7,10 @@ Cell::Cell() : name(), contents(""), previousContents() {
 	throw new exception("Do not use Cell's default constructor");
 }
 
-Cell::Cell(const string name, const Formula contents) : name(name), contents(contents.ToString()), previousContents() {
+Cell::Cell(const string name, const string contents) : name(name), contents(contents), previousContents() {
 }
 
-Cell::Cell(const string name, const Formula contents, const list<Formula> priorContents) : name(name), contents(contents.ToString()), previousContents(priorContents) {
+Cell::Cell(const string name, const string contents, const list<string> priorContents) : name(name), contents(contents), previousContents(priorContents) {
 }
 
 const string Cell::GetName() const {
@@ -18,16 +18,18 @@ const string Cell::GetName() const {
 }
 
 const string Cell::GetContents() const {
-	return contents.ToString();
+	return contents;
 }
 
-void Cell::SetContents(const Formula newContents) {
+void Cell::SetContents(const string newContents) {
 	previousContents.push_front(contents);
 	contents = newContents;
 }
 
 const vector<string> Cell::GetVariables() const {
-	return contents.GetVariables();
+	if (contents.size() > 0 && contents[0] == '=')
+		return Formula(contents).GetVariables();
+	return vector<string>();
 }
 
 bool Cell::Revert() {
@@ -42,11 +44,11 @@ const bool Cell::CanRevert() const {
 	return previousContents.empty();
 }
 
-const Formula Cell::GetPreviousState() const {
+const string Cell::GetPreviousState() const {
 	return previousContents.front();
 }
 
-const list<Formula> Cell::GetPreviousStates() const {
+const list<string> Cell::GetPreviousStates() const {
 	return previousContents;
 }
 
