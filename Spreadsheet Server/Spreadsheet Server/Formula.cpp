@@ -22,7 +22,7 @@ Formula::Formula(string formula)
 		formula = formula.substr(1);
 	}
 	else {
-		throw new exception("no equals sign!");
+		throw new exception();
 	}
 
 	// Track last variable for operator following rule and extra following rule
@@ -44,7 +44,7 @@ Formula::Formula(string formula)
 				lastWasOpeningOrOperator = true;
 				if (lastWasClosingNumberOrVar)
 				{
-					throw exception("( cannot follow a number, variable, or closing parenthesis");
+					throw exception();
 				}
 			}
 			else if (newToken.Content == ")")
@@ -53,13 +53,13 @@ Formula::Formula(string formula)
 				lastWasClosingNumberOrVar = true;
 				if (lastWasOpeningOrOperator)
 				{
-					throw new exception(") cannot follow ( or an operator");
+					throw new exception();
 				}
 			}
 			else {
 				if (lastWasOpeningOrOperator)
 				{
-					throw new exception((newToken.Content + " cannot follow ( or an operator").c_str());
+					throw new exception();
 				}
 				lastWasOpeningOrOperator = true;
 				lastWasClosingNumberOrVar = false;
@@ -69,7 +69,7 @@ Formula::Formula(string formula)
 		{
 			if (lastWasClosingNumberOrVar)
 			{
-				throw new exception(("Error on: " + newToken.Content + " Variables cannot follow ), numbers, or other variables").c_str());
+				throw new exception();
 			}
 			lastWasOpeningOrOperator = false;
 			lastWasClosingNumberOrVar = true;
@@ -78,7 +78,7 @@ Formula::Formula(string formula)
 		{
 			if (lastWasClosingNumberOrVar)
 			{
-				throw new exception(("Error on: " + newToken.Content + " Numbers cannot follow ), numbers, or other variables").c_str());
+				throw new exception();
 			}
 			lastWasClosingNumberOrVar = true;
 			lastWasOpeningOrOperator = false;
@@ -86,7 +86,7 @@ Formula::Formula(string formula)
 
 		if (closedParens > openParens)
 		{
-			throw new exception("The number of ) should never exceed the number of (");
+			throw new exception();
 		}
 
 		tokens.push_back(newToken);
@@ -95,22 +95,22 @@ Formula::Formula(string formula)
 	// Make sure parethensis counts are equal
 	if (openParens != closedParens)
 	{
-		throw new exception("Closing parenthesis and open parenthesis should be equal");
+		throw new exception();
 	}
 
 	// Make sure we have at least one token
 	if (tokens.size() == 0)
 	{
-		throw new exception("Formula must contain at least one token");
+		throw new exception();
 	}
 	// Make sure start & end tokens are correct
 	if (tokens[0].Type == "op" && tokens[0].Content != "(")
 	{
-		throw new exception("First token must be a number, variable, or (");
+		throw new exception();
 	}
 	else if (tokens[tokens.size() - 1].Type == "op" && tokens[tokens.size() - 1].Content != ")")
 	{
-		throw new exception("Last token must be a number, variable, or )");
+		throw new exception();
 	}
 }
 
@@ -200,7 +200,7 @@ double Formula::Evaluate(map<string, double> lookup) {
 			{
 				if (values.size() == 0)
 				{
-					throw new exception("Operators must be preceded by numbers or variables");
+					throw new exception();
 				}
 				else
 				{
@@ -299,11 +299,11 @@ double Formula::applyOperation(double a, double b, char op) {
 		return a * b;
 	else if (op == '/')
 		if (a == 0)
-			throw new exception("NO dividing by zero :(");
+			throw new exception();
 		else
 			return b / a;
 	else
-		throw new exception(op + " is not an operator :(((((");
+		throw new exception();
 }
 
 /// <summary>
@@ -366,7 +366,7 @@ Token::Token(string token) {
 		Content = token;
 	}
 	else {
-		throw new exception(("Token " + token + " is not a valid double, operator, or variable").c_str());
+		throw new exception();
 	}
 }
 
