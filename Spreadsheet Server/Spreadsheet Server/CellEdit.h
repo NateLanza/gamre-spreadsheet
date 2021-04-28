@@ -17,7 +17,7 @@ private:
 	/// <summary>
 	/// Previous state of the cell before the change
 	/// </summary>
-	Formula PriorState;
+	string PriorState;
 
 	/// <summary>
 	/// Name of the cell
@@ -30,13 +30,13 @@ public:
 	/// Creates a new CellEdit
 	/// </summary>
 	/// <param name="state">State of the cell BEFORE this edit</param>
-	CellEdit(const string name, const Formula state);
+	CellEdit(const string name, const string state);
 
 	/// <summary>
 	/// Gets the contents of the prior state of the cell stored here
 	/// </summary>
 	/// <returns>Cell contents, as a formula</returns>
-	Formula GetPriorContents() const;
+	string GetPriorContents() const;
 
 	/// <summary>
 	/// Get cell name

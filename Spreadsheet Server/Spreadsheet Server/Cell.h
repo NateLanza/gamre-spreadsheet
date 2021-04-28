@@ -21,12 +21,12 @@ private:
 	/// <summary>
 	/// Contents of this cell
 	/// </summary>
-	Formula contents;
+	string contents;
 
 	/// <summary>
 	/// Previous contents of this cell
 	/// </summary>
-	list<Formula> previousContents;
+	list<string> previousContents;
 
 public:
 
@@ -40,7 +40,7 @@ public:
 	/// </summary>
 	/// <param name="name">Name of cell, should be [A-Z][0-9]</param>
 	/// <param name="contents">Contents of cell. Should be a valid formula, string, or double</param>
-	Cell(const string name, const Formula contents); // contents of cell get set through method
+	Cell(const string name, const string contents); // contents of cell get set through method
 
 	/// <summary>
 	/// Creates a new cell with a prior state
@@ -48,7 +48,7 @@ public:
 	/// <param name="name">Cell name, should be [A-Z][0-9]</param>
 	/// <param name="contents">Contents of cell. Should be a valid formula, string, or double</param>
 	/// <param name="priorContents">Prior contents of cell before last edit. Should be a valid formula, string, or double</param>
-	Cell(const string name, const Formula contents, const list<Formula> priorContents);
+	Cell(const string name, const string contents, const list<string> priorContents);
 
 	/// <summary>
 	/// Get cell name
@@ -59,11 +59,12 @@ public:
 	/// <summary>
 	/// Get cell contents
 	/// </summary>
-	/// <returns>Contents of cell, converted to a string</returns>
+	/// <returns>Contents of cell</returns>
 	const string GetContents() const;
 
 	/// <summary>
 	/// Gets all other cells referenced by this cell (variables)
+	/// If this cell is not a formula the list returned is empty
 	/// </summary>
 	/// <returns>Variables (cells) in this cell's contents</returns>
 	const vector<string> GetVariables() const;
@@ -73,13 +74,13 @@ public:
 	/// Throws an exception with an appropriate message if there is an issue with the new contents
 	/// </summary>
 	/// <param name="newContents">New contents of cell</param>
-	void SetContents(const Formula newContents);
+	void SetContents(const string newContents);
 
 	/// <summary>
 	/// Gets the state of this cell prior to the most recent edit
 	/// </summary>
 	/// <returns></returns>
-	const Formula GetPreviousState() const;
+	const string GetPreviousState() const;
 
 	/// <summary>
 	/// Gets a list of all prior states of this cell
@@ -87,7 +88,7 @@ public:
 	/// </summary>
 	/// <returns>A list of formulas, with front() being the most recent state of
 	/// the cell and back() being the least recent state</returns>
-	const list<Formula> GetPreviousStates() const;
+	const list<string> GetPreviousStates() const;
 
 	/// <summary>
 	/// Whether a previous state exists for this cell

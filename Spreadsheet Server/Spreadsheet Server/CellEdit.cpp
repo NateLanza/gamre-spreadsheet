@@ -1,10 +1,10 @@
 #include "CellEdit.h"
 
-CellEdit::CellEdit(string name, Formula state): PriorState(state), name(name)
+CellEdit::CellEdit(string name, string state) : PriorState(state), name(name)
 {
 }
 
-Formula CellEdit::GetPriorContents() const {
+string CellEdit::GetPriorContents() const {
 	return PriorState;
 }
 
