@@ -52,7 +52,6 @@ void ServerConnection::mng_send(it_connection state, std::shared_ptr<std::string
 	else {
 		std::string s((std::istreambuf_iterator<char>(&state->read_buffer)), std::istreambuf_iterator<char>());
 		std::cout << "Finished sending message\n";
-		//TO:DO ! SEND DATA!!
 
 		std::cout << s << std::endl;
 		if (state->socket.is_open())
@@ -75,7 +74,7 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 	{
 
 		std::string s((std::istreambuf_iterator<char>(&state->read_buffer)), std::istreambuf_iterator<char>());
-		std::cout << "Received message: " << s << std::endl;
+		std::cout << "Received message: " << s;
 		// Checks if this JSON and needs to be serialized
 		if (s.at(0) != '{') {
 			
@@ -119,21 +118,29 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 		else {
 			//Creates a tree and stream to read the json
 			ptree pt2;
-			std::istream is(&state->read_buffer);
-			read_json(is, pt2);
+			std::stringstream jsonInput;
+			jsonInput << s;
 
-			// Extracts value from keys. Represents all possible client fields
-			std::string cellName = pt2.get<std::string>("cellName", "");
-			std::string content = pt2.get<std::string>("contents", "");
-			std::string requestType = pt2.get<std::string>("requestType", "");
+			
+			try {
+				cout << "Parsing json: " << s;
+				read_json(jsonInput, pt2);
 
-			// If the client is already connected, sending an edit request
+				// Extracts value from keys. Represents all possible client fields
+				std::string cellName = pt2.get<std::string>("cellName", "");
+				std::string content = pt2.get<std::string>("contents", "");
+				std::string requestType = pt2.get<std::string>("requestType", "");
 
-			//Selector and messageType gone!
-			// Create a client pointer to add to the stack of requests
-			Client* c = connected_clients.at(state->ID);
-			EditRequest request(requestType, cellName, content, c);
-			control->ProcessClientRequest(request);
+				// If the client is already connected, sending an edit request
+
+				//Selector and messageType gone!
+				// Create a client pointer to add to the stack of requests
+				Client* c = connected_clients.at(state->ID);
+				EditRequest request(requestType, cellName, content, c);
+				control->ProcessClientRequest(request);
+			} 	catch (const exception& e) 	{
+				cout << "Bad json read: " << e.what() << endl;
+			}
 
 		}
 
