@@ -259,7 +259,7 @@ namespace NetworkUtil
               0, numBytes);
 
                 state.data.Append(message);
-            } catch (ObjectDisposedException e) {
+            } catch (Exception e) {
                 state.ErrorOccured = true;
                 state.ErrorMessage = e.Message;
             } finally { 
