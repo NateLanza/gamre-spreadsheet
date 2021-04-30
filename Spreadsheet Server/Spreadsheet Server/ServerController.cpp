@@ -41,9 +41,9 @@ void ServerController::ConnectClientToSpreadsheet(Client* client, string spreads
 			"cellUpdated",
 			cell.GetName(),
 			cell.GetContents(),
-			0,
 			NULL,
-			NULL
+			"",
+			""
 		));
 	}
 
@@ -67,16 +67,17 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 		openSpreadsheets[request.GetClient()->spreadsheet]->
 			SelectCell(request.GetName(), request.GetClient()->GetID());
 
+		string message = SerializeMessage(
+			basic_string("cellSelected"),
+			request.GetName(),
+			"",
+			request.GetClient()->GetID(),
+			request.GetClient()->GetUsername(),
+			""
+		);
+
 		// Broadcast select
-		network->broadcast(clientConnections[request.GetClient()->spreadsheet],
-			SerializeMessage(
-				"cellSelected",
-				request.GetName(),
-				NULL,
-				request.GetClient()->GetID(),
-				request.GetClient()->GetUsername(),
-				NULL
-			));
+		network->broadcast(clientConnections[request.GetClient()->spreadsheet], message);
 
 		return;
 	}
@@ -102,8 +103,8 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 				request.GetName(),
 				openSpreadsheets[request.GetClient()->spreadsheet]->GetCell(request.GetName()),
 				0,
-				NULL,
-				NULL
+				"",
+				""
 			));
 	} else {
 		// Send error message to client for bad request
@@ -112,9 +113,9 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 		network->broadcast(toSend, SerializeMessage(
 			"requestError",
 			request.GetName(),
-			NULL,
+			"",
 			0,
-			NULL,
+			"",
 			"Request rejected"
 		));
 	}
@@ -142,42 +143,25 @@ void ServerController::DisconnectClient(Client* client) {
 	network->broadcast(clientConnections[client->spreadsheet], 
 		SerializeMessage(
 			"disconnected",
-			NULL,
-			NULL,
+			"",
+			"",
 			client->GetID(),
-			NULL,
-			NULL
+			"",
+			""
 		));
 }
 
-const string ServerController::SerializeMessage(string messageType, string cellName, string contents, int userID, string username, string message) const {
-	string jsonMessage;
-	
-	jsonMessage += "{ ";
-
-
-	// Run through each type, check if it is empty. If not add it to JsonMessage. 
-	if (messageType.empty())
-		jsonMessage += "\"messageType\": " + '\"' + messageType + "\", ";
-
-	if (cellName.empty())
-		jsonMessage += "\"cellName\": " + '\"' + cellName + "\" ";
-
-	if (contents.empty())
-		jsonMessage += "\"contents\": " + '\"' + contents + "\" ";
-
-	if (userID == NULL)
-		jsonMessage += "\"selector\": <" + '\"' + std::to_string(userID) + "\" ";
-
-	if (username.empty())
-		jsonMessage += "\"selectorName\": " + '\"' + username + "\" ";
-
-	if (message.empty())
-		jsonMessage += "\"message\": " + '\"' + message + "\" ";
-
-	jsonMessage += "}";	
-
-	return jsonMessage;
+string ServerController::SerializeMessage(string messageType, string cellName, string contents, int userID, string username, string message) const {
+	// Generate message based on type
+	if (messageType == "editCell") {
+		return "{\"messageType\": \"editCell\", \"cellName\": \"" + cellName + "\", \"contents\": \"" + contents + "\"}";
+	} else if (messageType == "cellSelected") {
+		return "{\"messageType\": \"cellSelected\", \"cellName\": \"" + cellName + "\", \"selector\": \"" + to_string(userID) + "\", \"selectorName\": \"" + username + "\"}";
+	} else if (messageType == "disconnected") {
+		return "{\"messageType\": \"disconnected\", \"user\": \"" + to_string(userID) + "\"}";
+	} else if (messageType == "requestError") {
+		return "{\"messageType\": \"requestError\", \"cellName\": \"" + cellName + "\", \"message\": \"" + message + "\"}";
+	}
 }
 
 std::list<std::string> ServerController::GetSpreadsheetNames() {

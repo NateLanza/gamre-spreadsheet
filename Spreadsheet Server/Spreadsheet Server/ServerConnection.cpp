@@ -228,6 +228,8 @@ void ServerConnection::listen(uint16_t port)
 void ServerConnection::broadcast(std::list<Client*> clients, std::string message)
 {
 
+	cout << "Sending message: " << message;
+
 	std::list<Connection> cln_con;
 	//Sends the message to each client in the list
 	auto buffer = std::make_shared<std::string>(message + "\n");
