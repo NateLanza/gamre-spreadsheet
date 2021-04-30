@@ -152,16 +152,21 @@ void ServerController::DisconnectClient(Client* client) {
 }
 
 string ServerController::SerializeMessage(string messageType, string cellName, string contents, int userID, string username, string message) const {
+	string result = "";
 	// Generate message based on type
 	if (messageType == "editCell") {
-		return "{\"messageType\": \"editCell\", \"cellName\": \"" + cellName + "\", \"contents\": \"" + contents + "\"}";
+		result += "{\"messageType\": \"editCell\", \"cellName\": \"" + cellName + "\", \"contents\": \"" + contents + "\"}";
 	} else if (messageType == "cellSelected") {
-		return "{\"messageType\": \"cellSelected\", \"cellName\": \"" + cellName + "\", \"selector\": \"" + to_string(userID) + "\", \"selectorName\": \"" + username + "\"}";
+		result += "{\"messageType\": \"cellSelected\", \"cellName\": \"" + cellName + "\", \"selector\": \"" + to_string(userID) + "\", \"selectorName\": \"" + username + "\"}";
 	} else if (messageType == "disconnected") {
-		return "{\"messageType\": \"disconnected\", \"user\": \"" + to_string(userID) + "\"}";
+		result += "{\"messageType\": \"disconnected\", \"user\": \"" + to_string(userID) + "\"}";
 	} else if (messageType == "requestError") {
-		return "{\"messageType\": \"requestError\", \"cellName\": \"" + cellName + "\", \"message\": \"" + message + "\"}";
+		result += "{\"messageType\": \"requestError\", \"cellName\": \"" + cellName + "\", \"message\": \"" + message + "\"}";
+	} else if (messageType == "serverError") {
+		result += "{\"messageType\": \"serverError\", \"message\": \"" + message + "\"}";
 	}
+
+	return result;
 }
 
 std::list<std::string> ServerController::GetSpreadsheetNames() {
