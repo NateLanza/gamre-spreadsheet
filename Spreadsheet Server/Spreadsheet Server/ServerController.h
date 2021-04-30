@@ -66,7 +66,9 @@ private:
 
 	/// <summary>
 	/// Serializes a message into JSON for sending via the Jakkpot protocol
-	/// Any fields not used by a particular message type can be set to any value
+	/// Also adds \n to the end of the message
+	/// Any fields not used by a particular message type must be set to "",
+	/// except userID, which should be set to NULL
 	/// </summary>
 	/// <param name="messageType">Jakkpot messageType</param>
 	/// <param name="cellName">Jakkpot cellName</param>
@@ -75,7 +77,7 @@ private:
 	/// <param name="username">Jakkpot selectorName</param>
 	/// <param name="message">Jakkpot message</param>
 	/// <returns>Valid JSON string, terminated by \n character & ready to send to clients</returns>
-	const string SerializeMessage(string messageType, string cellName, string contents, int userID, string username, string message) const;
+	string SerializeMessage(string messageType, string cellName, string contents, int userID, string username, string message) const;
 	
 	/// <summary>
 	/// All spreadsheets which are currently open & being edited by users
