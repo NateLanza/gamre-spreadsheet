@@ -19,19 +19,18 @@ void ServerController::StartServer() {
 
 void ServerController::ConnectClientToSpreadsheet(Client* client, string spreadsheet) {
 	Lock();
-	// See if any clients have this spreadsheet open, connect client if so
-	if (clientConnections.count(spreadsheet) == 1) {
-		clientConnections[spreadsheet].push_back(client);
-		return;
+	// See if any clients have this spreadsheet open, open if not
+	if (clientConnections.count(spreadsheet) != 1) {
+		// No clients have this spreadsheet open, so open it
+		StoredSpreadsheet newSS = storage.Open(spreadsheet);
+		SpreadsheetState* toAdd = new SpreadsheetState(newSS.cells, newSS.edits);
+		openSpreadsheets[spreadsheet] = toAdd;
+		list<Client*> clientList;
+		clientConnections[spreadsheet] = clientList;
 	}
 
-	// No clients have this spreadsheet open, so open it
-	StoredSpreadsheet newSS = storage.Open(spreadsheet);
-	SpreadsheetState* toAdd = new SpreadsheetState(newSS.cells, newSS.edits);
-	openSpreadsheets[spreadsheet] = toAdd;
-
 	// Send spreadsheet cells to client
-	list<Client*> sendTo;
+	list<Client*> sendTo = clientConnections[spreadsheet];
 	sendTo.push_back(client);
 	for (Cell cell : openSpreadsheets[spreadsheet]->GetPopulatedCells()) {
 		// Skip empty cells
@@ -48,8 +47,6 @@ void ServerController::ConnectClientToSpreadsheet(Client* client, string spreads
 	}
 
 	// Connect the client
-	list<Client*> clientList;
-	clientConnections[spreadsheet] = clientList;
 	clientConnections[spreadsheet].push_back(client);
 	client->spreadsheet = spreadsheet;
 
