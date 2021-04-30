@@ -7,7 +7,7 @@
 using namespace std;
 // See ServerController.h for method documentation
 
-ServerController::ServerController() : openSpreadsheets(), clientConnections(), storage() {
+ServerController::ServerController() : openSpreadsheets(), clientConnections(), storage(), threadkey() {
 	network = new ServerConnection(this);
 }
 
