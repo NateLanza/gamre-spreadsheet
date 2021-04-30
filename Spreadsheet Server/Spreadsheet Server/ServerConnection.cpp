@@ -172,6 +172,7 @@ void ServerConnection::mng_accept(it_connection state, boost::system::error_code
 	{
 		std::cout << error.message() << std::endl;
 		connections.erase(state);
+		std::cout << "cannot establish connection with client" << std::endl;
 
 	}
 	// On receiving a connection, starts ansyncronous read process with the connected socket. 

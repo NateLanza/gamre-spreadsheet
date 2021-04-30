@@ -175,7 +175,7 @@ const string ServerController::SerializeMessage(string messageType, string cellN
 	if (message.empty())
 		jsonMessage += "\"message\": " + '\"' + message + "\" ";
 
-	jsonMessage += "}";	
+	jsonMessage += "} \n";	
 
 	return jsonMessage;
 }
