@@ -154,8 +154,8 @@ void ServerController::DisconnectClient(Client* client) {
 string ServerController::SerializeMessage(string messageType, string cellName, string contents, int userID, string username, string message) const {
 	string result = "";
 	// Generate message based on type
-	if (messageType == "editCell") {
-		result += "{\"messageType\": \"editCell\", \"cellName\": \"" + cellName + "\", \"contents\": \"" + contents + "\"}";
+	if (messageType == "cellUpdated") {
+		result += "{\"messageType\": \"cellUpdated\", \"cellName\": \"" + cellName + "\", \"contents\": \"" + contents + "\"}";
 	} else if (messageType == "cellSelected") {
 		result += "{\"messageType\": \"cellSelected\", \"cellName\": \"" + cellName + "\", \"selector\": \"" + to_string(userID) + "\", \"selectorName\": \"" + username + "\"}";
 	} else if (messageType == "disconnected") {
