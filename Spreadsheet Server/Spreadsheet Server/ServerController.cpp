@@ -166,6 +166,8 @@ string ServerController::SerializeMessage(string messageType, string cellName, s
 		result += "{\"messageType\": \"serverError\", \"message\": \"" + message + "\"}";
 	}
 
+	result += "\n";
+
 	return result;
 }
 
