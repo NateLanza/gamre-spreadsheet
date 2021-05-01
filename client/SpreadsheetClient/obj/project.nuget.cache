@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "qVvgOj9QFCHwSKJp5kbAcXs0Ijlwwh80G03EMOv2/6I93NPp3LuJCUswcdWhfmxDg1tk5Ufpbq+/L1vBYS5qoQ==",
+  "dgSpecHash": "7PM3N8Kr+sLpWRouOls1aXeg2yuAxHO02YhGBSdp3qXPndUkMfAsMny9GfJWiyGxwuRIrTALi+GWujZg0oNaXA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
+  "projectFilePath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\izana\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\izana\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Users\\izana\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\dolph\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\dolph\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\dolph\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": []
 }
