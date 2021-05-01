@@ -51,7 +51,7 @@ void ServerController::ConnectClientToSpreadsheet(Client* client, string spreads
 	client->spreadsheet = spreadsheet;
 
 	// Send ID to client
-	network->broadcast(sendTo, client->GetID() + "\n");
+	network->broadcast(sendTo, to_string(client->GetID()) + "\n");
 
 	Unlock();
 }
