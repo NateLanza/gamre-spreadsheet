@@ -89,12 +89,11 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 
 				// Sets the id of the client and increments the id count
 				c->setID(ids);
+				
+				Client* client = new Client(ids, userName, c);
+				connected_clients.emplace(ids, client);				
 				ids++;
 
-				Client* client = new Client(ids, userName, c);
-				connected_clients.emplace(ids, client);
-
-				
 
 				state->user_chosen = true;
 				std::cout << "Sending spreadsheet names: " << s << std::endl;
