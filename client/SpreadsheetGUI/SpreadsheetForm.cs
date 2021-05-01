@@ -155,7 +155,7 @@ namespace SpreadsheetGUI {
         }
 
         /// <summary>
-        /// Changes the contents of a cell, both in the backend and in the display
+        /// Changes the contents of a cell
         /// </summary>
         /// <param name="cell"></param>
         /// <param name="content"></param>
@@ -227,6 +227,7 @@ namespace SpreadsheetGUI {
         private void SpreadsheetChanged(SpreadsheetPanel sender) {
             SpreadsheetGrid.GetSelection(out int col, out int row);
             String cell = RowColToCell(row, col);
+            Console.WriteLine("Want to send select " + cell);
             Controller.SendSelectRequest(cell);
         }
 

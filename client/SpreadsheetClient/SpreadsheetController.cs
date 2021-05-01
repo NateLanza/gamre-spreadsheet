@@ -226,8 +226,10 @@ namespace SS {
         private void WaitForIDCallback(SocketState ss) {
             // Validate state
             lock (ConnectionThreadKey) {
-                if (ConnectionState != ConnectionStates.WaitForID)
+                if (ConnectionState != ConnectionStates.WaitForID) {
+                    Networking.GetData(Connection);
                     return;
+                }
             }
 
             // See if we have tokens
@@ -238,25 +240,26 @@ namespace SS {
             }
 
             bool receivedID = false;
-            // See if we've received the ID, set if so
-            if (!serverTokens[serverTokens.Count - 1].Contains("{")) {
-                string ID = serverTokens[serverTokens.Count - 1];
-                if (int.TryParse(ID, out int intID)) {
-                    this.ID = intID;
-                    receivedID = true;
+            // Process server tokens
+            foreach (string token in serverTokens) {
+                // See if we've received the ID, set if so
+                if (!token.Contains("{")) {
+                    if (int.TryParse(token, out int intID)) {
+                        this.ID = intID;
+                        receivedID = true;
+                    } else {
+                        Console.WriteLine("Unable to parse ID: " + token);
+                    }
                 } else {
-                    throw new InvalidOperationException("Unable to parse ID from the server");
+                    ProcessServerJson(token);
                 }
-                serverTokens.RemoveAt(serverTokens.Count - 1);
             }
-
-            // Process json
-            foreach (string token in serverTokens)
-                ProcessServerJson(token);
+                
 
             // Move to next connection stage if ID received
             if (receivedID) {
                 lock (ConnectionThreadKey) {
+                    Console.WriteLine("ID Received");
                     ConnectionState = ConnectionStates.Connected;
                     Connection.OnNetworkAction = ReceiveLoop;
                     IDReceived(ID); 
