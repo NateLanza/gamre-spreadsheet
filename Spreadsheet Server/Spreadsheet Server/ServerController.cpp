@@ -202,10 +202,10 @@ void ServerController::StopServer() {
 		// Send message
 		network->broadcast(Clients.second, SerializeMessage(
 			"serverError",
-			NULL,
-			NULL,
-			NULL,
-			NULL,
+			"",
+			"",
+			0,
+			"",
 			"Server closing"
 		));
 
