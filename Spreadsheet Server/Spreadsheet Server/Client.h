@@ -3,6 +3,7 @@
 #include "Connection.h"
 
 using namespace std;
+using it_connection = std::list<Connection>::iterator;
 
 #ifndef CLIENT_H
 #define CLIENT_H
@@ -21,6 +22,14 @@ public:
 	/// <param name="ID">Unique ID of the client</param>
 	/// <param name="username">Client username</param>
 	Client(const int ID, const string username, const Connection *state);
+
+	
+	/// <summary>
+	/// Creates a new client
+	/// </summary>
+	/// <param name="ID">Unique ID of the client</param>
+	/// <param name="username">Client username</param>
+	Client(const int ID, const string username, const boost::asio::ip::tcp::socket* state);
 
 	/// <summary>
 	/// Gets ID
@@ -54,6 +63,8 @@ private:
 	/// Client networking information
 	/// </summary>
 	const Connection *state;
+
+	const boost::asio::ip::tcp::socket* state2;
 
 };
 

@@ -13,4 +13,6 @@ Connection::Connection(const Connection& copy)
 
 void Connection::setID(int x) {
 	ID = x;
+
+	
 }

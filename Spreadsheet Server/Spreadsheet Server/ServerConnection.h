@@ -47,9 +47,11 @@ public:
 
 	void listen(uint16_t port);
 
-	void broadcast(std::list<Client*> clients, std::string message);
+	void broadcast(std::list<Client*> &clients, std::string message);
 
 	void delete_client(Client* terminate);
+
+	void mng_send2(boost::asio::ip::tcp::socket socket, std::shared_ptr<std::string> msg_buffer, boost::system::error_code const& error);
 
 	
 };

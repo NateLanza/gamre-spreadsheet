@@ -62,6 +62,34 @@ void ServerConnection::mng_send(it_connection state, std::shared_ptr<std::string
 }
 
 /// <summary>
+/// Handles sending data to a client. 
+/// </summary>
+/// <param name="state"></param>
+/// <param name="msg_buffer"></param>
+/// <param name="err"></param>
+void ServerConnection::mng_send2(boost::asio::ip::tcp::socket socket, std::shared_ptr<std::string> msg_buffer, boost::system::error_code const& error)
+{
+	// Reports an error message, if present
+	if (error)
+	{
+		std::cout << error.message() << std::endl;
+		//connections.erase(state);
+
+	}
+	else {
+		//std::string s((std::istreambuf_iterator<char>(&state->read_buffer)), std::istreambuf_iterator<char>());
+		string s("hey");
+		std::cout << "Finished sending message\n";
+
+		std::cout << s << std::endl;
+		if (socket.is_open())
+		{
+		}
+
+	}
+}
+
+/// <summary>
 /// Handles receiving data from a client
 /// </summary>
 /// <param name="state"></param>
@@ -84,13 +112,17 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 				string userName(s);
 				// Creates client if only userName is provided
 
+				//auto boy = boost::asio::ip::tcp::sha
 				// Copies over a connection and registers it as the client's state
 				Connection* c = new Connection(state->stored_service);
 
 				// Sets the id of the client and increments the id count
 				c->setID(ids);
 				
-				Client* client = new Client(ids, userName, c);
+				Client* client = new Client(ids, userName, &state->socket);
+				client->state = c;
+				
+				//Client client(ids, userName, c);
 				connected_clients.emplace(ids, client);				
 				ids++;
 
@@ -203,6 +235,7 @@ void ServerConnection::async_receive(it_connection state)
 void ServerConnection::begin_accept()
 {
 	auto state = connections.emplace(connections.begin(), s_ioservice);
+	//it_connection state = connections.emplace(connections.begin(), s_ioservice);
 	auto handler = boost::bind(&ServerConnection::mng_accept, this, state, boost::asio::placeholders::error);
 
 	s_acceptor.async_accept(state->socket, handler);
@@ -228,7 +261,7 @@ void ServerConnection::listen(uint16_t port)
 /// </summary>
 /// <param name="clients"></param>
 /// <param name="message"></param>
-void ServerConnection::broadcast(std::list<Client*> clients, std::string message)
+void ServerConnection::broadcast(std::list<Client*> &clients, std::string message)
 {
 
 	cout << "Sending message: " << message;
@@ -239,8 +272,14 @@ void ServerConnection::broadcast(std::list<Client*> clients, std::string message
 
 	for (Client* client : clients)
 	{
-		if (client->state->socket.is_open())
-			cln_con.push_back(*(client->state));
+		Client *active = connected_clients.at(client->GetID());
+		if (active->state2->is_open()) {
+			cln_con.push_back(*active->state);
+			//auto handler = boost::bind(&ServerConnection::mng_send2, this, active->state2, buffer, boost::asio::placeholders::error);
+			//boost::asio::write(std::move(active->state2), boost::asio::buffer(*buffer));
+
+		}
+			
 	}
 
 	//it_connection its = clients2.begin();
@@ -252,47 +291,8 @@ void ServerConnection::broadcast(std::list<Client*> clients, std::string message
 		boost::asio::async_write((its->socket), boost::asio::buffer(*buffer), handler);
 	}
 
-	//for (Connection con : cln_con) 
-	//{
-	//    auto handler = boost::bind(&ServerConnection::mng_send, this, con, buffer, boost::asio::placeholders::error);
-	//    //its->socket.async_send(boost::asio::buffer(buffer), handler);
-	//    boost::asio::async_write((con->socket), boost::asio::buffer(*buffer), handler);
-	//}
-
-	//std::list<Connection*> cln_con;
-	////Sends the message to each client in the list
-	//std::list<int> l2;
-	//
-	//auto buffer = std::make_shared<std::string>(message + "/n");
-	//for (Client* client : clients)
-	//{
-	//	if (client->state->socket.is_open()) {
-	//		Connection* c = new Connection(client->state->stored_service);
-	//		cln_con.push_back(c);
-	//		auto handler = boost::bind(&ServerConnection::mng_send, this, client->state->socket, buffer, boost::asio::placeholders::error);
-	//		boost::asio::async_write(client->state->socket, boost::asio::buffer(*buffer), handler);
-	//		
-	//	}
-	//		
-	//}
-
-	//it_connection its = clients2.begin();
 	
-	//for (std::list<Connection>::iterator its = cln_con.begin(); its != cln_con.end(); ++its)
-	//{
-	//	auto handler = boost::bind(&ServerConnection::mng_send, this, its, buffer, boost::asio::placeholders::error);
-	//	//its->socket.async_send(boost::asio::buffer(*buffer), handler);
-	//	boost::asio::async_write((its->socket), boost::asio::buffer(*buffer), handler);
-	//}
-
-
-
-	//for (Connection con : cln_con) 
-	//{
-	//	auto handler = boost::bind(&ServerConnection::mng_send, this, con, buffer, boost::asio::placeholders::error);
-	//	//its->socket.async_send(boost::asio::buffer(*buffer), handler);
-	//	boost::asio::async_write((con->socket), boost::asio::buffer(*buffer), handler);
-	//}
+	
 }
 
 /// <summary>
@@ -305,43 +305,3 @@ void ServerConnection::delete_client(Client* terminate) {
 	delete terminate;
 }
 
-///// <summary>
-///// Sends out the given message to the given list of clients
-///// </summary>
-///// <param name="clients"></param>
-///// <param name="message"></param>
-//void ServerConnection::broadcast(std::list<Client> clients, EditRequest request)
-//{
-//	//Sends the message to each client in the list
-//	auto buffer = std::make_shared<std::string>(message);
-//	for (std::list<Client>::iterator it = clients.begin(); it != clients.end(); ++it) {
-//		if (it->state.socket.is_open())
-//		{
-//			auto handler = boost::bind(&ServerConnection::mng_send, this, it, buffer, boost::asio::placeholders::error);
-//			boost::asio::async_write(it->state.socket, boost::asio::buffer(*buffer), handler);
-//
-//
-//		}
-//	}
-//}
-
-
-
-/// <summary>
-/// Starts the server
-/// 
-/// TO DO ! REMOVE THIS METHOD, USE AS REFERENCE AS THIS CLASS SHOULD NOT HAVE A MAIN METHOD!
-/// </summary>
-/// <param name=""></param>
-/// <param name=""></param>
-/// <returns></returns>
-//
-
-//int main(int, char**) {
-//	ServerConnection srv;
-//	srv.listen(1100);
-//
-//	srv.run();
-//	return 0;
-// 
-//}
