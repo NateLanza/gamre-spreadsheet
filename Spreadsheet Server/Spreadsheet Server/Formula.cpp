@@ -32,6 +32,12 @@ Formula::Formula(string formula)
 	int closedParens = 0;
 	int openParens = 0;
 	vector<string> allTokens = GetTokens(formula);
+	// Make sure we have tokens
+	if (allTokens.size() == 0) {
+		throw new exception();
+		return;
+	}
+		
 	for (int itr = 0; itr < allTokens.size(); itr++)
 	{
 		Token newToken = Token(allTokens[itr]);
