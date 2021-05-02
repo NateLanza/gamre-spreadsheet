@@ -40,6 +40,13 @@ void ServerConnection::mng_send(it_connection state, std::shared_ptr<std::string
 
 void ServerConnection::mng_receive(it_connection state, boost::system::error_code const& error, size_t bytes)
 {
+	// Check for client disconnect
+	if ((boost::asio::error::eof == error) || (boost::asio::error::connection_reset == error))     {
+		delete_client(state->ID);
+		connections.erase(state);
+		return;
+	}
+
 	// Only process if bytes are received
 	if (bytes > 0)
 	{
