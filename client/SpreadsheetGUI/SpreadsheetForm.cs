@@ -35,6 +35,7 @@ namespace SpreadsheetGUI {
             Controller.ConnectionAttempted += HandleServerConnection;
             Controller.OtherClientDisconnected += HandleClientDisconnect;
             Controller.Disconnected += HandleDisconnect;
+            Controller.IDReceived += HandshakeComplete;
             this.FormClosing += SpreadsheetClosing;
             SpreadsheetGrid.SelectionChanged += SpreadsheetChanged;
 
@@ -101,6 +102,18 @@ namespace SpreadsheetGUI {
                 }
                 PopulateSpreadsheetNameList(spreadsheets);
             });
+        }
+
+        /// <summary>
+        /// When the ID is received, this method is executed
+        /// </summary>
+        /// <param name="ID"></param>
+        private void HandshakeComplete(int ID)
+        {
+            SelectedCellContent.Enabled = true;
+            CellValueBox.Enabled = true;
+            revert_button.Enabled = true;
+            undo_button.Enabled = true;
         }
 
         /// <summary>
@@ -228,6 +241,7 @@ namespace SpreadsheetGUI {
             SpreadsheetGrid.GetSelection(out int col, out int row);
             String cell = RowColToCell(row, col);
             Console.WriteLine("Want to send select " + cell);
+            Console.WriteLine("Want to send select " + col + ", " + row);
             Controller.SendSelectRequest(cell);
         }
 

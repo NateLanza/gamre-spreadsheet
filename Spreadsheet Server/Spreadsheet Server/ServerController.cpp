@@ -1,5 +1,6 @@
 #include "ServerController.h"
 #include "Storage.h"
+#include <iostream>
 
 //#include <boost/json.hpp>
 
@@ -19,9 +20,9 @@ void ServerController::StartServer() {
 
 void ServerController::ConnectClientToSpreadsheet(Client* client, string spreadsheet) {
 	Lock();
+
 	// See if any clients have this spreadsheet open, open if not
-	if (clientConnections.count(spreadsheet) != 1) {
-		// No clients have this spreadsheet open, so open it
+	if (clientConnections.count(spreadsheet) < 1) {
 		StoredSpreadsheet newSS = storage.Open(spreadsheet);
 		SpreadsheetState* toAdd = new SpreadsheetState(newSS.cells, newSS.edits);
 		openSpreadsheets[spreadsheet] = toAdd;
@@ -29,9 +30,12 @@ void ServerController::ConnectClientToSpreadsheet(Client* client, string spreads
 		clientConnections[spreadsheet] = clientList;
 	}
 
+	// Connect the client
+	clientConnections[spreadsheet].push_back(client);
+	client->spreadsheet = spreadsheet;
+
 	// Send spreadsheet cells to client
 	list<Client*> sendTo = clientConnections[spreadsheet];
-	sendTo.push_back(client);
 	for (Cell cell : openSpreadsheets[spreadsheet]->GetPopulatedCells()) {
 		// Skip empty cells
 		if (cell.GetContents() == "")
@@ -45,10 +49,6 @@ void ServerController::ConnectClientToSpreadsheet(Client* client, string spreads
 			""
 		));
 	}
-
-	// Connect the client
-	clientConnections[spreadsheet].push_back(client);
-	client->spreadsheet = spreadsheet;
 
 	// Send ID to client
 	network->broadcast(sendTo, to_string(client->GetID()) + "\n");
@@ -121,22 +121,24 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 void ServerController::DisconnectClient(Client* client) {
 	// Gonna modify connections, so lock
 	Lock();
-	clientConnections[client->spreadsheet].remove(client);
+	string ssname = client->spreadsheet;
+	clientConnections[ssname].erase(find(clientConnections[ssname].begin(), clientConnections[ssname].end(), client));
 
 	// See if that was the last client connected to the spreadsheet
 	// If so, close spreadsheet and save
-	if (clientConnections[client->spreadsheet].size() == 0) {
+	if (clientConnections[ssname].size() == 0) {
 		// Save
 		SpreadsheetState* ss = openSpreadsheets[client->spreadsheet];
 		StoredSpreadsheet toStore(ss->GetPopulatedCells(), ss->GetEditHistory());
-		storage.Save(client->spreadsheet, toStore);
+		storage.Save(ssname, toStore);
 		// Delete from current state
-		openSpreadsheets.erase(client->spreadsheet);
-		clientConnections.erase(client->spreadsheet);
+		openSpreadsheets.erase(ssname);
+		clientConnections.erase(ssname);
 	}
 	Unlock();
 
 	// Broadcast disconnect to other clients
+	if (clientConnections.count(ssname) > 0)
 	network->broadcast(clientConnections[client->spreadsheet], 
 		SerializeMessage(
 			"disconnected",
@@ -168,12 +170,12 @@ string ServerController::SerializeMessage(string messageType, string cellName, s
 	return result;
 }
 
-std::list<std::string> ServerController::GetSpreadsheetNames() {
-	std::list<std::string> names;
+list<string> ServerController::GetSpreadsheetNames() {
+	list<string> names;
 
-	for (pair<std::string, SpreadsheetState*> element : openSpreadsheets) {
+	for (string s : storage.GetSavedSpreadsheetNames()) {
 		
-		names.push_back(element.first);
+		names.push_back(s);
 	}
 
 	return names;

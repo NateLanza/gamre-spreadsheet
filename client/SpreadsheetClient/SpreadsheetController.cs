@@ -242,6 +242,7 @@ namespace SS {
             bool receivedID = false;
             // Process server tokens
             foreach (string token in serverTokens) {
+                Console.WriteLine(token);
                 // See if we've received the ID, set if so
                 if (!token.Contains("{")) {
                     if (int.TryParse(token, out int intID)) {
@@ -262,7 +263,7 @@ namespace SS {
                     Console.WriteLine("ID Received");
                     ConnectionState = ConnectionStates.Connected;
                     Connection.OnNetworkAction = ReceiveLoop;
-                    IDReceived(ID); 
+                    IDReceived(ID);
                 }
             }
 
@@ -303,6 +304,7 @@ namespace SS {
 
                 // Get data, make sure we have a complete token
                 string serverData = Connection.GetData();
+                Console.WriteLine(serverData + " <<<<  Received Message");
                 if (!serverData.Contains("\n")) {
                     return new List<string>();
                 }
@@ -325,6 +327,8 @@ namespace SS {
         /// </summary>
         /// <param name="json"></param>
         private void ProcessServerJson(string json) {
+            if (json == "")
+                return;
             // Try to deserialize object
             ServerMessage message;
             try {
@@ -364,13 +368,12 @@ namespace SS {
                 if (ConnectionState != ConnectionStates.Connected)
                     return; 
             }
-
             Networking.Send(Connection.TheSocket,
                 "{\"requestType\": \"editCell\", \"cellName\": \"" +
                 cell +
                 "\", \"contents\": \"" +
                 contents +
-                "\"}"
+                "\"}" + "\n"
                 );
         }
 
@@ -388,7 +391,7 @@ namespace SS {
             Networking.Send(Connection.TheSocket,
                 "{\"requestType\": \"revertCell\", \"cellName\": \"" +
                 cell +
-                "\"}"
+                "\"}" + "\n"
                 );
         }
 
@@ -406,7 +409,7 @@ namespace SS {
             Networking.Send(Connection.TheSocket,
                 "{\"requestType\": \"selectCell\", \"cellName\": \"" +
                 cell +
-                "\"}"
+                "\"}" + "\n"
                 );
         }
 
@@ -421,7 +424,7 @@ namespace SS {
             }
 
             Networking.Send(Connection.TheSocket,
-                "{\"requestType\": \"undo\"}"
+                "{\"requestType\": \"undo\"}" + "\n"
                 );
         }
     }

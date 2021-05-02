@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <boost/asio.hpp> 
 #include "Connection.h"
 
 using namespace std;
@@ -21,15 +22,7 @@ public:
 	/// </summary>
 	/// <param name="ID">Unique ID of the client</param>
 	/// <param name="username">Client username</param>
-	Client(const int ID, const string username, const Connection *state);
-
-	
-	/// <summary>
-	/// Creates a new client
-	/// </summary>
-	/// <param name="ID">Unique ID of the client</param>
-	/// <param name="username">Client username</param>
-	Client(const int ID, const string username, const boost::asio::ip::tcp::socket* state);
+	Client(const int ID, const string username, it_connection state);
 
 	/// <summary>
 	/// Gets ID
@@ -47,7 +40,7 @@ public:
 	/// Spreadsheet that this client is connected to
 	/// </summary>
 	string spreadsheet;
-	
+
 private:
 	/// <summary>
 	/// Client ID
@@ -62,9 +55,7 @@ private:
 	/// <summary>
 	/// Client networking information
 	/// </summary>
-	const Connection *state;
-
-	const boost::asio::ip::tcp::socket* state2;
+	it_connection state;
 
 };
 

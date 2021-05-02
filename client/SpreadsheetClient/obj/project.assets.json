@@ -265,19 +265,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\izana\\.nuget\\packages\\": {}
+    "C:\\Users\\e-gei\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
+      "projectUniqueName": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
       "projectName": "SpreadsheetClient",
-      "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
-      "packagesPath": "C:\\Users\\izana\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\obj\\",
+      "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
+      "packagesPath": "C:\\Users\\e-gei\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\izana\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\e-gei\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -291,14 +291,14 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "projectReferences": {
-            "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj": {
-              "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj"
+            "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj": {
+              "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj"
             },
-            "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj": {
-              "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj"
+            "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj": {
+              "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj"
             },
-            "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {
-              "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj"
+            "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {
+              "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj"
             }
           }
         }

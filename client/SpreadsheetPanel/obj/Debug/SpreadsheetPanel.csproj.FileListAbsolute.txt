@@ -22,3 +22,9 @@ C:\Users\izana\Source\Repos\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\
 C:\Users\izana\Source\Repos\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csproj.CoreCompileInputs.cache
 C:\Users\izana\Source\Repos\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.dll
 C:\Users\izana\Source\Repos\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.pdb
+C:\Users\e-gei\source\repos\gamre-spreadsheet\client\SpreadsheetPanel\bin\Debug\SpreadsheetPanel.dll
+C:\Users\e-gei\source\repos\gamre-spreadsheet\client\SpreadsheetPanel\bin\Debug\SpreadsheetPanel.pdb
+C:\Users\e-gei\source\repos\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csprojAssemblyReference.cache
+C:\Users\e-gei\source\repos\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csproj.CoreCompileInputs.cache
+C:\Users\e-gei\source\repos\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.dll
+C:\Users\e-gei\source\repos\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.pdb
