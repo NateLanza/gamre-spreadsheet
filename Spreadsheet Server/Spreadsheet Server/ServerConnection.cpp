@@ -56,8 +56,10 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 
 
 			if (!state->user_chosen) {
-
+				
 				string userName(s);
+				if (s[s.size() - 1] == '\n')
+					userName = s.substr(0, s.size() - 1);
 				// Creates client if userName is provided
 
 				state->setID(ids);

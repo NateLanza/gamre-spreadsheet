@@ -12,8 +12,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SpreadsheetGUI {
-    public partial class SpreadsheetForm : Form {
+namespace SpreadsheetGUI
+{
+    public partial class SpreadsheetForm : Form
+    {
         private SpreadsheetState Spreadsheet;
 
         private SpreadsheetController Controller;
@@ -21,7 +23,8 @@ namespace SpreadsheetGUI {
         /// <summary>
         /// Creates a new, empty spreadsheet
         /// </summary>
-        public SpreadsheetForm() {
+        public SpreadsheetForm()
+        {
             InitializeComponent();
 
             // Create model and controller
@@ -49,8 +52,10 @@ namespace SpreadsheetGUI {
         /// </summary>
         /// <param name="cell">Cell which the change was requested for</param>
         /// <param name="message">Server message</param>
-        public void HandleInvalidChange(string cell, string message) {
-            this.Invoke((MethodInvoker)delegate {
+        public void HandleInvalidChange(string cell, string message)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
                 MessageBox.Show("Invalid change to cell " + cell + ": " + message);
             });
         }
@@ -60,8 +65,10 @@ namespace SpreadsheetGUI {
         /// </summary>
         /// <param name="cell">Changed cell</param>
         /// <param name="contents">Cell contents</param>
-        public void HandleCellChange(string cell, string content) {
-            this.Invoke((MethodInvoker) delegate {
+        public void HandleCellChange(string cell, string content)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
                 UpdateCellContents(cell, content);
             });
         }
@@ -72,15 +79,20 @@ namespace SpreadsheetGUI {
         /// <param name="cell">Cell selected</param>
         /// <param name="name">Name of selector</param>
         /// <param name="id">ID of selector</param>
-        public void HandleSelectionChange(string cell, string name, int id) {
-            this.Invoke((MethodInvoker) delegate {
-                if (id == Controller.ID) {
+        public void HandleSelectionChange(string cell, string name, int id)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                if (id == Controller.ID)
+                {
                     int[] cellCoords = CellToRowCol(cell);
                     SpreadsheetGrid.SetSelection(cellCoords[1], cellCoords[0]);
                     SelectedCellContent.Text = Spreadsheet.GetCellContents(cell).ToString();
                     SelectedCellLabel.Text = "Selected Cell: " + cell;
                     UpdateCellValueBox();
-                } else {
+                }
+                else
+                {
                     SetNetworkSelection(id, cell);
                 }
             });
@@ -91,9 +103,12 @@ namespace SpreadsheetGUI {
         /// </summary>
         /// <param name="error">Whether an error occurred on connection</param>
         /// <param name="spreadsheets">Spreadsheet list</param>
-        public void HandleServerConnection(bool error, List<string> spreadsheets) {
-            this.Invoke((MethodInvoker) delegate {
-                if (error) {
+        public void HandleServerConnection(bool error, List<string> spreadsheets)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                if (error)
+                {
                     IPTextBox.Enabled = true;
                     UsernameBox.Enabled = true;
                     ConnectButton.Enabled = true;
@@ -110,18 +125,24 @@ namespace SpreadsheetGUI {
         /// <param name="ID"></param>
         private void HandshakeComplete(int ID)
         {
-            SelectedCellContent.Enabled = true;
-            CellValueBox.Enabled = true;
-            revert_button.Enabled = true;
-            undo_button.Enabled = true;
+            this.Invoke(new MethodInvoker(
+              () =>
+              {
+                  SelectedCellContent.Enabled = true;
+                  CellValueBox.Enabled = true;
+                  revert_button.Enabled = true;
+                  undo_button.Enabled = true;
+              }));
         }
 
         /// <summary>
         /// Handler for when another client disconnects from the server
         /// </summary>
         /// <param name="ID">ID of client</param>
-        public void HandleClientDisconnect(int ID) {
-            this.Invoke((MethodInvoker)delegate {
+        public void HandleClientDisconnect(int ID)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
                 RemoveNetworkConnection(ID);
             });
         }
@@ -129,8 +150,10 @@ namespace SpreadsheetGUI {
         /// <summary>
         /// Handler for when this client disconnects from the server
         /// </summary>
-        public void HandleDisconnect(string controllerMessage) {
-            this.Invoke((MethodInvoker)delegate {
+        public void HandleDisconnect(string controllerMessage)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
                 MessageBox.Show("Disconnected from the server: " + controllerMessage, "", MessageBoxButtons.OK);
                 IPTextBox.Enabled = true;
                 UsernameBox.Enabled = true;
@@ -146,8 +169,10 @@ namespace SpreadsheetGUI {
         /// <param name="msg"></param>
         /// <param name="keyData"></param>
         /// <returns></returns>
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
-            if (keyData == Keys.Control) {
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Control)
+            {
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
@@ -156,13 +181,16 @@ namespace SpreadsheetGUI {
         /// <summary>
         /// Handles pressing of keys for keyboard shortcuts
         /// </summary>
-        private void FormKeyDown(object sender, KeyEventArgs args) {
-            if (!args.Control) {
+        private void FormKeyDown(object sender, KeyEventArgs args)
+        {
+            if (!args.Control)
+            {
                 return;
             }
 
             // Close when user presses control + x
-            if (args.KeyCode == Keys.X) {
+            if (args.KeyCode == Keys.X)
+            {
                 this.Close();
             }
         }
@@ -172,36 +200,45 @@ namespace SpreadsheetGUI {
         /// </summary>
         /// <param name="cell"></param>
         /// <param name="content"></param>
-        private void UpdateCellContents(String cell, String content) {
+        private void UpdateCellContents(String cell, String content)
+        {
             IList<string> ToRecalculate;
             // Update backend
-            try {
+            try
+            {
                 ToRecalculate = Spreadsheet.SetContentsOfCell(cell, content);
-            } catch (Exception e) {
-                if (typeof(FormulaFormatException).IsInstanceOfType(e)) {
+            }
+            catch (Exception e)
+            {
+                if (typeof(FormulaFormatException).IsInstanceOfType(e))
+                {
                     int[] rowCol = CellToRowCol(cell);
                     SpreadsheetGrid.SetValue(rowCol[1], rowCol[0], "Invalid formula: " + e.Message);
-                } else if (typeof(ArgumentException).IsInstanceOfType(e)) {
+                }
+                else if (typeof(ArgumentException).IsInstanceOfType(e))
+                {
                     int[] rowCol = CellToRowCol(cell);
                     SpreadsheetGrid.SetValue(rowCol[1], rowCol[0], "Circular Error: Cells cannot depend on each other in a circular fashion");
                 }
                 return;
-            }   
+            }
             // Update display for all necessary cells
-            foreach(String newCell in ToRecalculate) {
+            foreach (String newCell in ToRecalculate)
+            {
                 int[] rowCol = CellToRowCol(newCell);
                 SpreadsheetGrid.SetValue(rowCol[1], rowCol[0], Spreadsheet.GetCellValue(newCell).ToString());
             }
         }
 
-        
+
 
         /// <summary>
         /// Converts a cell string to row and column values
         /// </summary>
         /// <param name="cell">Cell to convert</param>
         /// <returns>Row at index 0, col at index 1</returns>
-        private int[] CellToRowCol(String cell) {
+        private int[] CellToRowCol(String cell)
+        {
             char col = cell.ToUpper()[0];
             int.TryParse(cell.Substring(1), out int row);
 
@@ -214,8 +251,9 @@ namespace SpreadsheetGUI {
         /// <param name="col">Column number, 0-based</param>
         /// <param name="row">Row number, 0-based</param>
         /// <returns>[letter][number] cell</returns>
-        private string RowColToCell(int row, int col) {
-            char colLetter = (char) (col + 65);
+        private string RowColToCell(int row, int col)
+        {
+            char colLetter = (char)(col + 65);
 
             return colLetter + (++row).ToString();
         }
@@ -223,13 +261,15 @@ namespace SpreadsheetGUI {
         /// <summary>
         /// Updates the cell value box to reflect the selected cell
         /// </summary>
-        private void UpdateCellValueBox() {
+        private void UpdateCellValueBox()
+        {
             SpreadsheetGrid.GetSelection(out int col, out int row);
             SpreadsheetGrid.GetValue(col, row, out string value);
             CellValueBox.Text = value;
         }
 
-        private void SpreadsheetClosing(Object sender, FormClosingEventArgs args) {
+        private void SpreadsheetClosing(Object sender, FormClosingEventArgs args)
+        {
             // Fires when the spreadsheet window closes. Needs to send remaining changes to server and disconnect
         }
 
@@ -237,8 +277,8 @@ namespace SpreadsheetGUI {
         /// Runs when the spreadsheet grid changes
         /// </summary>
         /// <param name="sender">The grid that changed</param>
-        private void SpreadsheetChanged(SpreadsheetPanel sender) {
-            SpreadsheetGrid.GetSelection(out int col, out int row);
+        private void SpreadsheetChanged(int col, int row)
+        {
             String cell = RowColToCell(row, col);
             Console.WriteLine("Want to send select " + cell);
             Console.WriteLine("Want to send select " + col + ", " + row);
@@ -250,13 +290,15 @@ namespace SpreadsheetGUI {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SelectedCellContent_TextChanged(object sender, EventArgs e) {
+        private void SelectedCellContent_TextChanged(object sender, EventArgs e)
+        {
             SpreadsheetGrid.GetSelection(out int col, out int row);
             String cell = RowColToCell(row, col);
             Controller.SendEditRequest(cell, SelectedCellContent.Text);
         }
 
-        private void HelpButton_Click(object sender, EventArgs e) {
+        private void HelpButton_Click(object sender, EventArgs e)
+        {
             Help help = new Help();
             help.ShowDialog();
         }
@@ -306,7 +348,8 @@ namespace SpreadsheetGUI {
         /// Removes a networked client & their selection indicator by ID
         /// </summary>
         /// <param name="id">ID of client to remove</param>
-        private void RemoveNetworkConnection(int id) {
+        private void RemoveNetworkConnection(int id)
+        {
             SpreadsheetGrid.RemoveNetworkSelection(id);
         }
 
@@ -324,17 +367,20 @@ namespace SpreadsheetGUI {
             Controller.ConnectToSpreadsheet(SpreadsheetNameList.Text);
         }
 
-        private void revert_button_Click(object sender, EventArgs e) {
+        private void revert_button_Click(object sender, EventArgs e)
+        {
             SpreadsheetGrid.GetSelection(out int col, out int row);
             String cell = RowColToCell(row, col);
             Controller.SendRevertRequest(cell);
         }
 
-        private void undo_button_Click(object sender, EventArgs e) {
+        private void undo_button_Click(object sender, EventArgs e)
+        {
             Controller.SendUndoRequest();
         }
 
-        private void newSSButton_Click(object sender, EventArgs e) {
+        private void newSSButton_Click(object sender, EventArgs e)
+        {
             OpenButton.Enabled = false;
             SpreadsheetNameList.Enabled = false;
             newSSButton.Enabled = false;

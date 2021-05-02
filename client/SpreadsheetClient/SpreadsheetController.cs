@@ -336,7 +336,7 @@ namespace SS {
             } catch (JsonException) {
                 return;
             }
-
+            Console.WriteLine(message.Type);
             // Take action based on message
             switch (message.Type) {
                 case "cellUpdated":
