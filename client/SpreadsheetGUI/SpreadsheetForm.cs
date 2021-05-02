@@ -280,8 +280,6 @@ namespace SpreadsheetGUI
         private void SpreadsheetChanged(int col, int row)
         {
             String cell = RowColToCell(row, col);
-            Console.WriteLine("Want to send select " + cell);
-            Console.WriteLine("Want to send select " + col + ", " + row);
             Controller.SendSelectRequest(cell);
         }
 
@@ -339,7 +337,7 @@ namespace SpreadsheetGUI
         {
             //we assume that the cellname is a single capital character followed by an integer
             int col = (int)cellName[0] - 65;
-            int row = int.Parse(cellName.Substring(1));
+            int row = int.Parse(cellName.Substring(1))-1;
 
             SpreadsheetGrid.SetNetworkSelection(id, col, row);
         }
