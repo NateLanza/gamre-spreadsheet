@@ -174,7 +174,7 @@ namespace SpreadsheetUtilities {
                         try {
                             value = lookup(s.Content);
                         } catch (Exception e) {
-                            return new FormulaError("Lookup function threw error: " + e.Message + " at " + s.Content);
+                            return new FormulaError("Error: " + s.Content + " is not a double");
                         }
                     } else {
                         value = Double.Parse(s.Content);
@@ -182,12 +182,12 @@ namespace SpreadsheetUtilities {
                     // Evaluate / or *
                     if (ops.Count != 0 && (string.Equals(ops.Peek(), "/") || string.Equals(ops.Peek(), "*"))) {
                         if (values.Count == 0) {
-                            return new FormulaError("Operators must be preceded by numbers or variables");
+                            return new FormulaError("Error: Operators must be preceded by numbers or variables");
                         } else {
                             try {
                                 values.Push(runOperation(value, values.Pop(), ops.Pop()));
                             } catch (DivideByZeroException) {
-                                return new FormulaError("Divide by zero");
+                                return new FormulaError("Error: Divide by zero");
                             }
                         }
                     } else {
