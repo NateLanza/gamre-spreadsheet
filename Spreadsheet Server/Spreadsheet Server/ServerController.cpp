@@ -1,6 +1,7 @@
 #include "ServerController.h"
 #include "Storage.h"
 #include <iostream>
+#include <algorithm>
 
 //#include <boost/json.hpp>
 
@@ -213,9 +214,16 @@ string ServerController::SerializeMessage(string messageType, string cellName, s
 list<string> ServerController::GetSpreadsheetNames() {
 	list<string> names;
 
+	// Add stored spreadsheets
 	for (string s : storage.GetSavedSpreadsheetNames()) {
-
 		names.push_back(s);
+	}
+
+	// Add open spreadsheets
+	for (pair<string, SpreadsheetState*> openSheet : openSpreadsheets) {
+		// Check if names already contains the name
+		if (std::find(names.begin(), names.end(), openSheet.first) == names.end())
+			names.push_back(openSheet.first);
 	}
 
 	return names;
