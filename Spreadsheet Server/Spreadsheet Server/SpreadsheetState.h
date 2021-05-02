@@ -89,7 +89,7 @@ private:
 	/// Read operations should use lock_shared and unlock_shared
 	/// Write operations should use lock and unlock
 	/// </summary>
-	shared_mutex threadkey;
+	shared_mutex* threadkey;
 
 	/// <summary>
 	/// Adds a cell to cells if it doesn't already exist,
@@ -179,8 +179,8 @@ public:
 	/// Undoes the last edit to the spreadsheet
 	/// Will use a write lock. Do NOT encase in any locks
 	/// </summary>
-	/// <returns>True if edit undone, false if edit would create a circular dependency</returns>
-	bool UndoLastEdit();
+	/// <returns>True if edit undone, false if edit would create a circular dependency, and name of cell changed</returns>
+	tuple<bool, string> UndoLastEdit();
 
 	/// <summary>
 	/// Returns all edits made to this spreadsheet as a stack, with most recent at the top

@@ -216,6 +216,9 @@ namespace NetworkUtil
         /// <param name="state">The SocketState to begin receiving</param>
         public static void GetData(SocketState state)
         {
+            // Make sure state is set
+            if (state == null)
+                return;
             try
             {
                 state.TheSocket.BeginReceive(state.buffer, 0, state.buffer.Length, SocketFlags.None, ReceiveCallback, state);
@@ -259,7 +262,7 @@ namespace NetworkUtil
               0, numBytes);
 
                 state.data.Append(message);
-            } catch (ObjectDisposedException e) {
+            } catch (Exception e) {
                 state.ErrorOccured = true;
                 state.ErrorMessage = e.Message;
             } finally { 
@@ -279,6 +282,7 @@ namespace NetworkUtil
         /// <returns>True if the send process was started, false if an error occurs or the socket is already closed</returns>
         public static bool Send(Socket socket, string data)
         {
+            Console.WriteLine("sending stuff!");
             if (!socket.Connected) {
                 return false;
             }

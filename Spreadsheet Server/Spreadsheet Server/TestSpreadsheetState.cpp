@@ -5,7 +5,8 @@
 //
 //void Assert(bool val, string message) {
 //	if (!val)
-//		cout << message << endl;
+//		
+//  << message << endl;
 //}
 //
 //// Lil tester function

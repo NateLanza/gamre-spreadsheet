@@ -21,8 +21,5 @@ RUN apk --update add --no-cache \
 #COPY source/ server/
 COPY . server/
 
-# Expose external server port
-EXPOSE 1100
-
 # Compile server source
 RUN g++ -lstdc++fs -std=c++17 -o server.out server/*.cpp -lstdc++fs

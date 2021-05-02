@@ -2,13 +2,8 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/gamre-spreadsheet/v16/Browse.VC.db
-/.vs/gamre-spreadsheet/v16/Browse.VC.db-shm
-/.vs/gamre-spreadsheet/v16/Browse.VC.db-wal
-/.vs/gamre-spreadsheet/v16/Browse.VC.opendb
 /client/Spreadsheet Client/.vs/Spreadsheet Client/DesignTimeBuild/.dtbcache.v2
-/client/.vs/Spreadsheet Client/v16/.suo
-/client/.vs/Spreadsheet Client/DesignTimeBuild/.dtbcache.v2
+
 
 ################################################################################
 # Added files for C++ language
@@ -30,17 +25,12 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
 *.smod
 
 # Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
 
 # Executables
 *.exe

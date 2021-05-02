@@ -8,8 +8,9 @@ Connection::Connection(boost::asio::io_service& io_service, size_t max_buffer_si
 	: socket(io_service), read_buffer(max_buffer_size), stored_service(io_service), ID(0) {
 }
 
-Connection::Connection(const Connection& copy) 
-	: socket(copy.stored_service), read_buffer(copy.read_buffer.size()), stored_service(copy.stored_service), ID(0) { }
+//Connection::Connection(const Connection& copy) 
+//	: socket(copy.socket), read_buffer(copy.read_buffer.size()), stored_service(copy.stored_service), ID(0) {
+//}
 
 void Connection::setID(int x) {
 	ID = x;

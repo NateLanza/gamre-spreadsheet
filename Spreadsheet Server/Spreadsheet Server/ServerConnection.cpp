@@ -15,31 +15,16 @@
 using boost::property_tree::ptree;
 using boost::property_tree::read_json;
 using boost::property_tree::write_json;
-/// <summary>
-/// Networking of the server. Able to establish client / server connections via TCP Listener
-/// </summary>
 
-class ServerController;
-// Creates a new server connection, initializes the members of the Connection
 ServerConnection::ServerConnection(ServerController* control) : s_ioservice(), s_acceptor(s_ioservice), connections(), control(control) {
 }
 
-
-/// <summary>
-/// Starts the server. The io_service allows for asynchrony
-/// </summary>
 void ServerConnection::run()
 {
 	s_ioservice.run();
 
 }
 
-/// <summary>
-/// Handles sending data to a client. 
-/// </summary>
-/// <param name="state"></param>
-/// <param name="msg_buffer"></param>
-/// <param name="err"></param>
 void ServerConnection::mng_send(it_connection state, std::shared_ptr<std::string> msg_buffer, boost::system::error_code const& error)
 {
 	// Reports an error message, if present
@@ -47,64 +32,54 @@ void ServerConnection::mng_send(it_connection state, std::shared_ptr<std::string
 	{
 		std::cout << error.message() << std::endl;
 		connections.erase(state);
-
 	}
 	else {
 		std::string s((std::istreambuf_iterator<char>(&state->read_buffer)), std::istreambuf_iterator<char>());
-		std::cout << "Finished sending message\n";
-		//TO:DO ! SEND DATA!!
-
-		std::cout << s << std::endl;
-		if (state->socket.is_open())
-		{
-		}
-
 	}
 }
 
-/// <summary>
-/// Handles receiving data from a client
-/// </summary>
-/// <param name="state"></param>
-/// <param name="err"></param>
-/// <param name="bytes_transfered"></param>
 void ServerConnection::mng_receive(it_connection state, boost::system::error_code const& error, size_t bytes)
 {
 	// Only process if bytes are received
 	if (bytes > 0)
 	{
-
 		std::string s((std::istreambuf_iterator<char>(&state->read_buffer)), std::istreambuf_iterator<char>());
-		std::cout << "Received message: " << s << std::endl;
+		std::cout << "Received message: " << s;
 		// Checks if this JSON and needs to be serialized
 		if (s.at(0) != '{') {
-			
-			
+
+
 			if (!state->user_chosen) {
-
+				
 				string userName(s);
-				// Creates client if only userName is provided
+				if (s[s.size() - 1] == '\n')
+					userName = s.substr(0, s.size() - 1);
+				// Creates client if userName is provided
 
-				// Copies over a connection and registers it as the client's state
-				Connection* c = new Connection(state->stored_service);
-				Client* client = new Client(ids, userName, c);
+				state->setID(ids);
+				Client* client = new Client(ids, userName, state);
 				connected_clients.emplace(ids, client);
-
-				// Sets the id of the client and increments the id count
-				c->setID(ids);
 				ids++;
-
 				state->user_chosen = true;
-				std::cout << "Sending spreadsheet names: " << s << std::endl;
+
+				std::cout << "Sending spreadsheet names to: " << s << std::endl;
+
+				//if no spreadsheets are sent, we must still send two /n characters
+				//this bool is here to detect that case
+				bool sentSpreadsheet = false;
 				// Sends the names of available spreadsheets to the client, followed by a newline. 
 				for (auto name : control->GetSpreadsheetNames()) {
-					std::cout << "Spreadsheet: " << s << std::endl;
+					sentSpreadsheet = true;
+					std::cout << "Spreadsheet: " << name << std::endl;
 					auto buffer = std::make_shared<std::string>(name + "\n");
 					auto handler = boost::bind(&ServerConnection::mng_send, this, state, buffer, boost::asio::placeholders::error);
 					boost::asio::async_write(state->socket, boost::asio::buffer(*buffer), handler);
 				}
 
 				auto buffer = std::make_shared<std::string>("\n\n");
+				if (sentSpreadsheet)
+					buffer = std::make_shared<std::string>("\n");
+
 				auto handler = boost::bind(&ServerConnection::mng_send, this, state, buffer, boost::asio::placeholders::error);
 				boost::asio::async_write(state->socket, boost::asio::buffer(*buffer), handler);
 			}
@@ -112,6 +87,8 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 			//Spreadsheet to be chosen, client is connected to it
 			else {
 				std::string ss_name(s);
+				if (s[s.size() - 1] == '\n')
+					ss_name = s.substr(0, s.size() - 1);
 				Client* c = connected_clients.at(state->ID);
 				control->ConnectClientToSpreadsheet(c, ss_name);
 			}
@@ -119,52 +96,54 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 		else {
 			//Creates a tree and stream to read the json
 			ptree pt2;
-			std::istream is(&state->read_buffer);
-			read_json(is, pt2);
+			std::stringstream jsonInput;
+			jsonInput << s;
 
-			// Extracts value from keys. Represents all possible client fields
-			std::string cellName = pt2.get<std::string>("cellName", "");
-			std::string content = pt2.get<std::string>("contents", "");
-			std::string requestType = pt2.get<std::string>("requestType", "");
 
-			// If the client is already connected, sending an edit request
+			try {
+				read_json(jsonInput, pt2);
 
-			//Selector and messageType gone!
-			// Create a client pointer to add to the stack of requests
-			Client* c = connected_clients.at(state->ID);
-			EditRequest request(requestType, cellName, content, c);
-			control->ProcessClientRequest(request);
+				// Extracts value from keys. Represents all possible client fields
+				std::string cellName = pt2.get<std::string>("cellName", "");
+				std::string content = pt2.get<std::string>("contents", "");
+				std::string requestType = pt2.get<std::string>("requestType", "");
 
+				// If the client is already connected, sending an edit request
+
+				//Selector and messageType gone!
+				// Create a client pointer to add to the stack of requests
+				Client* c = connected_clients.at(state->ID);
+				EditRequest request(requestType, cellName, content, c);
+				control->ProcessClientRequest(request);
+			}
+			catch (const exception& e) {
+				cout << "Bad json read: " << e.what() << endl;
+			}
 		}
-
-
-
 	}
+
 	// Reports an error, if one is present
+	// This also detects when sockets are disconnected!
 	if (error)
 	{
+		delete_client(state->ID);
 		std::cout << error.message() << std::endl;
-		connections.erase(state);
 	}
 
 	// Starts asynchronous read again
-	else
+	else {
 		async_receive(state);
+	}
 
 }
 
-/// <summary>
-/// Handles accepting of clients. 
-/// </summary>
-/// <param name="state"></param>
-/// <param name="err"></param>
 void ServerConnection::mng_accept(it_connection state, boost::system::error_code const& error)
 {
 	// Reports an error, if present
 	if (error)
 	{
-		std::cout << error.message() << std::endl;
 		connections.erase(state);
+		std::cout << "Cannot establish connection with client: " << error.message() << std::endl;
 
 	}
 	// On receiving a connection, starts ansyncronous read process with the connected socket. 
@@ -176,20 +155,12 @@ void ServerConnection::mng_accept(it_connection state, boost::system::error_code
 	begin_accept();
 }
 
-/// <summary>
-/// Starts asynchronous process of reading data
-/// </summary>
-/// <param name="state">The state of the connection</param>
 void ServerConnection::async_receive(it_connection state)
 {
 	auto handler = boost::bind(&ServerConnection::mng_receive, this, state, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred);
 	boost::asio::async_read_until(state->socket, state->read_buffer, "\n", handler);
-
 }
 
-/// <summary>
-/// Begins accepting new clients
-/// </summary>
 void ServerConnection::begin_accept()
 {
 	auto state = connections.emplace(connections.begin(), s_ioservice);
@@ -198,10 +169,6 @@ void ServerConnection::begin_accept()
 	s_acceptor.async_accept(state->socket, handler);
 }
 
-/// <summary>
-/// Listens for connections on the specified ports. Creates an endpoint used to open an acceptor and begin listening
-/// </summary>
-/// <param name="port">Specified port to listen</param>
 void ServerConnection::listen(uint16_t port)
 {
 	auto endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port);
@@ -212,124 +179,38 @@ void ServerConnection::listen(uint16_t port)
 	begin_accept();
 }
 
-
-/// <summary>
-/// Sends out the given message to the given list of clients
-/// </summary>
-/// <param name="clients"></param>
-/// <param name="message"></param>
-void ServerConnection::broadcast(std::list<Client*> clients, std::string message)
+void ServerConnection::broadcast(std::list<Client*>& clients, std::string message)
 {
 
-	std::list<Connection> cln_con;
-	//Sends the message to each client in the list
-	auto buffer = std::make_shared<std::string>(message + "\n");
+	cout << "Sending message: " << message;
+
+	auto buffer = std::make_shared<std::string>(message);
 
 	for (Client* client : clients)
 	{
-		if (client->state->socket.is_open())
-			cln_con.push_back(*(client->state));
+		try {
+			if (client->state->socket.is_open()) {
+				auto handler = boost::bind(&ServerConnection::mng_send, this, client->state, buffer, boost::asio::placeholders::error);
+				boost::asio::async_write(client->state->socket, boost::asio::buffer(*buffer), handler);
+			}
+		}
+		catch (exception e) {
+			cout << "Could not send message to client " << client->GetID() << endl;
+			cout << "Error message: " << e.what() << endl;
+		}
 	}
-
-	//it_connection its = clients2.begin();
-
-	for (std::list<Connection>::iterator its = cln_con.begin(); its != cln_con.end(); ++its)
-	{
-		auto handler = boost::bind(&ServerConnection::mng_send, this, its, buffer, boost::asio::placeholders::error);
-		//its->socket.async_send(boost::asio::buffer(buffer), handler);
-		boost::asio::async_write((its->socket), boost::asio::buffer(*buffer), handler);
-	}
-
-	//for (Connection con : cln_con) 
-	//{
-	//    auto handler = boost::bind(&ServerConnection::mng_send, this, con, buffer, boost::asio::placeholders::error);
-	//    //its->socket.async_send(boost::asio::buffer(buffer), handler);
-	//    boost::asio::async_write((con->socket), boost::asio::buffer(*buffer), handler);
-	//}
-
-	//std::list<Connection*> cln_con;
-	////Sends the message to each client in the list
-	//std::list<int> l2;
-	//
-	//auto buffer = std::make_shared<std::string>(message + "/n");
-	//for (Client* client : clients)
-	//{
-	//	if (client->state->socket.is_open()) {
-	//		Connection* c = new Connection(client->state->stored_service);
-	//		cln_con.push_back(c);
-	//		auto handler = boost::bind(&ServerConnection::mng_send, this, client->state->socket, buffer, boost::asio::placeholders::error);
-	//		boost::asio::async_write(client->state->socket, boost::asio::buffer(*buffer), handler);
-	//		
-	//	}
-	//		
-	//}
-
-	//it_connection its = clients2.begin();
-	
-	//for (std::list<Connection>::iterator its = cln_con.begin(); its != cln_con.end(); ++its)
-	//{
-	//	auto handler = boost::bind(&ServerConnection::mng_send, this, its, buffer, boost::asio::placeholders::error);
-	//	//its->socket.async_send(boost::asio::buffer(*buffer), handler);
-	//	boost::asio::async_write((its->socket), boost::asio::buffer(*buffer), handler);
-	//}
-
-
-
-	//for (Connection con : cln_con) 
-	//{
-	//	auto handler = boost::bind(&ServerConnection::mng_send, this, con, buffer, boost::asio::placeholders::error);
-	//	//its->socket.async_send(boost::asio::buffer(*buffer), handler);
-	//	boost::asio::async_write((con->socket), boost::asio::buffer(*buffer), handler);
-	//}
 }
 
-/// <summary>
-/// Deletes the specified client
-/// </summary>
-/// <param name="terminate"></param>
-void ServerConnection::delete_client(Client* terminate) {
+void ServerConnection::delete_client(int ID) {
+	//in this case, nothing to delete
+	if (connected_clients.count(ID) == 0)
+		return;
 
-	connected_clients.erase(terminate->GetID());
-	delete terminate;
+	Client* c = connected_clients.at(ID);
+	if (c->spreadsheet != "")
+		control->DisconnectClient(c);
+
+	connected_clients.erase(ID);
+	delete c;
 }
 
-///// <summary>
-///// Sends out the given message to the given list of clients
-///// </summary>
-///// <param name="clients"></param>
-///// <param name="message"></param>
-//void ServerConnection::broadcast(std::list<Client> clients, EditRequest request)
-//{
-//	//Sends the message to each client in the list
-//	auto buffer = std::make_shared<std::string>(message);
-//	for (std::list<Client>::iterator it = clients.begin(); it != clients.end(); ++it) {
-//		if (it->state.socket.is_open())
-//		{
-//			auto handler = boost::bind(&ServerConnection::mng_send, this, it, buffer, boost::asio::placeholders::error);
-//			boost::asio::async_write(it->state.socket, boost::asio::buffer(*buffer), handler);
-//
-//
-//		}
-//	}
-//}
-
-
-
-/// <summary>
-/// Starts the server
-/// 
-/// TO DO ! REMOVE THIS METHOD, USE AS REFERENCE AS THIS CLASS SHOULD NOT HAVE A MAIN METHOD!
-/// </summary>
-/// <param name=""></param>
-/// <param name=""></param>
-/// <returns></returns>
-//
-
-//int main(int, char**) {
-//	ServerConnection srv;
-//	srv.listen(1100);
-//
-//	srv.run();
-//	return 0;
-// 
-//}

@@ -19,10 +19,9 @@ struct Connection {
 
 	Connection(boost::asio::io_service& io_service);		// Creates a Connection with io_service, which facilitates ansynchrony. 
 
-	
 	Connection(boost::asio::io_service& io_service, size_t max_buffer_size); // Creates the connection with an additional buffer_size, if specified.
 	
-	Connection(const Connection& copy);
+	//Connection(const Connection& copy); //copy constructor
 
 	void setID(int x);
 };

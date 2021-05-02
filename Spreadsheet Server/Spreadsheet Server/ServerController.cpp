@@ -1,5 +1,7 @@
 #include "ServerController.h"
 #include "Storage.h"
+#include <iostream>
+#include <algorithm>
 
 //#include <boost/json.hpp>
 
@@ -7,32 +9,34 @@
 using namespace std;
 // See ServerController.h for method documentation
 
-ServerController::ServerController() : openSpreadsheets(), clientConnections(), storage() {
+ServerController::ServerController() : openSpreadsheets(), clientConnections(), storage(), threadkey() {
 	network = new ServerConnection(this);
 }
 
-void ServerController::StartServer() {	
-	
+void ServerController::StartServer() {
+
 	network->listen(1100);
 	network->run();
 }
 
 void ServerController::ConnectClientToSpreadsheet(Client* client, string spreadsheet) {
 	Lock();
-	// See if any clients have this spreadsheet open, connect client if so
-	if (clientConnections.count(spreadsheet) == 1) {
-		clientConnections[spreadsheet].push_back(client);
-		return;
+
+	// See if any clients have this spreadsheet open, open if not
+	if (clientConnections.count(spreadsheet) < 1) {
+		StoredSpreadsheet newSS = storage.Open(spreadsheet);
+		SpreadsheetState* toAdd = new SpreadsheetState(newSS.cells, newSS.edits);
+		openSpreadsheets[spreadsheet] = toAdd;
+		list<Client*> clientList;
+		clientConnections[spreadsheet] = clientList;
 	}
 
-	// No clients have this spreadsheet open, so open it
-	StoredSpreadsheet newSS = storage.Open(spreadsheet);
-	SpreadsheetState* toAdd = new SpreadsheetState(newSS.cells, newSS.edits);
-	openSpreadsheets[spreadsheet] = toAdd;
+	// Connect the client
+	clientConnections[spreadsheet].push_back(client);
+	client->spreadsheet = spreadsheet;
 
 	// Send spreadsheet cells to client
-	list<Client*> sendTo;
-	sendTo.push_back(client);
+	list<Client*> sendTo = clientConnections[spreadsheet];
 	for (Cell cell : openSpreadsheets[spreadsheet]->GetPopulatedCells()) {
 		// Skip empty cells
 		if (cell.GetContents() == "")
@@ -41,20 +45,14 @@ void ServerController::ConnectClientToSpreadsheet(Client* client, string spreads
 			"cellUpdated",
 			cell.GetName(),
 			cell.GetContents(),
-			0,
 			NULL,
-			NULL
+			"",
+			""
 		));
 	}
 
-	// Connect the client
-	list<Client*> clientList;
-	clientConnections[spreadsheet] = clientList;
-	clientConnections[spreadsheet].push_back(client);
-	client->spreadsheet = spreadsheet;
-
 	// Send ID to client
-	network->broadcast(sendTo, client->GetID() + "\n");
+	network->broadcast(sendTo, to_string(client->GetID()) + "\n");
 
 	Unlock();
 }
@@ -67,18 +65,53 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 		openSpreadsheets[request.GetClient()->spreadsheet]->
 			SelectCell(request.GetName(), request.GetClient()->GetID());
 
+		string message = SerializeMessage(
+			basic_string("cellSelected"),
+			request.GetName(),
+			"",
+			request.GetClient()->GetID(),
+			request.GetClient()->GetUsername(),
+			""
+		);
+
 		// Broadcast select
-		network->broadcast(clientConnections[request.GetClient()->spreadsheet],
-			SerializeMessage(
-				"cellSelected",
-				request.GetName(),
-				NULL,
-				request.GetClient()->GetID(),
-				request.GetClient()->GetUsername(),
-				NULL
-			));
+		network->broadcast(clientConnections[request.GetClient()->spreadsheet], message);
 
 		return;
+	}
+
+	if (request.GetType() == "undo") {
+		tuple<bool, string> undoRequestSuccess;
+		undoRequestSuccess = openSpreadsheets[request.GetClient()->spreadsheet]->
+			UndoLastEdit();
+
+		// If request successful, send out the new cell
+		if (get<0>(undoRequestSuccess)) {
+			network->broadcast(clientConnections[request.GetClient()->spreadsheet],
+				SerializeMessage(
+					"cellUpdated",
+					get<1>(undoRequestSuccess),
+					openSpreadsheets[request.GetClient()->spreadsheet]->GetCell(get<1>(undoRequestSuccess)),
+					0,
+					"",
+					""
+				));
+			return;
+		}
+		else {
+			// Send error message to client for bad request
+			list<Client*> toSend;
+			toSend.push_back(request.GetClient());
+			network->broadcast(toSend, SerializeMessage(
+				"requestError",
+				"",
+				"",
+				0,
+				"",
+				get<1>(undoRequestSuccess)
+			));
+			return;
+		}
 	}
 
 	bool requestSuccess = false;
@@ -86,106 +119,110 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 	if (request.GetType() == "editCell") {
 		requestSuccess = openSpreadsheets[request.GetClient()->spreadsheet]->
 			EditCell(request.GetName(), request.GetContent(), request.GetClient()->GetID());
-	} else if (request.GetType() == "revertCell") {
+	}
+	else if (request.GetType() == "revertCell") {
 		requestSuccess = openSpreadsheets[request.GetClient()->spreadsheet]->
 			RevertCell(request.GetName());
-	} else if (request.GetType() == "undo") {
-		requestSuccess = openSpreadsheets[request.GetClient()->spreadsheet]->
-			UndoLastEdit();
 	}
 
 	// If request successful, send out the new cell
-	if (requestSuccess) 	{
+	if (requestSuccess) {
 		network->broadcast(clientConnections[request.GetClient()->spreadsheet],
 			SerializeMessage(
 				"cellUpdated",
 				request.GetName(),
 				openSpreadsheets[request.GetClient()->spreadsheet]->GetCell(request.GetName()),
 				0,
-				NULL,
-				NULL
+				"",
+				""
 			));
-	} else {
+		return;
+	}
+	else {
 		// Send error message to client for bad request
 		list<Client*> toSend;
 		toSend.push_back(request.GetClient());
 		network->broadcast(toSend, SerializeMessage(
 			"requestError",
 			request.GetName(),
-			NULL,
+			"",
 			0,
-			NULL,
+			"",
 			"Request rejected"
 		));
+		return;
 	}
 }
 
 void ServerController::DisconnectClient(Client* client) {
 	// Gonna modify connections, so lock
 	Lock();
-	clientConnections[client->spreadsheet].remove(client);
+	string ssname = client->spreadsheet;
+	clientConnections[ssname].erase(find(clientConnections[ssname].begin(), clientConnections[ssname].end(), client));
 
 	// See if that was the last client connected to the spreadsheet
 	// If so, close spreadsheet and save
-	if (clientConnections[client->spreadsheet].size() == 0) {
+	if (clientConnections[ssname].size() == 0) {
 		// Save
 		SpreadsheetState* ss = openSpreadsheets[client->spreadsheet];
 		StoredSpreadsheet toStore(ss->GetPopulatedCells(), ss->GetEditHistory());
-		storage.Save(client->spreadsheet, toStore);
+		storage.Save(ssname, toStore);
 		// Delete from current state
-		openSpreadsheets.erase(client->spreadsheet);
-		clientConnections.erase(client->spreadsheet);
+		openSpreadsheets.erase(ssname);
+		clientConnections.erase(ssname);
 	}
 	Unlock();
 
 	// Broadcast disconnect to other clients
-	network->broadcast(clientConnections[client->spreadsheet], 
-		SerializeMessage(
-			"disconnected",
-			NULL,
-			NULL,
-			client->GetID(),
-			NULL,
-			NULL
-		));
+	if (clientConnections.count(ssname) > 0)
+		network->broadcast(clientConnections[client->spreadsheet],
+			SerializeMessage(
+				"disconnected",
+				"",
+				"",
+				client->GetID(),
+				"",
+				""
+			));
 }
 
-const string ServerController::SerializeMessage(string messageType, string cellName, string contents, int userID, string username, string message) const {
-	string jsonMessage;
-	
-	jsonMessage += "{ ";
+string ServerController::SerializeMessage(string messageType, string cellName, string contents, int userID, string username, string message) const {
+	string result = "";
+	// Generate message based on type
+	if (messageType == "cellUpdated") {
+		result += "{\"messageType\": \"cellUpdated\", \"cellName\": \"" + cellName + "\", \"contents\": \"" + contents + "\"}";
+	}
+	else if (messageType == "cellSelected") {
+		result += "{\"messageType\": \"cellSelected\", \"cellName\": \"" + cellName + "\", \"selector\": \"" + to_string(userID) + "\", \"selectorName\": \"" + username + "\"}";
+	}
+	else if (messageType == "disconnected") {
+		result += "{\"messageType\": \"disconnected\", \"user\": \"" + to_string(userID) + "\"}";
+	}
+	else if (messageType == "requestError") {
+		result += "{\"messageType\": \"requestError\", \"cellName\": \"" + cellName + "\", \"message\": \"" + message + "\"}";
+	}
+	else if (messageType == "serverError") {
+		result += "{\"messageType\": \"serverError\", \"message\": \"" + message + "\"}";
+	}
 
+	result += "\n";
 
-	// Run through each type, check if it is empty. If not add it to JsonMessage. 
-	if (messageType.empty())
-		jsonMessage += "\"messageType\": " + '\"' + messageType + "\", ";
-
-	if (cellName.empty())
-		jsonMessage += "\"cellName\": " + '\"' + cellName + "\" ";
-
-	if (contents.empty())
-		jsonMessage += "\"contents\": " + '\"' + contents + "\" ";
-
-	if (userID == NULL)
-		jsonMessage += "\"selector\": <" + '\"' + std::to_string(userID) + "\" ";
-
-	if (username.empty())
-		jsonMessage += "\"selectorName\": " + '\"' + username + "\" ";
-
-	if (message.empty())
-		jsonMessage += "\"message\": " + '\"' + message + "\" ";
-
-	jsonMessage += "}";	
-
-	return jsonMessage;
+	return result;
 }
 
-std::list<std::string> ServerController::GetSpreadsheetNames() {
-	std::list<std::string> names;
+list<string> ServerController::GetSpreadsheetNames() {
+	list<string> names;
 
-	for (pair<std::string, SpreadsheetState*> element : openSpreadsheets) {
-		
-		names.push_back(element.first);
+	// Add stored spreadsheets
+	for (string s : storage.GetSavedSpreadsheetNames()) {
+		names.push_back(s);
+	}
+
+	// Add open spreadsheets
+	for (pair<string, SpreadsheetState*> openSheet : openSpreadsheets) {
+		// Check if names already contains the name
+		if (std::find(names.begin(), names.end(), openSheet.first) == names.end())
+			names.push_back(openSheet.first);
 	}
 
 	return names;
@@ -214,10 +251,10 @@ void ServerController::StopServer() {
 		// Send message
 		network->broadcast(Clients.second, SerializeMessage(
 			"serverError",
-			NULL,
-			NULL,
-			NULL,
-			NULL,
+			"",
+			"",
+			0,
+			"",
 			"Server closing"
 		));
 

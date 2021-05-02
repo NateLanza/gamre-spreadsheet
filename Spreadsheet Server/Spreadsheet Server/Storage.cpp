@@ -111,9 +111,9 @@ void Storage::Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 			file << cell.GetContents();
 			file << cell.GetPreviousStates().size();
 			// parse list of previous contents into file
-			for (Formula f : cell.GetPreviousStates())
+			for (string f : cell.GetPreviousStates())
 			{
-				file << f.ToString();
+				file << f;
 			}
 		}
 

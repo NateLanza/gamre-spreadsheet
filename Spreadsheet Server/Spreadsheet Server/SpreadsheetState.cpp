@@ -8,9 +8,11 @@
 /// </summary>
 SpreadsheetState::SpreadsheetState() : cells(), edits(), dependencies(), selections(), threadkey()
 {
+	threadkey = new shared_mutex();
 }
 
 SpreadsheetState::SpreadsheetState(set<Cell>& cells, list<CellEdit>& edits) : cells(), edits(edits), dependencies(), threadkey(), selections() {
+	threadkey = new shared_mutex();
 	// Edits are set by the initializer list, now we just need to map dependencies & cells
 	WriteLock();
 	for (Cell cell : cells) {
@@ -24,11 +26,16 @@ SpreadsheetState::SpreadsheetState(set<Cell>& cells, list<CellEdit>& edits) : ce
 	WriteUnlock();
 }
 
+/// <summary>
+/// Deletes all ptrs in this class
+/// </summary>
 SpreadsheetState::~SpreadsheetState() {
 	cells.clear();
 	while (!edits.empty())
 		edits.pop_front();
 	selections.clear();
+	// We have to explicitly call delete on pointers
+	delete threadkey;
 	// Destructors are called automatically
 }
 
@@ -135,12 +142,12 @@ bool SpreadsheetState::RevertCell(const string cell) {
 	return true;
 }
 
-bool SpreadsheetState::UndoLastEdit() {
+tuple<bool, string> SpreadsheetState::UndoLastEdit() {
 	// Writelock the method so that the edit stack doesn't change
 	WriteLock();
 	if (edits.size() == 0) {
 		WriteUnlock();
-		return false;
+		return tuple<bool,string>(false,"No more edits to undo");
 	}
 
 	// Validate undo
@@ -148,7 +155,7 @@ bool SpreadsheetState::UndoLastEdit() {
 	string f = edits.front().GetPriorContents();
 	if (CheckNewCellCircular(name, f, false)) {
 		WriteUnlock();
-		return false;
+		return tuple<bool, string>(false, "Invalid cell change");
 	}
 
 	// Undo validated, implement it
@@ -157,7 +164,7 @@ bool SpreadsheetState::UndoLastEdit() {
 	edits.pop_front();
 	WriteUnlock();
 
-	return true;
+	return tuple<bool, string>(true, name);
 }
 
 void SpreadsheetState::AddOrUpdateCell(const string cellName, const string& content, const bool lock) {
@@ -212,9 +219,6 @@ list<CellEdit> SpreadsheetState::GetEditHistory() {
 
 set<Cell> SpreadsheetState::GetPopulatedCells() {
 	set<Cell> result = set<Cell>();
-	// Prune empty cells
-	WriteLock();
-	WriteUnlock();
 
 	ReadLock();
 	// Put all cells in result list
@@ -225,19 +229,19 @@ set<Cell> SpreadsheetState::GetPopulatedCells() {
 }
 
 void SpreadsheetState::WriteLock() {
-	threadkey.lock();
+	threadkey->lock();
 }
 
 void SpreadsheetState::ReadLock() {
-	threadkey.lock_shared();
+	threadkey->lock_shared();
 }
 
 void SpreadsheetState::WriteUnlock() {
-	threadkey.unlock();
+	threadkey->unlock();
 }
 
 void SpreadsheetState::ReadUnlock() {
-	threadkey.unlock_shared();
+	threadkey->unlock_shared();
 }
 
 const string SpreadsheetState::GetCell(const string name) {

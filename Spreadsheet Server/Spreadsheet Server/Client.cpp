@@ -3,11 +3,9 @@
 
 // See client.h for method docs
 
-Client::Client(const int ID, const string username, const Connection *state) 
-				: username(username), ID(ID)
+Client::Client(const int ID, const string username, it_connection state)
+	: state(state), username(username), ID(ID)
 {
-	this->state = state;
-	//state = NULL;
 }
 
 const int Client::GetID() const {

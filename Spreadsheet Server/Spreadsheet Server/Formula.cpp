@@ -22,7 +22,7 @@ Formula::Formula(string formula)
 		formula = formula.substr(1);
 	}
 	else {
-		throw new exception();
+		throw exception();
 	}
 
 	// Track last variable for operator following rule and extra following rule
@@ -32,6 +32,12 @@ Formula::Formula(string formula)
 	int closedParens = 0;
 	int openParens = 0;
 	vector<string> allTokens = GetTokens(formula);
+	// Make sure we have tokens
+	if (allTokens.size() == 0) {
+		throw exception();
+		return;
+	}
+		
 	for (int itr = 0; itr < allTokens.size(); itr++)
 	{
 		Token newToken = Token(allTokens[itr]);
@@ -53,13 +59,13 @@ Formula::Formula(string formula)
 				lastWasClosingNumberOrVar = true;
 				if (lastWasOpeningOrOperator)
 				{
-					throw new exception();
+					throw exception();
 				}
 			}
 			else {
 				if (lastWasOpeningOrOperator)
 				{
-					throw new exception();
+					throw exception();
 				}
 				lastWasOpeningOrOperator = true;
 				lastWasClosingNumberOrVar = false;
@@ -69,7 +75,7 @@ Formula::Formula(string formula)
 		{
 			if (lastWasClosingNumberOrVar)
 			{
-				throw new exception();
+				throw exception();
 			}
 			lastWasOpeningOrOperator = false;
 			lastWasClosingNumberOrVar = true;
@@ -78,7 +84,7 @@ Formula::Formula(string formula)
 		{
 			if (lastWasClosingNumberOrVar)
 			{
-				throw new exception();
+				throw exception();
 			}
 			lastWasClosingNumberOrVar = true;
 			lastWasOpeningOrOperator = false;
@@ -86,7 +92,7 @@ Formula::Formula(string formula)
 
 		if (closedParens > openParens)
 		{
-			throw new exception();
+			throw exception();
 		}
 
 		tokens.push_back(newToken);
@@ -95,28 +101,29 @@ Formula::Formula(string formula)
 	// Make sure parethensis counts are equal
 	if (openParens != closedParens)
 	{
-		throw new exception();
+		throw exception();
 	}
 
 	// Make sure we have at least one token
 	if (tokens.size() == 0)
 	{
-		throw new exception();
+		throw exception();
 	}
 	// Make sure start & end tokens are correct
 	if (tokens[0].Type == "op" && tokens[0].Content != "(")
 	{
-		throw new exception();
+		throw exception();
 	}
 	else if (tokens[tokens.size() - 1].Type == "op" && tokens[tokens.size() - 1].Content != ")")
 	{
-		throw new exception();
+		throw exception();
 	}
 }
 
 /// <summary>
 /// Provides a list of tokens from the provided string.
 /// Automatically capitalizes all letters in variable names.
+/// Throws an exception if unable to parse token
 /// </summary>
 /// <param name="s"></param>
 /// <returns></returns>
@@ -160,9 +167,11 @@ vector<string> Formula::GetTokens(string s) {
 
 			output.push_back(s.substr(i, j - i));
 			i = j - 1;
+			continue;
 		}
 
-		//if s[i] was none of the above, we just ignore it and move on
+		//if s[i] was none of the above, throw
+		throw exception();
 	}
 
 	return output;
@@ -200,7 +209,7 @@ double Formula::Evaluate(map<string, double> lookup) {
 			{
 				if (values.size() == 0)
 				{
-					throw new exception();
+					throw exception();
 				}
 				else
 				{
@@ -299,11 +308,11 @@ double Formula::applyOperation(double a, double b, char op) {
 		return a * b;
 	else if (op == '/')
 		if (a == 0)
-			throw new exception();
+			throw exception();
 		else
 			return b / a;
 	else
-		throw new exception();
+		throw exception();
 }
 
 /// <summary>
@@ -366,7 +375,7 @@ Token::Token(string token) {
 		Content = token;
 	}
 	else {
-		throw new exception();
+		throw exception();
 	}
 }
 

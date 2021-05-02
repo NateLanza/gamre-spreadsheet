@@ -40,7 +40,7 @@ bool Cell::Revert() {
 }
 
 const bool Cell::CanRevert() const {
-	return previousContents.empty();
+	return previousContents.size() != 0;
 }
 
 const string Cell::GetPreviousState() const {
