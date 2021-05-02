@@ -107,6 +107,13 @@ namespace SS {
         }
 
         /// <summary>
+        /// Disconnects this client from the server
+        /// </summary>
+        public void DisconnectFromServer() {
+            Disconnected("User disconnected");
+        }
+
+        /// <summary>
         /// Event handler for when this client disconnects
         /// </summary>
         private void HandleDisconnect(string message) {

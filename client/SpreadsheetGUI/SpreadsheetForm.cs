@@ -111,7 +111,7 @@ namespace SpreadsheetGUI
                 {
                     IPTextBox.Enabled = true;
                     UsernameBox.Enabled = true;
-                    ConnectButton.Enabled = true;
+                    ConnectButton.Text = "Connect";
                     MessageBox.Show("Unable to connect to server", "", MessageBoxButtons.OK);
                     return;
                 }
@@ -157,7 +157,7 @@ namespace SpreadsheetGUI
                 MessageBox.Show("Disconnected from the server: " + controllerMessage, "", MessageBoxButtons.OK);
                 IPTextBox.Enabled = true;
                 UsernameBox.Enabled = true;
-                ConnectButton.Enabled = true;
+                ConnectButton.Text = "Connect";
                 OpenButton.Enabled = false;
                 newSSButton.Enabled = false;
 
@@ -314,10 +314,15 @@ namespace SpreadsheetGUI
         /// <param name="e"></param>
         private void ConnectButton_Click(object sender, EventArgs e)
         {
-            ConnectButton.Enabled = false;
-            IPTextBox.Enabled = false;
-            UsernameBox.Enabled = false;
-            Controller.ConnectToServer(IPTextBox.Text, UsernameBox.Text);
+            if (ConnectButton.Text == "Connect") {
+                ConnectButton.Text = "Disconnect";
+                IPTextBox.Enabled = false;
+                UsernameBox.Enabled = false;
+                Controller.ConnectToServer(IPTextBox.Text, UsernameBox.Text);
+            } else if (ConnectButton.Text == "Disconnect") {
+                Controller.DisconnectFromServer();
+            }
+            
         }
 
         /// <summary>

@@ -99,6 +99,7 @@ StoredSpreadsheet Storage::Open(string filename)
 /// <param name="ss">The stored spreadsheet that contains the list of cells and edits of a certain spreadsheet</param>
 void Storage::Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 {
+	cout << "Saving spreadsheet: " << spreadsheetName << " at " << fs::current_path() << "/spreadsheets";
 	try
 	{
 		string filename = spreadsheetName + ".sprd";
