@@ -121,9 +121,6 @@ bool SpreadsheetState::RevertCell(const string cell) {
 	// Make sure cell exists & can be reverted
 	if (!CellExists(cell) || !cells[cell].CanRevert()) {
 		WriteUnlock();
-		cout << "cell doesn't exist or something" << endl;
-		cout << !CellExists(cell) << endl;
-		cout << !cells[cell].CanRevert() << endl;
 		return false;
 	}
 

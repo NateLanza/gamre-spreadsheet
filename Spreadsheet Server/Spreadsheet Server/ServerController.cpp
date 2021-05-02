@@ -115,7 +115,6 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 	}
 
 	bool requestSuccess = false;
-	cout << request.GetType() << endl;
 	// Take action based on request type
 	if (request.GetType() == "editCell") {
 		requestSuccess = openSpreadsheets[request.GetClient()->spreadsheet]->
