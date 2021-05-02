@@ -62,3 +62,6 @@ C:\Users\e-gei\source\repos\gamre-spreadsheet\client\SpreadsheetClient\obj\Debug
 C:\Users\e-gei\source\repos\gamre-spreadsheet\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.csproj.CopyComplete
 C:\Users\e-gei\source\repos\gamre-spreadsheet\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.dll
 C:\Users\e-gei\source\repos\gamre-spreadsheet\client\SpreadsheetClient\obj\Debug\netstandard2.0\SpreadsheetClient.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\bin\Debug\netstandard2.0\Newtonsoft.Json.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\bin\Debug\netstandard2.0\Newtonsoft.Json.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetClient\bin\Debug\netstandard2.0\Newtonsoft.Json.xml

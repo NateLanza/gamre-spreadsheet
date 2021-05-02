@@ -180,19 +180,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\e-gei\\.nuget\\packages\\": {}
+    "C:\\Users\\dolph\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
+      "projectUniqueName": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
       "projectName": "DependencyGraph",
-      "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
-      "packagesPath": "C:\\Users\\e-gei\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\obj\\",
+      "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
+      "packagesPath": "C:\\Users\\dolph\\.nuget\\packages\\",
+      "outputPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\DependencyGraph\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\e-gei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\dolph\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
