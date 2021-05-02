@@ -12,8 +12,8 @@ ServerController::ServerController() : openSpreadsheets(), clientConnections(), 
 	network = new ServerConnection(this);
 }
 
-void ServerController::StartServer() {	
-	
+void ServerController::StartServer() {
+
 	network->listen(1100);
 	network->run();
 }
@@ -79,21 +79,54 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 		return;
 	}
 
+	if (request.GetType() == "undo") {
+		tuple<bool, string> undoRequestSuccess;
+		undoRequestSuccess = openSpreadsheets[request.GetClient()->spreadsheet]->
+			UndoLastEdit();
+
+		// If request successful, send out the new cell
+		if (get<0>(undoRequestSuccess)) {
+			network->broadcast(clientConnections[request.GetClient()->spreadsheet],
+				SerializeMessage(
+					"cellUpdated",
+					get<1>(undoRequestSuccess),
+					openSpreadsheets[request.GetClient()->spreadsheet]->GetCell(get<1>(undoRequestSuccess)),
+					0,
+					"",
+					""
+				));
+			return;
+		}
+		else {
+			// Send error message to client for bad request
+			list<Client*> toSend;
+			toSend.push_back(request.GetClient());
+			network->broadcast(toSend, SerializeMessage(
+				"requestError",
+				"",
+				"",
+				0,
+				"",
+				get<1>(undoRequestSuccess)
+			));
+			return;
+		}
+	}
+
 	bool requestSuccess = false;
+	cout << request.GetType() << endl;
 	// Take action based on request type
 	if (request.GetType() == "editCell") {
 		requestSuccess = openSpreadsheets[request.GetClient()->spreadsheet]->
 			EditCell(request.GetName(), request.GetContent(), request.GetClient()->GetID());
-	} else if (request.GetType() == "revertCell") {
+	}
+	else if (request.GetType() == "revertCell") {
 		requestSuccess = openSpreadsheets[request.GetClient()->spreadsheet]->
 			RevertCell(request.GetName());
-	} else if (request.GetType() == "undo") {
-		requestSuccess = openSpreadsheets[request.GetClient()->spreadsheet]->
-			UndoLastEdit();
 	}
 
 	// If request successful, send out the new cell
-	if (requestSuccess) 	{
+	if (requestSuccess) {
 		network->broadcast(clientConnections[request.GetClient()->spreadsheet],
 			SerializeMessage(
 				"cellUpdated",
@@ -103,7 +136,9 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 				"",
 				""
 			));
-	} else {
+		return;
+	}
+	else {
 		// Send error message to client for bad request
 		list<Client*> toSend;
 		toSend.push_back(request.GetClient());
@@ -115,6 +150,7 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 			"",
 			"Request rejected"
 		));
+		return;
 	}
 }
 
@@ -139,15 +175,15 @@ void ServerController::DisconnectClient(Client* client) {
 
 	// Broadcast disconnect to other clients
 	if (clientConnections.count(ssname) > 0)
-	network->broadcast(clientConnections[client->spreadsheet], 
-		SerializeMessage(
-			"disconnected",
-			"",
-			"",
-			client->GetID(),
-			"",
-			""
-		));
+		network->broadcast(clientConnections[client->spreadsheet],
+			SerializeMessage(
+				"disconnected",
+				"",
+				"",
+				client->GetID(),
+				"",
+				""
+			));
 }
 
 string ServerController::SerializeMessage(string messageType, string cellName, string contents, int userID, string username, string message) const {
@@ -155,13 +191,17 @@ string ServerController::SerializeMessage(string messageType, string cellName, s
 	// Generate message based on type
 	if (messageType == "cellUpdated") {
 		result += "{\"messageType\": \"cellUpdated\", \"cellName\": \"" + cellName + "\", \"contents\": \"" + contents + "\"}";
-	} else if (messageType == "cellSelected") {
+	}
+	else if (messageType == "cellSelected") {
 		result += "{\"messageType\": \"cellSelected\", \"cellName\": \"" + cellName + "\", \"selector\": \"" + to_string(userID) + "\", \"selectorName\": \"" + username + "\"}";
-	} else if (messageType == "disconnected") {
+	}
+	else if (messageType == "disconnected") {
 		result += "{\"messageType\": \"disconnected\", \"user\": \"" + to_string(userID) + "\"}";
-	} else if (messageType == "requestError") {
+	}
+	else if (messageType == "requestError") {
 		result += "{\"messageType\": \"requestError\", \"cellName\": \"" + cellName + "\", \"message\": \"" + message + "\"}";
-	} else if (messageType == "serverError") {
+	}
+	else if (messageType == "serverError") {
 		result += "{\"messageType\": \"serverError\", \"message\": \"" + message + "\"}";
 	}
 
@@ -174,7 +214,7 @@ list<string> ServerController::GetSpreadsheetNames() {
 	list<string> names;
 
 	for (string s : storage.GetSavedSpreadsheetNames()) {
-		
+
 		names.push_back(s);
 	}
 

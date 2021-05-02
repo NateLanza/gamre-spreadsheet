@@ -121,6 +121,9 @@ bool SpreadsheetState::RevertCell(const string cell) {
 	// Make sure cell exists & can be reverted
 	if (!CellExists(cell) || !cells[cell].CanRevert()) {
 		WriteUnlock();
+		cout << "cell doesn't exist or something" << endl;
+		cout << !CellExists(cell) << endl;
+		cout << !cells[cell].CanRevert() << endl;
 		return false;
 	}
 
@@ -142,12 +145,12 @@ bool SpreadsheetState::RevertCell(const string cell) {
 	return true;
 }
 
-bool SpreadsheetState::UndoLastEdit() {
+tuple<bool, string> SpreadsheetState::UndoLastEdit() {
 	// Writelock the method so that the edit stack doesn't change
 	WriteLock();
 	if (edits.size() == 0) {
 		WriteUnlock();
-		return false;
+		return tuple<bool,string>(false,"No more edits to undo");
 	}
 
 	// Validate undo
@@ -155,7 +158,7 @@ bool SpreadsheetState::UndoLastEdit() {
 	string f = edits.front().GetPriorContents();
 	if (CheckNewCellCircular(name, f, false)) {
 		WriteUnlock();
-		return false;
+		return tuple<bool, string>(false, "Invalid cell change");
 	}
 
 	// Undo validated, implement it
@@ -164,7 +167,7 @@ bool SpreadsheetState::UndoLastEdit() {
 	edits.pop_front();
 	WriteUnlock();
 
-	return true;
+	return tuple<bool, string>(true, name);
 }
 
 void SpreadsheetState::AddOrUpdateCell(const string cellName, const string& content, const bool lock) {
