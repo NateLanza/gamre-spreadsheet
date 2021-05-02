@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "m620iRUbc5wmjojSRGfmP6A5e8/MQxf099DyHl1s8bv5qEjUoIHsF8bHe0D/4rurWxSSFm+RpgALQ+kNVsmfQA==",
+  "dgSpecHash": "QPuYC4udVZpZc7cHY3hWfXGB9xAngqJZu3+0p4BpfLDepHBaHoTNe6Sf5ErMyjOd9bDsHBBX/C/DYIpnlRNFjQ==",
   "success": true,
-  "projectFilePath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\Formula\\Formula.csproj",
+  "projectFilePath": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\dolph\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\dolph\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+    "C:\\Users\\izana\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\izana\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
   ],
   "logs": []
 }

@@ -262,6 +262,7 @@ namespace SS {
                 lock (ConnectionThreadKey) {
                     Console.WriteLine("ID Received");
                     ConnectionState = ConnectionStates.Connected;
+                    SendSelectRequest("A1");
                     Connection.OnNetworkAction = ReceiveLoop;
                     IDReceived(ID);
                 }
