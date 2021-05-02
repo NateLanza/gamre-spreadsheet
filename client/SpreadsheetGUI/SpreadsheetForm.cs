@@ -279,6 +279,9 @@ namespace SpreadsheetGUI
         /// <param name="sender">The grid that changed</param>
         private void SpreadsheetChanged(int col, int row)
         {
+            SpreadsheetGrid.GetSelection(out int currRow, out int currCol);
+            String currCell = RowColToCell(currCol, currRow);
+            Controller.SendEditRequest(currCell, SelectedCellContent.Text);
             String cell = RowColToCell(row, col);
             Controller.SendSelectRequest(cell);
         }
@@ -290,9 +293,6 @@ namespace SpreadsheetGUI
         /// <param name="e"></param>
         private void SelectedCellContent_TextChanged(object sender, EventArgs e)
         {
-            SpreadsheetGrid.GetSelection(out int col, out int row);
-            String cell = RowColToCell(row, col);
-            Controller.SendEditRequest(cell, SelectedCellContent.Text);
         }
 
         private void HelpButton_Click(object sender, EventArgs e)
@@ -384,6 +384,16 @@ namespace SpreadsheetGUI
             newSSButton.Enabled = false;
             newSSName.Enabled = false;
             Controller.ConnectToSpreadsheet(newSSName.Text);
+        }
+
+        private void SelectedCellContent_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SpreadsheetGrid.GetSelection(out int col, out int row);
+                String cell = RowColToCell(row, col);
+                Controller.SendEditRequest(cell, SelectedCellContent.Text);
+            }
         }
     }
 }

@@ -65,6 +65,7 @@
             this.SelectedCellContent.Size = new System.Drawing.Size(443, 22);
             this.SelectedCellContent.TabIndex = 0;
             this.SelectedCellContent.TextChanged += new System.EventHandler(this.SelectedCellContent_TextChanged);
+            this.SelectedCellContent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectedCellContent_KeyDown);
             // 
             // SelectedCellLabel
             // 
