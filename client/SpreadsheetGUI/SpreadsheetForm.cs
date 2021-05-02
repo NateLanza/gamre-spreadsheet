@@ -160,6 +160,10 @@ namespace SpreadsheetGUI
                 ConnectButton.Enabled = true;
                 OpenButton.Enabled = false;
                 newSSButton.Enabled = false;
+
+                // Reset spreadsheet
+                Spreadsheet = new SpreadsheetState();
+                SpreadsheetGrid.Clear();
             });
         }
 
