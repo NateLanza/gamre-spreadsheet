@@ -35,17 +35,18 @@ void ServerConnection::mng_send(it_connection state, std::shared_ptr<std::string
 	}
 	else {
 		std::string s((std::istreambuf_iterator<char>(&state->read_buffer)), std::istreambuf_iterator<char>());
-		std::cout << "Finished sending message\n";
-
-		std::cout << s << std::endl;
-		if (state->socket.is_open())
-		{
-		}
 	}
 }
 
 void ServerConnection::mng_receive(it_connection state, boost::system::error_code const& error, size_t bytes)
 {
+	// Check for client disconnect
+	if ((boost::asio::error::eof == error) || (boost::asio::error::connection_reset == error))     {
+		delete_client(state->ID);
+		connections.erase(state);
+		return;
+	}
+
 	// Only process if bytes are received
 	if (bytes > 0)
 	{
@@ -107,7 +108,6 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 
 
 			try {
-				cout << "Parsing json: " << s;
 				read_json(jsonInput, pt2);
 
 				// Extracts value from keys. Represents all possible client fields
@@ -139,7 +139,6 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 
 	// Starts asynchronous read again
 	else {
-		cout << "started receiving again!" << endl;
 		async_receive(state);
 	}
 
@@ -150,9 +149,8 @@ void ServerConnection::mng_accept(it_connection state, boost::system::error_code
 	// Reports an error, if present
 	if (error)
 	{
-		std::cout << error.message() << std::endl;
 		connections.erase(state);
-		std::cout << "cannot establish connection with client" << std::endl;
+		std::cout << "Cannot establish connection with client: " << error.message() << std::endl;
 
 	}
 	// On receiving a connection, starts ansyncronous read process with the connected socket. 

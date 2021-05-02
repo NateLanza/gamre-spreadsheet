@@ -107,6 +107,13 @@ namespace SS {
         }
 
         /// <summary>
+        /// Disconnects this client from the server
+        /// </summary>
+        public void DisconnectFromServer() {
+            Disconnected("User disconnected");
+        }
+
+        /// <summary>
         /// Event handler for when this client disconnects
         /// </summary>
         private void HandleDisconnect(string message) {
@@ -277,17 +284,30 @@ namespace SS {
         /// </summary>
         /// <param name="ss">Connection</param>
         private void ReceiveLoop(SocketState ss) {
-            // Get & parse tokens
-            List<string> tokens = ParseServerTokens();
-            foreach (string token in tokens)
-                ProcessServerJson(token);
-
             // Check for error
             lock (ConnectionThreadKey) {
+                // End receive loop if we asynchronously disconnected
+                if (ConnectionState != ConnectionStates.Connected)
+                    return;
+                // Check for network error
                 if (Connection.ErrorOccured) {
                     Disconnected("Connection error occurred");
-                } 
+                    return;
+                }
             }
+
+            // Get & parse tokens
+            List<string> tokens = ParseServerTokens();
+            foreach (string token in tokens) {
+                try {
+                    ProcessServerJson(token);
+                } catch (InvalidOperationException) {
+                    // Network error
+                    Disconnected("Connection error occurred");
+                    return;
+                }
+            }
+            
             // Continue look
             Networking.GetData(Connection);
         }
