@@ -5,17 +5,28 @@ namespace TestHandler
 {
     class TestHandler
     {
-        private static int numTests = 7;
+        // The number of tests that this program supprts
+        private static int numTests = 11;
 
+        // The IP of the server this program is testing
         private static string IP;
 
         // Variables used in testing that the correct server messages are received
         private static string desiredCell;
         private static string desiredContent;
         private static int desiredID;
+
+        // Bools used to test the server selection change functionality
         private static bool correctSelectionReceived = false;
-        private static bool correctEditReceived = false;
+        private static bool incorrectSelectionReceived = false;
+
+        // Bools used to test the server cell change functionality
+        private static bool correctChangeReceived = false;
+        private static bool incorrectChangeReceived = false;
+
+        // Bools used to test the server change rejection functionmality
         private static bool correctRejectionReceived = false;
+        private static bool incorrectRejectionReceived = false;
 
         static void Main(string[] args)
         {           
@@ -45,6 +56,8 @@ namespace TestHandler
                     Test9();
                 else if (args[0] == "10")
                     Test10();
+                else if (args[0] == "11")
+                    Test11();
             }
         }
 
@@ -56,22 +69,44 @@ namespace TestHandler
         private static void Timeout (Object source, ElapsedEventArgs e)
         {  Console.WriteLine("Test Failed : Timeout");  }
 
+        /// <summary>
+        /// Determines if the cell selection message that this client received was the one expected.
+        /// </summary>
+        /// <param name="cell"> The name of the cell selected </param>
+        /// <param name="name"> The name of the client who selected the cell </param>
+        /// <param name="ID"> The ID of the client who selected the cell </param>
         private static void CellSelectionHandler (string cell, string name, int ID)
         {
             if (cell == desiredCell && ID == desiredID)
                 correctSelectionReceived = true;
+            else
+                incorrectSelectionReceived = true;
         }
 
-        private static void CellEditHandler(string cell, string content)
+        /// <summary>
+        /// Determines if the cell change message that this client received was the one expected.
+        /// </summary>
+        /// <param name="cell"> The name of the cell changed </param>
+        /// <param name="content"> The new content of the cell </param>
+        private static void CellChangeHandler(string cell, string content)
         {
             if (cell == desiredCell && content == desiredContent)
-                correctEditReceived = true;
+                correctChangeReceived = true;
+            else
+                incorrectChangeReceived = true;
         }
 
+        /// <summary>
+        /// Determines if the invalid cell change message that this client received was the one expected.
+        /// </summary>
+        /// <param name="cell"> The name of the cell in which a change was rejected </param>
+        /// <param name="message"> The rejection message from the server  </param>
         private static void ChangeRejectedHandler (string cell, string message)
         {
             if (cell == desiredCell)
-                correctSelectionReceived = true;
+                correctRejectionReceived = true;
+            else
+                incorrectRejectionReceived = true;
         }
 
         /// <summary>
@@ -98,9 +133,11 @@ namespace TestHandler
             {
                 if (client1.HasReceivedSpreadsheets())
                 {
-                    Console.WriteLine("Test Passed");
                     time.Stop();
                     time.Close();
+
+                    Console.WriteLine("Test Passed");
+
                     return;
                 }
             }
@@ -133,9 +170,11 @@ namespace TestHandler
             {
                 if (client1.HasConnectedToSheet())
                 {
-                    Console.WriteLine("Test Passed");
                     time.Stop();
                     time.Close();
+
+                    Console.WriteLine("Test Passed");
+
                     return;
                 }
             }
@@ -171,9 +210,11 @@ namespace TestHandler
             {
                 if (client1.HasReceivedSpreadsheets() && client2.HasReceivedSpreadsheets() && client3.HasReceivedSpreadsheets())
                 {
-                    Console.WriteLine("Test Passed");
                     time.Stop();
                     time.Close();
+
+                    Console.WriteLine("Test Passed");
+
                     return;
                 }
             }
@@ -213,9 +254,11 @@ namespace TestHandler
             {
                 if (client1.HasConnectedToSheet() && client2.HasConnectedToSheet() && client3.HasConnectedToSheet())
                 {
-                    Console.WriteLine("Test Passed");
                     time.Stop();
                     time.Close();
+
+                    Console.WriteLine("Test Passed");
+
                     return;
                 }
             }
@@ -254,9 +297,20 @@ namespace TestHandler
             {
                 if (correctSelectionReceived)
                 {
-                    Console.WriteLine("Test Passed");
                     time.Stop();
                     time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectSelectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
                     return;
                 }
             }
@@ -298,9 +352,20 @@ namespace TestHandler
             {
                 if (correctSelectionReceived)
                 {
-                    Console.WriteLine("Test Passed");
                     time.Stop();
                     time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectSelectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
                     return;
                 }
             }
@@ -338,9 +403,20 @@ namespace TestHandler
             {
                 if (correctRejectionReceived)
                 {
-                    Console.WriteLine("Test Passed");
                     time.Stop();
                     time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectRejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
                     return;
                 }
             }
@@ -365,7 +441,7 @@ namespace TestHandler
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "New Content";
-            client1.CellChanged += CellEditHandler;
+            client1.CellChanged += CellChangeHandler;
 
             // Setup timer
             Timer time = new Timer(4000);
@@ -377,11 +453,22 @@ namespace TestHandler
 
             while (time.Enabled)
             {
-                if (correctEditReceived)
+                if (correctChangeReceived)
                 {
-                    Console.WriteLine("Test Passed");
                     time.Stop();
                     time.Close();
+
+                    Console.WriteLine("Test Passed");
+                    
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
                     return;
                 }
             }
@@ -409,7 +496,7 @@ namespace TestHandler
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "New Content";
-            client2.CellChanged += CellEditHandler;
+            client2.CellChanged += CellChangeHandler;
 
             // Setup timer
             Timer time = new Timer(4000);
@@ -421,11 +508,22 @@ namespace TestHandler
 
             while (time.Enabled)
             {
-                if (correctEditReceived)
+                if (correctChangeReceived)
                 {
-                    Console.WriteLine("Test Passed");
                     time.Stop();
                     time.Close();
+
+                    Console.WriteLine("Test Passed");
+                    
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
                     return;
                 }
             }
@@ -459,14 +557,79 @@ namespace TestHandler
             time.Start();
             client1.SendEditRequest("Incorrect Input", "New Content");
 
-
             while (time.Enabled)
             {
                 if (correctRejectionReceived)
                 {
-                    Console.WriteLine("Test Passed");
                     time.Stop();
                     time.Close();
+
+                    Console.WriteLine("Test Passed");
+                    
+                    return;
+                }
+                else if (incorrectRejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server responds correvtly to a valid undo request
+        /// </summary>
+        public static void Test11 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Basic Undo Request Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "Value 1");
+            client1.SendEditRequest("A1", "Value 2");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "Value 1";
+            client1.CellChanged += CellChangeHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendUndoRequest();
+
+            while (time.Enabled)
+            {
+                if (correctChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
                     return;
                 }
             }
