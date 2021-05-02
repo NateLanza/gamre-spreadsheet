@@ -207,6 +207,10 @@ namespace SpreadsheetGUI
             try
             {
                 ToRecalculate = Spreadsheet.SetContentsOfCell(cell, content);
+                // Update selected cell box if this is the selected cell
+                if (GetSelectedCell() == cell) {
+                    SelectedCellContent.Text = content;
+                }
             }
             catch (Exception e)
             {
@@ -279,9 +283,7 @@ namespace SpreadsheetGUI
         /// <param name="sender">The grid that changed</param>
         private void SpreadsheetChanged(int col, int row)
         {
-            SpreadsheetGrid.GetSelection(out int currRow, out int currCol);
-            String currCell = RowColToCell(currCol, currRow);
-            Controller.SendEditRequest(currCell, SelectedCellContent.Text);
+            Controller.SendEditRequest(GetSelectedCell(), SelectedCellContent.Text);
             String cell = RowColToCell(row, col);
             Controller.SendSelectRequest(cell);
         }
@@ -367,9 +369,12 @@ namespace SpreadsheetGUI
 
         private void revert_button_Click(object sender, EventArgs e)
         {
+            Controller.SendRevertRequest(GetSelectedCell());
+        }
+
+        private string GetSelectedCell() {
             SpreadsheetGrid.GetSelection(out int col, out int row);
-            String cell = RowColToCell(row, col);
-            Controller.SendRevertRequest(cell);
+            return RowColToCell(row, col);
         }
 
         private void undo_button_Click(object sender, EventArgs e)
