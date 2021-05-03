@@ -6,7 +6,7 @@ namespace TestHandler
     class TestHandler
     {
         // The number of tests that this program supprts
-        private static int numTests = 11;
+        private static int numTests = 26;
 
         // The IP of the server this program is testing
         private static string IP;
@@ -25,6 +25,7 @@ namespace TestHandler
         private static bool incorrectChangeReceived = false;
 
         // Bools used to test the server change rejection functionmality
+        private static bool rejectionReceived = false;
         private static bool correctRejectionReceived = false;
         private static bool incorrectRejectionReceived = false;
 
@@ -58,6 +59,36 @@ namespace TestHandler
                     Test10();
                 else if (args[0] == "11")
                     Test11();
+                else if (args[0] == "12")
+                    Test12();
+                else if (args[0] == "13")
+                    Test13();
+                else if (args[0] == "14")
+                    Test14();
+                else if (args[0] == "15")
+                    Test15();
+                else if (args[0] == "16")
+                    Test16();
+                else if (args[0] == "17")
+                    Test17();
+                else if (args[0] == "18")
+                    Test18();
+                else if (args[0] == "19")
+                    Test19();
+                else if (args[0] == "20")
+                    Test20();
+                else if (args[0] == "21")
+                    Test21();
+                else if (args[0] == "22")
+                    Test22();
+                else if (args[0] == "23")
+                    Test23();
+                else if (args[0] == "24")
+                    Test24();
+                else if (args[0] == "25")
+                    Test25();
+                else if (args[0] == "26")
+                    Test26();
             }
         }
 
@@ -103,6 +134,8 @@ namespace TestHandler
         /// <param name="message"> The rejection message from the server  </param>
         private static void ChangeRejectedHandler (string cell, string message)
         {
+            rejectionReceived = true;
+
             if (cell == desiredCell)
                 correctRejectionReceived = true;
             else
@@ -267,15 +300,55 @@ namespace TestHandler
         }
 
         /// <summary>
-        /// Tests basic cell selections by ensuring that the proper server message is received after the request is made
+        /// Tests that clients can connect to multiple different spreadsheets simultaneously
         /// </summary>
         public static void Test5 ()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Multi-Spreadsheet Connection Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            GhostClient client2 = new GhostClient(IP);
+            client1.Connect();
+            client2.Connect();
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.ConnectToSpreadsheet("sheet1");
+            client2.ConnectToSpreadsheet("sheet2");
+
+            while (time.Enabled)
+            {
+                if (client1.HasConnectedToSheet() && client2.HasConnectedToSheet())
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests basic cell selections by ensuring that the proper server message is received after the request is made
+        /// </summary>
+        public static void Test6 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
             Console.WriteLine("Basic Cell Selection Test");
 
-            // Setup ghost clients
+            // Setup ghost client
             GhostClient client1 = new GhostClient(IP);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
@@ -321,7 +394,7 @@ namespace TestHandler
         /// <summary>
         /// Expands on Test5 to test that the correct server response to a cell selection is received by multiple clients
         /// </summary>
-        public static void Test6()
+        public static void Test7 ()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: 4 seconds");
@@ -376,13 +449,13 @@ namespace TestHandler
         /// <summary>
         /// Tests that the correct change rejection is received when an invalid input is given to a cell selection request
         /// </summary>
-        public static void Test7 ()
+        public static void Test8 ()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: 4 seconds");
             Console.WriteLine("Basic Cell Selection Rejection Test");
 
-            // Setup ghost clients
+            // Setup ghost client
             GhostClient client1 = new GhostClient(IP);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
@@ -427,13 +500,13 @@ namespace TestHandler
         /// <summary>
         /// Tests basic cell edits by ensuring that the proper server message is received after the request is made
         /// </summary>
-        public static void Test8()
+        public static void Test9 ()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: 4 seconds");
-            Console.WriteLine("Basic Cell Selection Test");
+            Console.WriteLine("Basic Cell Edit Test");
 
-            // Setup ghost clients
+            // Setup ghost client
             GhostClient client1 = new GhostClient(IP);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
@@ -479,11 +552,11 @@ namespace TestHandler
         /// <summary>
         /// Tests multi-client cell edits by ensuring that the proper server message is received after the request is made
         /// </summary>
-        public static void Test9()
+        public static void Test10 ()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: 4 seconds");
-            Console.WriteLine("Basic Cell Selection Test");
+            Console.WriteLine("Multi-Client Cell Edit Test");
 
             // Setup ghost clients
             GhostClient client1 = new GhostClient(IP);
@@ -534,13 +607,13 @@ namespace TestHandler
         /// <summary>
         /// Tests that the correct change rejection is received when an invalid input is given to a cell edit request
         /// </summary>
-        public static void Test10()
+        public static void Test11 ()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: 4 seconds");
             Console.WriteLine("Basic Cell Edit Rejection Test");
 
-            // Setup ghost clients
+            // Setup ghost client
             GhostClient client1 = new GhostClient(IP);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
@@ -583,15 +656,15 @@ namespace TestHandler
         }
 
         /// <summary>
-        /// Tests that the server responds correvtly to a valid undo request
+        /// Tests that the server responds correctly to a valid undo request
         /// </summary>
-        public static void Test11 ()
+        public static void Test12 ()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: 4 seconds");
             Console.WriteLine("Basic Undo Request Test");
 
-            // Setup ghost clients
+            // Setup ghost client
             GhostClient client1 = new GhostClient(IP);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
@@ -624,6 +697,763 @@ namespace TestHandler
                     return;
                 }
                 else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server responds correctly to a valid undo request by another client
+        /// </summary>
+        public static void Test13 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Basic Multi-Client Undo Request Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            GhostClient client2 = new GhostClient(IP);
+            client1.Connect();
+            client2.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+            client2.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "Value 1");
+            client2.SendEditRequest("A1", "Value 2");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "Value 1";
+            client2.CellChanged += CellChangeHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendUndoRequest();
+
+            while (time.Enabled)
+            {
+                if (correctChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server properly responds to multiple consecutive undo requests
+        /// </summary>
+        public static void Test14 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Multiple Undo Requests Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "Value 1");
+            client1.SendEditRequest("A1", "Value 2");
+            client1.SendEditRequest("B1", "Value 3");
+
+            client1.SendUndoRequest();
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "Value 1";
+            client1.CellChanged += CellChangeHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendUndoRequest();
+
+            while (time.Enabled)
+            {
+                if (correctChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server responds correctly to a valid revert request
+        /// </summary>
+        public static void Test15 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Basic Revert Request Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "Value 1");
+            client1.SendEditRequest("A1", "Value 2");
+            client1.SendEditRequest("B1", "Value 3");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "Value 1";
+            client1.CellChanged += CellChangeHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendRevertRequest("A1");
+
+            while (time.Enabled)
+            {
+                if (correctChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server responds correctly to a valid revert request from a different client.
+        /// </summary>
+        public static void Test16 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Multi-Client Revert Request Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            GhostClient client2 = new GhostClient(IP);
+            client1.Connect();
+            client2.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+            client2.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "Value 1");
+            client2.SendEditRequest("A1", "Value 2");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "Value 1";
+            client1.CellChanged += CellChangeHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendRevertRequest("A1");
+
+            while (time.Enabled)
+            {
+                if (correctChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server responds correctly to multiple consecutive revert requests
+        /// </summary>
+        public static void Test17 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Multiple Revert Requests Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "Value 1");
+            client1.SendEditRequest("A1", "Value 2");
+            client1.SendEditRequest("A1", "Value 3");
+            client1.SendEditRequest("B1", "Value 4");
+
+            client1.SendRevertRequest("A1");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "Value 1";
+            client1.CellChanged += CellChangeHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendRevertRequest("A1");
+
+            while (time.Enabled)
+            {
+                if (correctChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server responds correctly to an invalid undo request
+        /// </summary>
+        public static void Test18 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Invalid Undo Request Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            // Setup desired results and register handler
+            client1.ChangeRejected += ChangeRejectedHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendUndoRequest();
+
+            while (time.Enabled)
+            {
+                if (rejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (rejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server rejects a revert request on a raw spreadsheet
+        /// </summary>
+        public static void Test19 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Invalid Revert Request Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            client1.ChangeRejected += ChangeRejectedHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendRevertRequest("A1");
+
+            while (time.Enabled)
+            {
+                if (correctRejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectRejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server rejects a revert request trageted at an invalid cell
+        /// </summary>
+        public static void Test20 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Invalid Revert Target Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            // Setup desired results and register handler
+            desiredCell = "Incorrect Input";
+            client1.ChangeRejected += ChangeRejectedHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendRevertRequest("Incorrect Input");
+
+            while (time.Enabled)
+            {
+                if (correctRejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectRejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server correctly handles the interaction between the undo and revert functions
+        /// </summary>
+        public static void Test21 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Undoing Revert Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "Value 1");
+
+            client1.SendRevertRequest("A1");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "Value 1";
+            client1.CellChanged += CellChangeHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendUndoRequest();
+
+            while (time.Enabled)
+            {
+                if (correctChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that a basic formula is handled correctly by the server
+        /// </summary>
+        public static void Test22 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Basic Formula Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "2";
+            client1.CellChanged += CellChangeHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendEditRequest("A1", "= 1 + 1");
+
+            while (time.Enabled)
+            {
+                if (correctChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that basic cell dependency (via formula) is handled correctly by the server
+        /// </summary>
+        public static void Test23 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Basic Cell Dependency Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "Value 1");
+
+            // Setup desired results and register handler
+            desiredCell = "B1";
+            desiredContent = "Value 1";
+            client1.CellChanged += CellChangeHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendEditRequest("B1", "=A1");
+
+            while (time.Enabled)
+            {
+                if (correctChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server responds correctly to a formula which uses an invalid variable
+        /// </summary>
+        public static void Test24 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Invalid Formula Variable Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "New Content";
+            client1.ChangeRejected += ChangeRejectedHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendEditRequest("A1", "=B123A");
+
+            while (time.Enabled)
+            {
+                if (correctRejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectRejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        public static void Test25 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Invalid Formula Variable Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "=B1");
+
+            // Setup desired results and register handler
+            desiredCell = "B1";
+            client1.ChangeRejected += ChangeRejectedHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendEditRequest("B1", "=A1");
+
+            while (time.Enabled)
+            {
+                if (correctRejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectRejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        public static void Test26 ()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Invalid Formula Variable Test");
+
+            // Setup ghost client
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "=B1");
+            client1.SendEditRequest("A1", "New Content");
+            client1.SendEditRequest("B1", "=A1");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            client1.ChangeRejected += ChangeRejectedHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendRevertRequest("A1");
+
+            while (time.Enabled)
+            {
+                if (correctRejectionReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectRejectionReceived)
                 {
                     time.Stop();
                     time.Close();
