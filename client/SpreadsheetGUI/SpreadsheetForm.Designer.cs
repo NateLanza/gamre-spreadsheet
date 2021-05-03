@@ -23,7 +23,6 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.SpreadsheetGrid = new SS.SpreadsheetPanel();
             this.SelectedCellContent = new System.Windows.Forms.TextBox();
             this.SelectedCellLabel = new System.Windows.Forms.Label();
             this.CellValueBox = new System.Windows.Forms.TextBox();
@@ -42,17 +41,8 @@
             this.newSSName = new System.Windows.Forms.TextBox();
             this.newSSLabel = new System.Windows.Forms.Label();
             this.newSSButton = new System.Windows.Forms.Button();
+            this.SpreadsheetGrid = new SS.SpreadsheetPanel();
             this.SuspendLayout();
-            // 
-            // SpreadsheetGrid
-            // 
-            this.SpreadsheetGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.SpreadsheetGrid.Location = new System.Drawing.Point(0, 85);
-            this.SpreadsheetGrid.Name = "SpreadsheetGrid";
-            this.SpreadsheetGrid.Size = new System.Drawing.Size(1773, 555);
-            this.SpreadsheetGrid.TabIndex = 1;
             // 
             // SelectedCellContent
             // 
@@ -219,11 +209,23 @@
             this.newSSButton.UseVisualStyleBackColor = true;
             this.newSSButton.Click += new System.EventHandler(this.newSSButton_Click);
             // 
+            // SpreadsheetGrid
+            // 
+            this.SpreadsheetGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SpreadsheetGrid.Location = new System.Drawing.Point(0, 85);
+            this.SpreadsheetGrid.MinimumSize = new System.Drawing.Size(2200, 2200);
+            this.SpreadsheetGrid.Name = "SpreadsheetGrid";
+            this.SpreadsheetGrid.Size = new System.Drawing.Size(2300, 3300);
+            this.SpreadsheetGrid.TabIndex = 1;
+            // 
             // SpreadsheetForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(2200, 2200);
             this.ClientSize = new System.Drawing.Size(1443, 554);
             this.Controls.Add(this.newSSButton);
             this.Controls.Add(this.newSSLabel);
