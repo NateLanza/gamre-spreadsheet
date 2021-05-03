@@ -123,9 +123,6 @@ namespace TestHandler
         /// <param name="ID"> The ID of the client who selected the cell </param>
         private static void CellSelectionHandler(string cell, string name, int ID)
         {
-            Console.WriteLine("here! in CellSelectionHandler");
-            Console.WriteLine(cell + ", " + ID);
-            Console.WriteLine(desiredCell + ", " + desiredID);
             if (cell == desiredCell && ID == desiredID)
                 correctSelectionReceived = true;
             else
