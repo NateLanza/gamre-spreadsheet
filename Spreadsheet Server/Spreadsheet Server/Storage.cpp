@@ -3,8 +3,10 @@
 #include <fstream>
 #include <stdexcept>
 #include <experimental/filesystem>
+#include <boost/filesystem.hpp>
 
-namespace fs = std::experimental::filesystem;
+//namespace fs = std::experimental::filesystem;
+namespace fs = boost::filesystem;
 
 /// <summary>
 /// The constructor for a StoredSpreadsheet()
@@ -29,7 +31,9 @@ StoredSpreadsheet Storage::Open(string filename)
 {
 	try
 	{
-		ifstream file(filename);
+		ifstream file;
+		file.open("../../spreadsheets/" + filename);
+
 		string line;
 
 		set<Cell> ssCells;
@@ -81,7 +85,7 @@ StoredSpreadsheet Storage::Open(string filename)
 
 		return ss;
 	}
-	catch(exception e)
+	catch (exception e)
 	{
 		StoredSpreadsheet ss;
 		return ss;
@@ -99,11 +103,10 @@ StoredSpreadsheet Storage::Open(string filename)
 /// <param name="ss">The stored spreadsheet that contains the list of cells and edits of a certain spreadsheet</param>
 void Storage::Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 {
-	cout << "Saving spreadsheet: " << spreadsheetName << " at " << fs::current_path() << "/spreadsheets";
 	try
 	{
 		string filename = spreadsheetName + ".sprd";
-		ofstream file("../spreadsheet/" + filename);
+		ofstream file("../../spreadsheet/" + filename);
 
 		for (Cell cell : ss.cells)
 		{
@@ -140,21 +143,17 @@ void Storage::Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 /// <returns>List of files that contain .sprd extension</returns>
 list<string> Storage::GetSavedSpreadsheetNames()
 {
-	try
-	{
-		list<string> spreadsheets;
-		string path = "/spreadsheet/";
-		string ext(".sprd");
+	list<string> files;
+	//vector<string> files2;
 
-		for (auto& p : fs::recursive_directory_iterator(path))
-		{
-			if (p.path().extension() == ext)
-				spreadsheets.push_back(p.path().stem().string());
-		}
-		return spreadsheets;
-	}
-	catch (exception e)
+	if (fs::exists("../../spreadsheets") && fs::is_directory("../../spreadsheets"))
 	{
-		throw e;
+		for (auto const& entry : fs::recursive_directory_iterator("../../spreadsheets"))
+		{
+			if (entry.path().extension() == ".sprd")
+				files.push_back(entry.path().filename().string());
+		}
 	}
+
+	return files;
 }

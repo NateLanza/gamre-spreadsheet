@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {}
+    "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {}
   },
   "projects": {
-    "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {
+    "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj",
+        "projectUniqueName": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj",
         "projectName": "NetworkController",
-        "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj",
+        "projectPath": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj",
         "packagesPath": "C:\\Users\\izana\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\NetworkController\\obj\\",
+        "outputPath": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\izana\\AppData\\Roaming\\NuGet\\NuGet.Config",

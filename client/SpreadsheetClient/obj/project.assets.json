@@ -233,11 +233,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
+      "projectUniqueName": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
       "projectName": "SpreadsheetClient",
-      "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
+      "projectPath": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
       "packagesPath": "C:\\Users\\izana\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\obj\\",
+      "outputPath": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\izana\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -254,14 +254,14 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "projectReferences": {
-            "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj": {
-              "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj"
+            "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj": {
+              "projectPath": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj"
             },
-            "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj": {
-              "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj"
+            "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj": {
+              "projectPath": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj"
             },
-            "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {
-              "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj"
+            "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {
+              "projectPath": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj"
             }
           }
         }

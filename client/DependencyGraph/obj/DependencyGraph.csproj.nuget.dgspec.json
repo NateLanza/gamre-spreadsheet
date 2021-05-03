@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj": {}
+    "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj": {}
   },
   "projects": {
-    "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj": {
+    "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
+        "projectUniqueName": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
         "projectName": "DependencyGraph",
-        "projectPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
+        "projectPath": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
         "packagesPath": "C:\\Users\\izana\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\izana\\Source\\Repos\\gamre-spreadsheet\\client\\DependencyGraph\\obj\\",
+        "outputPath": "C:\\Users\\izana\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\izana\\AppData\\Roaming\\NuGet\\NuGet.Config",
