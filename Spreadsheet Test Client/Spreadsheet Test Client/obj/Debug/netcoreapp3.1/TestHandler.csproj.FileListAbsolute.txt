@@ -1,8 +1,0 @@
-C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\Spreadsheet Test Client\obj\Debug\netcoreapp3.1\TestHandler.csprojAssemblyReference.cache
-C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\Spreadsheet Test Client\obj\Debug\netcoreapp3.1\TestHandler.AssemblyInfoInputs.cache
-C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\Spreadsheet Test Client\obj\Debug\netcoreapp3.1\TestHandler.AssemblyInfo.cs
-C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\Spreadsheet Test Client\obj\Debug\netcoreapp3.1\TestHandler.csproj.CoreCompileInputs.cache
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Spreadsheet Test Client\obj\Debug\netcoreapp3.1\TestHandler.csprojAssemblyReference.cache
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Spreadsheet Test Client\obj\Debug\netcoreapp3.1\TestHandler.AssemblyInfoInputs.cache
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Spreadsheet Test Client\obj\Debug\netcoreapp3.1\TestHandler.AssemblyInfo.cs
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Spreadsheet Test Client\obj\Debug\netcoreapp3.1\TestHandler.csproj.CoreCompileInputs.cache
