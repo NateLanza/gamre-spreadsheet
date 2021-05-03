@@ -762,8 +762,7 @@ namespace TestHandler
             // Setup ghost clients
             GhostClient client1 = new GhostClient(IP, port);
             GhostClient client2 = new GhostClient(IP, port);
-            client1.Connect();
-            client2.Connect();
+
             client1.ConnectToSpreadsheet("sheet");
             client2.ConnectToSpreadsheet("sheet");
 
@@ -781,6 +780,10 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
+            client1.Connect();
+            client2.Connect();
+
             client1.SendUndoRequest();
 
             while (time.Enabled)
@@ -828,16 +831,6 @@ namespace TestHandler
             // Attach callbacks
             client1.ConnectionAttempted += client1Callback;
 
-            // Setup test
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
-            client1.SendEditRequest("A1", "Value 1");
-            client1.SendEditRequest("A1", "Value 2");
-            client1.SendEditRequest("B1", "Value 3");
-
-            client1.SendUndoRequest();
-
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "Value 1";
@@ -849,6 +842,17 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
+            client1.Connect();
+
+            // Delay until connected
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
+
+            client1.SendEditRequest("A1", "Value 1");
+            client1.SendEditRequest("A1", "Value 2");
+            client1.SendEditRequest("B1", "Value 3");
+
+            client1.SendUndoRequest();
             client1.SendUndoRequest();
 
             while (time.Enabled)
@@ -896,14 +900,6 @@ namespace TestHandler
             // Attach callbacks
             client1.ConnectionAttempted += client1Callback;
 
-            // Setup test
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
-            client1.SendEditRequest("A1", "Value 1");
-            client1.SendEditRequest("A1", "Value 2");
-            client1.SendEditRequest("B1", "Value 3");
-
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "Value 1";
@@ -915,6 +911,15 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
+            client1.Connect();
+
+            // Delay until connected
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
+
+            client1.SendEditRequest("A1", "Value 1");
+            client1.SendEditRequest("A1", "Value 2");
+            client1.SendEditRequest("B1", "Value 3");
             client1.SendRevertRequest("A1");
 
             while (time.Enabled)
@@ -967,15 +972,6 @@ namespace TestHandler
             client1.ConnectionAttempted += client1Callback;
             client2.ConnectionAttempted += client2Callback;
 
-            // Setup test
-            client1.Connect();
-            client2.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-            client2.ConnectToSpreadsheet("sheet");
-
-            client1.SendEditRequest("A1", "Value 1");
-            client2.SendEditRequest("A1", "Value 2");
-
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "Value 1";
@@ -987,6 +983,15 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
+            client1.Connect();
+            client2.Connect();
+
+            // Delay until connected
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
+
+            client1.SendEditRequest("A1", "Value 1");
+            client2.SendEditRequest("A1", "Value 2");
             client1.SendRevertRequest("A1");
 
             while (time.Enabled)
@@ -1034,17 +1039,6 @@ namespace TestHandler
             // Attach callbacks
             client1.ConnectionAttempted += client1Callback;
 
-            // Setup test
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
-            client1.SendEditRequest("A1", "Value 1");
-            client1.SendEditRequest("A1", "Value 2");
-            client1.SendEditRequest("A1", "Value 3");
-            client1.SendEditRequest("B1", "Value 4");
-
-            client1.SendRevertRequest("A1");
-
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "Value 1";
@@ -1056,6 +1050,17 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
+            client1.Connect();
+
+            // Delay until connected
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
+
+            client1.SendEditRequest("A1", "Value 1");
+            client1.SendEditRequest("A1", "Value 2");
+            client1.SendEditRequest("A1", "Value 3");
+            client1.SendEditRequest("B1", "Value 4");
+            client1.SendRevertRequest("A1");
             client1.SendRevertRequest("A1");
 
             while (time.Enabled)
@@ -1103,10 +1108,6 @@ namespace TestHandler
             // Attach callbacks
             client1.ConnectionAttempted += client1Callback;
 
-            // Setup test
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
             // Setup desired results and register handler
             client1.ChangeRejected += ChangeRejectedHandler;
 
@@ -1116,6 +1117,11 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
+            client1.Connect();
+
+            // Delay until connected
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
             client1.SendUndoRequest();
 
             while (time.Enabled)
@@ -1163,10 +1169,6 @@ namespace TestHandler
             // Attach callbacks
             client1.ConnectionAttempted += client1Callback;
 
-            // Setup test
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
             // Setup desired results and register handler
             desiredCell = "A1";
             client1.ChangeRejected += ChangeRejectedHandler;
@@ -1177,6 +1179,11 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
+            client1.Connect();
+
+            // Delay until connected
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
             client1.SendRevertRequest("A1");
 
             while (time.Enabled)
@@ -1224,10 +1231,6 @@ namespace TestHandler
             // Attach callbacks
             client1.ConnectionAttempted += client1Callback;
 
-            // Setup test
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
             // Setup desired results and register handler
             desiredCell = "Incorrect Input";
             client1.ChangeRejected += ChangeRejectedHandler;
@@ -1238,6 +1241,11 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
+            client1.Connect();
+
+            // Delay until connected
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
             client1.SendRevertRequest("Incorrect Input");
 
             while (time.Enabled)
@@ -1285,14 +1293,6 @@ namespace TestHandler
             // Attach callbacks
             client1.ConnectionAttempted += client1Callback;
 
-            // Setup test
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
-            client1.SendEditRequest("A1", "Value 1");
-
-            client1.SendRevertRequest("A1");
-
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "Value 1";
@@ -1304,6 +1304,14 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
+            client1.Connect();
+
+            // Delay until connected
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
+
+            client1.SendEditRequest("A1", "Value 1");
+            client1.SendRevertRequest("A1");
             client1.SendUndoRequest();
 
             while (time.Enabled)
@@ -1351,10 +1359,6 @@ namespace TestHandler
             // Attach callbacks
             client1.ConnectionAttempted += client1Callback;
 
-            // Setup test
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "2";
@@ -1366,6 +1370,12 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
+            client1.Connect();
+
+            // Delay until connected
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
+
             client1.SendEditRequest("A1", "= 1 + 1");
 
             while (time.Enabled)
@@ -1413,12 +1423,6 @@ namespace TestHandler
             // Attach callbacks
             client1.ConnectionAttempted += client1Callback;
 
-            //Setup test
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
-            client1.SendEditRequest("A1", "Value 1");
-
             // Setup desired results and register handler
             desiredCell = "B1";
             desiredContent = "Value 1";
@@ -1430,6 +1434,13 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
+            client1.Connect();
+
+            // Delay until connected
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
+
+            client1.SendEditRequest("A1", "Value 1");
             client1.SendEditRequest("B1", "=A1");
 
             while (time.Enabled)
@@ -1477,10 +1488,6 @@ namespace TestHandler
             // Attach callbacks
             client1.ConnectionAttempted += client1Callback;
 
-            // Setup test
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "New Content";
@@ -1492,6 +1499,11 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
+            client1.Connect();
+
+            // Delay until connected
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
             client1.SendEditRequest("A1", "=B123A");
 
             while (time.Enabled)
@@ -1546,10 +1558,12 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
 
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
+
             client1.SendEditRequest("A1", "=B1");
             client1.SendEditRequest("B1", "=A1");
 
@@ -1588,9 +1602,9 @@ namespace TestHandler
             GhostClient client1 = new GhostClient(IP, port);
 
             // Attach callbacks
-            client1.ConnectionAttempted += ((bool error, List<String> ssNames) => {
+            client1.ConnectionAttempted += (bool error, List<String> ssNames) => {
                 client1.ConnectToSpreadsheet("sheet");
-            }); ;            
+            }; ;            
 
             // Setup desired results and register handler
             desiredCell = "A1";
@@ -1602,11 +1616,12 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
 
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
-            // Run test
+
             client1.SendEditRequest("A1", "=B1");
             client1.SendEditRequest("A1", "New Content");
             client1.SendEditRequest("B1", "=A1");
