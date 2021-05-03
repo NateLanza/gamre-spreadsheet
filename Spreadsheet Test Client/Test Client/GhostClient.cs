@@ -259,7 +259,6 @@ namespace TestHandler
             bool receivedID = false;
             // Process server tokens
             foreach (string token in serverTokens) {
-                Console.WriteLine(token);
                 // See if we've received the ID, set if so
                 if (!token.Contains("{")) {
                     if (int.TryParse(token, out int intID)) {
@@ -352,6 +351,10 @@ namespace TestHandler
             {
                 return;
             }
+
+            // Make sure we deserialized
+            if (message == null)
+                return;
 
             // Take action based on message
             switch (message.Type)
