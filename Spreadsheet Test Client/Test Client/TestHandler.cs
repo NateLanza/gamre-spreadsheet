@@ -796,10 +796,10 @@ namespace TestHandler
             GhostClient client1 = new GhostClient(IP, port);
             GhostClient client2 = new GhostClient(IP, port);
             client1.ConnectionAttempted += (bool error, List<string> ss) => {
-                client1.ConnectToSpreadsheet("sheet12");
+                client1.ConnectToSpreadsheet("sheet13");
             };
             client2.ConnectionAttempted += (bool error, List<string> ss) => {
-                client2.ConnectToSpreadsheet("sheet12");
+                client2.ConnectToSpreadsheet("sheet13");
             };
             
             // Setup desired results and register handler
@@ -861,7 +861,7 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet14");
             });
 
             // Attach callbacks
@@ -878,7 +878,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
 
             // Delay until connected
@@ -930,7 +929,7 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet15");
             });
 
             // Attach callbacks
@@ -947,7 +946,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
 
             // Delay until connected
@@ -998,10 +996,10 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet16");
             });
             GhostClient.ServerConnectionHandler client2Callback = ((bool error, List<String> ssNames) => {
-                client2.ConnectToSpreadsheet("sheet");
+                client2.ConnectToSpreadsheet("sheet16");
             });
 
             // Attach callbacks
@@ -1019,7 +1017,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
             client2.Connect();
 
@@ -1069,7 +1066,7 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet17");
             });
 
             // Attach callbacks
@@ -1086,7 +1083,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
 
             // Delay until connected
@@ -1138,7 +1134,7 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet18");
             });
 
             // Attach callbacks
@@ -1153,7 +1149,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
 
             // Delay until connected
@@ -1199,7 +1194,7 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet19");
             });
 
             // Attach callbacks
@@ -1215,7 +1210,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
 
             // Delay until connected
@@ -1261,7 +1255,7 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet20");
             });
 
             // Attach callbacks
@@ -1277,7 +1271,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
 
             // Delay until connected
@@ -1323,7 +1316,7 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet21");
             });
 
             // Attach callbacks
@@ -1340,7 +1333,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
 
             // Delay until connected
@@ -1389,7 +1381,7 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet22");
             });
 
             // Attach callbacks
@@ -1406,7 +1398,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
 
             // Delay until connected
@@ -1453,7 +1444,7 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet23");
             });
 
             // Attach callbacks
@@ -1470,7 +1461,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
 
             // Delay until connected
@@ -1518,7 +1508,7 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet24");
             });
 
             // Attach callbacks
@@ -1535,7 +1525,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
 
             // Delay until connected
@@ -1578,7 +1567,7 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet25");
             });
 
             // Attach callbacks
@@ -1594,7 +1583,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
 
             // Delay until connected
@@ -1639,7 +1627,7 @@ namespace TestHandler
 
             // Attach callbacks
             client1.ConnectionAttempted += (bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet26");
             }; ;            
 
             // Setup desired results and register handler
@@ -1652,7 +1640,6 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-
             client1.Connect();
 
             // Delay until connected
