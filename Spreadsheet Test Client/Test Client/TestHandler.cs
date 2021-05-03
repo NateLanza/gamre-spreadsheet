@@ -107,7 +107,11 @@ namespace TestHandler
         /// <param name="source"> The timer which triggered this event </param>
         /// <param name="e"> Standard event args </param>
         private static void Timeout (Object source, ElapsedEventArgs e)
-        {  Console.WriteLine("Test Failed : Timeout");  }
+        {
+            Timer t = (Timer)source;
+            t.Stop();
+            Console.WriteLine("Test Failed : Timeout");
+        }
 
         /// <summary>
         /// Determines if the cell selection message that this client received was the one expected.

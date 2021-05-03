@@ -15,3 +15,20 @@ D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Tes
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.dll
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.pdb
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.genruntimeconfig.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\bin\Debug\netcoreapp3.1\Test Client.exe
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\bin\Debug\netcoreapp3.1\Test Client.deps.json
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\bin\Debug\netcoreapp3.1\Test Client.runtimeconfig.json
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\bin\Debug\netcoreapp3.1\Test Client.runtimeconfig.dev.json
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\bin\Debug\netcoreapp3.1\Test Client.dll
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\bin\Debug\netcoreapp3.1\Test Client.pdb
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\bin\Debug\netcoreapp3.1\Newtonsoft.Json.pdb
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\bin\Debug\netcoreapp3.1\Newtonsoft.Json.xml
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.csprojAssemblyReference.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.AssemblyInfoInputs.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.AssemblyInfo.cs
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.csproj.CoreCompileInputs.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.csproj.CopyComplete
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.dll
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.pdb
+C:\Users\abarr\Source\Repos\gamre-spreadsheet3\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.genruntimeconfig.cache
