@@ -280,7 +280,6 @@ namespace SS
                 return col < 0 || row < 0 || col >= COL_COUNT || row >= ROW_COUNT;
             }
 
-
             public void Clear()
             {
                 _values.Clear();

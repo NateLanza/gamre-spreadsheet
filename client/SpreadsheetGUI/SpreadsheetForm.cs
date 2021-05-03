@@ -167,6 +167,10 @@ namespace SpreadsheetGUI
             });
         }
 
+        protected override Point ScrollToControl(Control activeControl) {
+            return DisplayRectangle.Location;
+        }
+
         /// <summary>
         /// Sets cntrlPressed to true when the control key is pressed, or false when it is released
         /// </summary>
@@ -350,6 +354,12 @@ namespace SpreadsheetGUI
             //we assume that the cellname is a single capital character followed by an integer
             int col = (int)cellName[0] - 65;
             int row = int.Parse(cellName.Substring(1))-1;
+
+            // Select input box if id matches our ID
+            if (id == Controller.ID) {
+                this.ActiveControl = SelectedCellContent;
+                SelectedCellContent.Focus();
+            }
 
             SpreadsheetGrid.SetNetworkSelection(id, col, row);
         }
