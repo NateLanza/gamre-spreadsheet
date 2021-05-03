@@ -1,0 +1,4 @@
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController\obj\Release\netcoreapp3.1\NetworkController.csprojAssemblyReference.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController\obj\Release\netcoreapp3.1\NetworkController.AssemblyInfoInputs.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController\obj\Release\netcoreapp3.1\NetworkController.AssemblyInfo.cs
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController\obj\Release\netcoreapp3.1\NetworkController.csproj.CoreCompileInputs.cache
