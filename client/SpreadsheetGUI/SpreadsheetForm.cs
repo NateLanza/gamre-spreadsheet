@@ -168,6 +168,15 @@ namespace SpreadsheetGUI
         }
 
         /// <summary>
+        /// Prevent autoscroll to spreadsheet grid
+        /// </summary>
+        /// <param name="activeControl"></param>
+        /// <returns></returns>
+        protected override System.Drawing.Point ScrollToControl(Control activeControl) {
+            return DisplayRectangle.Location;
+        }
+
+        /// <summary>
         /// Sets cntrlPressed to true when the control key is pressed, or false when it is released
         /// </summary>
         /// <param name="msg"></param>
