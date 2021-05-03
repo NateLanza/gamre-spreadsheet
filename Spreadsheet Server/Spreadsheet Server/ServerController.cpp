@@ -61,6 +61,19 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 	// First, process select request if applicable
 	if (request.GetType() == "selectCell") {
 		// Select cell
+		if (!SpreadsheetState::IsValid(request.GetName())) {
+			list<shared_ptr<Client>> toSend;
+			toSend.push_back(request.GetClient());
+			network->broadcast(toSend, SerializeMessage(
+				"requestError",
+				"",
+				"",
+				0,
+				"",
+				"Cannot select cell " + request.GetName()
+			));
+			return;
+		}
 		openSpreadsheets[request.GetClient()->spreadsheet]->
 			SelectCell(request.GetName(), request.GetClient()->GetID());
 

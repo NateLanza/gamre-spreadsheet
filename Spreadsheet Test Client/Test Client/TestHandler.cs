@@ -607,7 +607,7 @@ namespace TestHandler
 
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected) ;
-
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "New Content");
 
             while (time.Enabled)
@@ -672,6 +672,7 @@ namespace TestHandler
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected && client2.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "New Content");
 
             while (time.Enabled)

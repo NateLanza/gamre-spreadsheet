@@ -1,20 +1,18 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "+F2GeAX9dAjKc/GL4PNTvxkTuQBRNFy94nM2/2kHiYpXYvW12M5/qRmkOrLLwku0nMA+ZQzIXKnDdk30ni1SJg==",
   "success": true,
   "projectFilePath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\e-gei\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\e-gei\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
-=======
-  "dgSpecHash": "XaNA3+zVsOLU6APEwwOIqB/vgTrPkqUNN7b8tm6j4Fb2HFngYQPIhLb3VqDF6pxDa/3fVrwCnD5kRKh/6uotIg==",
-  "success": true,
-  "projectFilePath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\client\\DependencyGraph\\DependencyGraph.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\abarr\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\abarr\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
->>>>>>> ad4e5cbc1b9e3cbb8ebf4cd238fc641f74388635
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

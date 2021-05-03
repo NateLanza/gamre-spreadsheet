@@ -387,17 +387,13 @@ Token::Token(string token) {
 /// <param name="token"></param>
 /// <returns></returns>
 bool Token::IsValid(string token) {
-	if (token.size() == 0)
+	if (token.size() <= 1 || token.size() > 3)
 		return false;
 	//65 is ascii for 'A', 90 is ascii for 'Z'
 	if ((int)token[0] < 65 || (int)token[0] > 90)
 		return false;
 
-	int i = 1;
-	while (i < token.size() && (int)token[i] >= 65 && (int)token[i] <= 90)
-		i++;
-
-	for (; i < token.size(); i++)
+	for (int i = 1; i < token.size(); i++)
 		//48 is ascii for '0', 57 is ascii for '9'
 		if ((int)token[i] < 48 || (int)token[i] > 57)
 			return false;

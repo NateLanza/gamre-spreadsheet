@@ -1,15 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LQNLdZCNC/dWYKbtThkBZ2hk3LfBhWt97YPF7vX514y586L6djUTLIeK6BnvnxVZEEpzJvAx6GWuIe7AOZOgEQ==",
+  "dgSpecHash": "n1JXdcRoakPqe41gn+RCOAJToOG5jcKBAfIBh4FgT2jDywkyTzUdZUlKGge6iijVrU7Uula9CLdGSiOiQ1acBg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\Spreadsheet Test Client\\Test Client\\Test Client.csproj",
+  "projectFilePath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Test Client\\Test Client.csproj",
   "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\Spreadsheet Test Client\\Test Client\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }

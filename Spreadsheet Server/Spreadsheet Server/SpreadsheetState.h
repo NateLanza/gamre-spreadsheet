@@ -205,6 +205,12 @@ public:
 	/// <returns>Current contents of the cell</returns>
 	const string GetCell(const string name);
 
+	/// <summary>
+	/// Returns true if and only if this is a valid cell name
+	/// </summary>
+	/// <param name="token"></param>
+	/// <returns></returns>
+	static bool IsValid(string token);
 };
 
 #endif

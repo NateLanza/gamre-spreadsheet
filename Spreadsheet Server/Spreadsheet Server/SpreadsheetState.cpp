@@ -255,3 +255,25 @@ const string SpreadsheetState::GetCell(const string name) {
 		throw runtime_error(string("Cell " + name + " has no content to get"));
 	}
 }
+
+/// <summary>
+/// Returns whether the given token is a valid variable.
+/// For this spreadsheet application, this means it is some number of upper case letters
+/// followed by a sequence of digits.
+/// </summary>
+/// <param name="token"></param>
+/// <returns></returns>
+bool SpreadsheetState::IsValid(string token) {
+	if (token.size() <= 1 || token.size() > 3)
+		return false;
+	//65 is ascii for 'A', 90 is ascii for 'Z'
+	if ((int)token[0] < 65 || (int)token[0] > 90)
+		return false;
+
+	for (int i = 1; i < token.size(); i++)
+		//48 is ascii for '0', 57 is ascii for '9'
+		if ((int)token[i] < 48 || (int)token[i] > 57)
+			return false;
+
+	return true;
+}
