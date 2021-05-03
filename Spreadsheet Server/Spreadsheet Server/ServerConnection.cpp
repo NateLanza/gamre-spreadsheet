@@ -114,7 +114,6 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 				ptree pt2;
 				std::stringstream jsonInput;
 				jsonInput << jsonstr;
-				cout << jsonstr << endl;
 
 				try {
 					read_json(jsonInput, pt2);
@@ -133,6 +132,8 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 					control->ProcessClientRequest(request);
 				}
 				catch (const exception& e) {
+					EditRequest request("JSONerror", "", "", connected_clients.at(state->ID));
+					control->ProcessClientRequest(request);
 					cout << "Bad json read: " << e.what() << endl;
 				}
 			}

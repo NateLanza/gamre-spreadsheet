@@ -117,12 +117,34 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 		}
 	}
 
+	if (request.GetType() == "JSONerror") {
+		// Send error message to client for bad request
+		list<shared_ptr<Client>> toSend;
+		toSend.push_back(request.GetClient());
+		network->broadcast(toSend, SerializeMessage(
+			"requestError",
+			request.GetName(),
+			"",
+			0,
+			"",
+			"Request rejected"
+		));
+		return;
+	}
+
 	bool requestSuccess = false;
 	// Take action based on request type
 	if (request.GetType() == "editCell") {
 		//if the contents are the same, ignore this request
-		if (request.GetContent() == openSpreadsheets[request.GetClient()->spreadsheet]->GetCell(request.GetName()))
-			return;
+		try {
+			if (request.GetContent() == openSpreadsheets[request.GetClient()->spreadsheet]->GetCell(request.GetName()))
+				return;
+		}
+		catch (exception e) { 
+			/*this should occur when the cell doesn't exist yet in the spreadsheet*/ 
+			if (request.GetContent() == "")
+				return;
+		}
 		requestSuccess = openSpreadsheets[request.GetClient()->spreadsheet]->
 			EditCell(request.GetName(), request.GetContent(), request.GetClient()->GetID());
 	}
