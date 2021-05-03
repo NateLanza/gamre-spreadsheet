@@ -8,8 +8,9 @@ namespace TestHandler
         // The number of tests that this program supprts
         private static int numTests = 26;
 
-        // The IP of the server this program is testing
+        // The IP and port of the server this program is testing
         private static string IP;
+        private static string port;
 
         // Variables used in testing that the correct server messages are received
         private static string desiredCell;
@@ -35,9 +36,14 @@ namespace TestHandler
                 Console.WriteLine(numTests.ToString());
             else
             {
-                IP = args[1];                      // Second main Arg is IP
+                // Get IP and Port
+                string[] input = args[1].Split(":");    // Second main Arg is IP:Port
+                IP = input[0];
+                port = input[1];
 
-                if (args[0] == "1")                // First main Arg is Test number
+
+                // Run specefied Test
+                if (args[0] == "1")                     // First main Arg is Test number
                     Test1();
                 else if (args[0] == "2")
                     Test2();
