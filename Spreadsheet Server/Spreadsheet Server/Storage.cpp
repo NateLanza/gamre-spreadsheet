@@ -31,12 +31,12 @@ StoredSpreadsheet Storage::Open(string filename)
 {
 	try
 	{
-		ifstream file("spreadsheets/" + filename);
+		ifstream file("spreadsheets/" + filename + ".sprd");
 
 		string line;
 
 		set<Cell> ssCells;
-		list<CellEdit> ssEdits;	
+		list<CellEdit> ssEdits;
 
 		//if the file isn't good, just make a new spreadsheet
 		if (!file.good())
@@ -163,14 +163,23 @@ void Storage::Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 list<string> Storage::GetSavedSpreadsheetNames()
 {
 	list<string> files;
+	int k = 0;
 	//vector<string> files2;
 
 	if (fs::exists("spreadsheets") && fs::is_directory("spreadsheets"))
 	{
 		for (auto const& entry : fs::recursive_directory_iterator("spreadsheets"))
 		{
-			if (entry.path().extension() == ".sprd")
-				files.push_back(entry.path().filename().string());
+			if (entry.path().extension() == ".sprd") {
+				k = entry.path().filename().string().find('.');
+				if (k > 0) {
+					string s = entry.path().filename().string().substr(0, k);
+					files.push_back(s);
+				}
+				else
+					files.push_back(entry.path().filename().string());
+			}
+
 		}
 	}
 

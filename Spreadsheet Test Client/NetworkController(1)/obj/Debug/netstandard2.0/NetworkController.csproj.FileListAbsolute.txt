@@ -1,0 +1,9 @@
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController(1)\bin\Debug\netstandard2.0\NetworkController.deps.json
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController(1)\bin\Debug\netstandard2.0\NetworkController.dll
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController(1)\bin\Debug\netstandard2.0\NetworkController.pdb
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController(1)\obj\Debug\netstandard2.0\NetworkController.AssemblyInfoInputs.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController(1)\obj\Debug\netstandard2.0\NetworkController.AssemblyInfo.cs
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController(1)\obj\Debug\netstandard2.0\NetworkController.csproj.CoreCompileInputs.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController(1)\obj\Debug\netstandard2.0\NetworkController.dll
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController(1)\obj\Debug\netstandard2.0\NetworkController.pdb
+C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\NetworkController(1)\obj\Debug\netstandard2.0\NetworkController.csprojAssemblyReference.cache

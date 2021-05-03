@@ -188,15 +188,26 @@ namespace SS {
             // Parse spreadsheet list,
             string serverData = ss.GetData();
             ss.RemoveData(0, serverData.Length);
-            List<string> spreadsheets = new List<string>(serverData.Split('\n'));
-            spreadsheets.Remove("");
+            List<string> unprocessedSpreadsheets = new List<string>(serverData.Split('\n'));
+            List<string> spreadsheets = new List<string>();
+            while (unprocessedSpreadsheets.Remove("")) { }
+            foreach (string s in unprocessedSpreadsheets)
+            {
+                if (s.IndexOf('.') > 0)
+                    spreadsheets.Add(s.Substring(0, s.IndexOf('.')));
+                else
+                    spreadsheets.Add(s);
+            }
+
+
 
             // Check for race conditions, trigger event
-            lock (ConnectionThreadKey) {
+            lock (ConnectionThreadKey)
+            {
                 if (ConnectionState != ConnectionStates.WaitForSpreadsheets)
                     return;
                 ConnectionAttempted(false, spreadsheets);
-                ConnectionState = ConnectionStates.WaitForSpreadsheetConnection; 
+                ConnectionState = ConnectionStates.WaitForSpreadsheetConnection;
             }
         }
 

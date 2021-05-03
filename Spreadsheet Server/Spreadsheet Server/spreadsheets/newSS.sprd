@@ -4,18 +4,18 @@ a
 1
  
 CELL
-B1
-b
+B2
+mybad
 1
  
 CELL
-B2
-mybad
-3
-mybad .4  
+B4
+6
+1
+ 
 CELL
-C1
-c
+C5
+6
 1
  
 CELL
@@ -23,6 +23,23 @@ D2
 e
 1
  
+CELL
+E5
+4
+1
+ 
+CELL_EDIT
+B4
+
+CELL_EDIT
+C5
+
+CELL_EDIT
+E5
+
+CELL_EDIT
+A1
+a
 CELL_EDIT
 D2
 

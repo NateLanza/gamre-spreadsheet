@@ -3,7 +3,7 @@ using System.Timers;
 
 namespace TestHandler
 {
-    class TestHandler
+    public class TestHandler
     {
         // The number of tests that this program supprts
         private static int numTests = 26;
@@ -29,7 +29,7 @@ namespace TestHandler
         private static bool correctRejectionReceived = false;
         private static bool incorrectRejectionReceived = false;
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {           
             if (args.Length == 0)
                 Console.WriteLine(numTests.ToString());
@@ -90,6 +90,8 @@ namespace TestHandler
                 else if (args[0] == "26")
                     Test26();
             }
+
+            Console.ReadLine();
         }
 
         /// <summary>
