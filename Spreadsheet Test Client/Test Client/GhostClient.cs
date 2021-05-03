@@ -65,7 +65,7 @@ namespace TestHandler
         private bool spreadsheetsReceived = false;
         private bool connectedToSheet = false;
 
-        private object ConnectionThreadKey;
+        private object ConnectionThreadKey = new object();
 
         public int ConnectionState { get; private set; }
 
