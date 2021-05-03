@@ -87,6 +87,14 @@ namespace TestHandler
         {
             IP = _IP;
             port = Int32.Parse(_port);
+            // Add blank handlers to prevent null exceptions
+            CellChanged += (string cell, string contents) => { };
+            SelectionChanged += (string s, string n, int i) => { };
+            IDReceived += (int id) => { };
+            ChangeRejected += (string s, string ss) => { };
+            OtherClientDisconnected += (int id) => { };
+            Disconnected += (string s) => { };
+            ConnectionAttempted += (bool error, List<string> ss) => { };
         }
 
         public bool HasReceivedSpreadsheets ()
@@ -234,51 +242,40 @@ namespace TestHandler
         private void WaitForIDCallback(SocketState ss)
         {
             // Validate state
-            lock (ConnectionThreadKey)
-            {
-                if (ConnectionState != ConnectionStates.WaitForID)
+            lock (ConnectionThreadKey) {
+                if (ConnectionState != ConnectionStates.WaitForID) {
+                    Networking.GetData(Connection);
                     return;
+                }
             }
 
             // See if we have tokens
             List<string> serverTokens = ParseServerTokens();
-            if (serverTokens.Count == 0)
-            {
+            if (serverTokens.Count == 0) {
                 Networking.GetData(Connection);
                 return;
             }
 
             bool receivedID = false;
-            // See if we've received the ID, set if so
-            if (!serverTokens[serverTokens.Count - 1].Contains("{"))
-            {
-                string ID = serverTokens[serverTokens.Count - 1];
-                if (int.TryParse(ID, out int intID))
-                {
-                    this.ID = intID;
-                    receivedID = true;
+            // Process server tokens
+            foreach (string token in serverTokens) {
+                // See if we've received the ID, set if so
+                if (!token.Contains("{")) {
+                    if (int.TryParse(token, out int intID)) {
+                        this.ID = intID;
+                        receivedID = true;
+                    } else {}
+                } else {
+                    ProcessServerJson(token);
                 }
-                else
-                {
-                    throw new InvalidOperationException("Unable to parse ID from the server");
-                }
-                serverTokens.RemoveAt(serverTokens.Count - 1);
             }
 
-            // Process json
-            foreach (string token in serverTokens)
-                ProcessServerJson(token);
-
             // Move to next connection stage if ID received
-            if (receivedID)
-            {
-                lock (ConnectionThreadKey)
-                {
-                    connectedToSheet = true;
-
+            if (receivedID) {
+                lock (ConnectionThreadKey) {
                     ConnectionState = ConnectionStates.Connected;
                     Connection.OnNetworkAction = ReceiveLoop;
-                    IDReceived(ID);                                      //Event!!
+                    IDReceived(ID);
                 }
             }
 
@@ -354,6 +351,10 @@ namespace TestHandler
             {
                 return;
             }
+
+            // Make sure we deserialized
+            if (message == null)
+                return;
 
             // Take action based on message
             switch (message.Type)

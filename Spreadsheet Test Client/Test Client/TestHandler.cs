@@ -6,6 +6,8 @@ namespace TestHandler
 {
     public class TestHandler
     {
+        private const int DefaultTimeout = 10000;
+
         // The number of tests that this program supprts
         private static int numTests = 26;
 
@@ -107,7 +109,11 @@ namespace TestHandler
         /// <param name="source"> The timer which triggered this event </param>
         /// <param name="e"> Standard event args </param>
         private static void Timeout (Object source, ElapsedEventArgs e)
-        {  Console.WriteLine("Test Failed : Timeout");  }
+        {
+            Timer t = (Timer)source;
+            t.Stop();
+            Console.WriteLine("Test Failed : Timeout");
+        }
 
         /// <summary>
         /// Determines if the cell selection message that this client received was the one expected.
@@ -157,14 +163,14 @@ namespace TestHandler
         public static void Test1 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Basic Connection Test");
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -194,7 +200,7 @@ namespace TestHandler
         public static void Test2 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Spreadsheet Connection Test");
 
             // Setup ghost client
@@ -206,7 +212,7 @@ namespace TestHandler
             client1.ConnectionAttempted += client1Callback;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
             
             // BEGIN TEST
@@ -236,7 +242,7 @@ namespace TestHandler
         public static void Test3 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Multi-Client Server Connection Test");
 
             // Setup ghost clients
@@ -245,7 +251,7 @@ namespace TestHandler
             GhostClient client3 = new GhostClient(IP, port);
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -277,7 +283,7 @@ namespace TestHandler
         public static void Test4 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Multi-Client Spreadsheet Connection Test");
 
             // Setup ghost clients
@@ -302,7 +308,7 @@ namespace TestHandler
             client3.ConnectionAttempted += client3Callback;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -334,7 +340,7 @@ namespace TestHandler
         public static void Test5 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Multi-Spreadsheet Connection Test");
 
             // Setup ghost client
@@ -354,7 +360,7 @@ namespace TestHandler
             client2.ConnectionAttempted += client2Callback;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -385,7 +391,7 @@ namespace TestHandler
         public static void Test6 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Basic Cell Selection Test");
 
             // Setup ghost client
@@ -404,7 +410,7 @@ namespace TestHandler
             client1.SelectionChanged += CellSelectionHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -443,7 +449,7 @@ namespace TestHandler
         public static void Test7 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Multi-Client Basic Cell Selection Test");
 
             // Setup ghost clients
@@ -462,7 +468,7 @@ namespace TestHandler
             client2.SelectionChanged += CellSelectionHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -507,7 +513,7 @@ namespace TestHandler
         public static void Test8 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Basic Cell Selection Rejection Test");
 
             // Setup ghost client
@@ -521,7 +527,7 @@ namespace TestHandler
             client1.ChangeRejected += ChangeRejectedHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -565,7 +571,7 @@ namespace TestHandler
         public static void Test9 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Basic Cell Edit Test");
 
             // Setup ghost client
@@ -580,7 +586,7 @@ namespace TestHandler
             client1.CellChanged += CellChangeHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -624,7 +630,7 @@ namespace TestHandler
         public static void Test10 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Multi-Client Cell Edit Test");
 
             // Setup ghost clients
@@ -643,7 +649,7 @@ namespace TestHandler
             client2.CellChanged += CellChangeHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -688,7 +694,7 @@ namespace TestHandler
         public static void Test11 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Basic Cell Edit Rejection Test");
 
             // Setup ghost client
@@ -702,7 +708,7 @@ namespace TestHandler
             client1.ChangeRejected += ChangeRejectedHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -746,7 +752,7 @@ namespace TestHandler
         public static void Test12 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Basic Undo Request Test");
 
             // Setup ghost client
@@ -761,7 +767,7 @@ namespace TestHandler
             client1.CellChanged += CellChangeHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -807,7 +813,7 @@ namespace TestHandler
         public static void Test13 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Basic Multi-Client Undo Request Test");
 
             // Setup ghost clients
@@ -826,7 +832,7 @@ namespace TestHandler
             client2.CellChanged += CellChangeHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -873,7 +879,7 @@ namespace TestHandler
         public static void Test14 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Multiple Undo Requests Test");
 
             // Setup ghost client
@@ -893,7 +899,7 @@ namespace TestHandler
             client1.CellChanged += CellChangeHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -941,7 +947,7 @@ namespace TestHandler
         public static void Test15 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Basic Revert Request Test");
 
             // Setup ghost client
@@ -961,7 +967,7 @@ namespace TestHandler
             client1.CellChanged += CellChangeHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -1007,7 +1013,7 @@ namespace TestHandler
         public static void Test16 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Multi-Client Revert Request Test");
 
             // Setup ghost clients
@@ -1032,7 +1038,7 @@ namespace TestHandler
             client1.CellChanged += CellChangeHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -1078,7 +1084,7 @@ namespace TestHandler
         public static void Test17 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Multiple Revert Requests Test");
 
             // Setup ghost client
@@ -1098,7 +1104,7 @@ namespace TestHandler
             client1.CellChanged += CellChangeHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -1146,7 +1152,7 @@ namespace TestHandler
         public static void Test18 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Invalid Undo Request Test");
 
             // Setup ghost client
@@ -1164,7 +1170,7 @@ namespace TestHandler
             client1.ChangeRejected += ChangeRejectedHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -1206,7 +1212,7 @@ namespace TestHandler
         public static void Test19 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Invalid Revert Request Test");
 
             // Setup ghost client
@@ -1225,7 +1231,7 @@ namespace TestHandler
             client1.ChangeRejected += ChangeRejectedHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -1267,7 +1273,7 @@ namespace TestHandler
         public static void Test20 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Invalid Revert Target Test");
 
             // Setup ghost client
@@ -1286,7 +1292,7 @@ namespace TestHandler
             client1.ChangeRejected += ChangeRejectedHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -1328,7 +1334,7 @@ namespace TestHandler
         public static void Test21 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Undoing Revert Test");
 
             // Setup ghost client
@@ -1348,7 +1354,7 @@ namespace TestHandler
             client1.CellChanged += CellChangeHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -1393,7 +1399,7 @@ namespace TestHandler
         public static void Test22 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Basic Formula Test");
 
             // Setup ghost client
@@ -1413,7 +1419,7 @@ namespace TestHandler
             client1.CellChanged += CellChangeHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -1456,7 +1462,7 @@ namespace TestHandler
         public static void Test23 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Basic Cell Dependency Test");
 
             // Setup ghost client
@@ -1476,7 +1482,7 @@ namespace TestHandler
             client1.CellChanged += CellChangeHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -1520,7 +1526,7 @@ namespace TestHandler
         public static void Test24 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Invalid Formula Variable Test");
 
             // Setup ghost client
@@ -1540,7 +1546,7 @@ namespace TestHandler
             client1.ChangeRejected += ChangeRejectedHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -1579,7 +1585,7 @@ namespace TestHandler
         public static void Test25 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Invalid Formula Variable Test");
 
             // Setup ghost client
@@ -1598,7 +1604,7 @@ namespace TestHandler
             client1.ChangeRejected += ChangeRejectedHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
@@ -1639,7 +1645,7 @@ namespace TestHandler
         public static void Test26 ()
         {
             // Output test description to console
-            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
             Console.WriteLine("Invalid Formula Variable Test");
 
             // Setup ghost client
@@ -1655,7 +1661,7 @@ namespace TestHandler
             client1.ChangeRejected += ChangeRejectedHandler;
 
             // Setup timer
-            Timer time = new Timer(4000);
+            Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
 
             // BEGIN TEST
