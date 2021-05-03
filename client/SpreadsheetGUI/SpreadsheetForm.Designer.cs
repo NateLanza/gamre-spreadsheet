@@ -29,7 +29,6 @@
             this.CellValueBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.HelpWindow = new System.Windows.Forms.HelpProvider();
-            this.helpButton = new System.Windows.Forms.Button();
             this.IPTextBox = new System.Windows.Forms.TextBox();
             this.IPAddressLabel = new System.Windows.Forms.Label();
             this.ConnectButton = new System.Windows.Forms.Button();
@@ -96,17 +95,6 @@
             this.label1.Size = new System.Drawing.Size(71, 17);
             this.label1.TabIndex = 4;
             this.label1.Text = "Cell Value";
-            // 
-            // helpButton
-            // 
-            this.helpButton.Location = new System.Drawing.Point(1437, 68);
-            this.helpButton.Margin = new System.Windows.Forms.Padding(4);
-            this.helpButton.Name = "helpButton";
-            this.helpButton.Size = new System.Drawing.Size(100, 28);
-            this.helpButton.TabIndex = 6;
-            this.helpButton.Text = "Get Help";
-            this.helpButton.UseVisualStyleBackColor = true;
-            this.helpButton.Click += new System.EventHandler(this.HelpButton_Click);
             // 
             // IPTextBox
             // 
@@ -259,7 +247,6 @@
             this.Controls.Add(this.ConnectButton);
             this.Controls.Add(this.IPAddressLabel);
             this.Controls.Add(this.IPTextBox);
-            this.Controls.Add(this.helpButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CellValueBox);
             this.Controls.Add(this.SelectedCellLabel);
@@ -281,7 +268,6 @@
         private System.Windows.Forms.TextBox CellValueBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.HelpProvider HelpWindow;
-        private System.Windows.Forms.Button helpButton;
         private System.Windows.Forms.TextBox IPTextBox;
         private System.Windows.Forms.Label IPAddressLabel;
         private System.Windows.Forms.Button ConnectButton;
