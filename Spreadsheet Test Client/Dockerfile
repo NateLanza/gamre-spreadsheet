@@ -1,6 +1,6 @@
 FROM mono
 ADD . /src
 WORKDIR /src
-RUN mono nuget.exe restore
+RUN mono nuget.exe restore "Test Client.sln"
 RUN xbuild /p:Configuration=Release
-CMD [ "mono", "/src/Mono-MyFirstNancy/bin/Release/Mono-MyFirstNancy.exe" ]
+CMD ["cd", "src/Spreadsheet Test Client/bin/Release"]
