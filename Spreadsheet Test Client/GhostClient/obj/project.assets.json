@@ -10,6 +10,16 @@
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
+      },
+      "NetworkController/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/NetworkController.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NetworkController.dll": {}
+        }
       }
     }
   },
@@ -40,27 +50,40 @@
         "newtonsoft.json.nuspec",
         "packageIcon.png"
       ]
+    },
+    "NetworkController/1.0.0": {
+      "type": "project",
+      "path": "../NetworkController/NetworkController.csproj",
+      "msbuildProject": "../NetworkController/NetworkController.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "NetworkController >= 1.0.0",
       "Newtonsoft.Json >= 13.0.1"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\abarr\\.nuget\\packages\\": {}
+    "C:\\Users\\dolph\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj",
+      "projectUniqueName": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj",
       "projectName": "GhostClient",
-      "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj",
-      "packagesPath": "C:\\Users\\abarr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\obj\\",
+      "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj",
+      "packagesPath": "C:\\Users\\dolph\\.nuget\\packages\\",
+      "outputPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\abarr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\dolph\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -72,7 +95,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "targetAlias": "netcoreapp3.1",
+          "projectReferences": {
+            "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj": {
+              "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -83,6 +111,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Newtonsoft.Json": {
             "target": "Package",
@@ -104,7 +133,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

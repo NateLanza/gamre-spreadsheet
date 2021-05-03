@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "EkpTKQ+jsqvaCWAlOJwYZM2eBJFhL6JUAr9jJUH9/Dj/AoEg6cW8tYF9C2KerZ13twshbsTRJa1+OlAveBmsvA==",
+  "dgSpecHash": "Yp0fUZWfsFQi1NxOhqf8cmi9wBtWECnFRbd6ARypEsE7lRLL6CJesB7eQWoOgjA90uBbs11oEf8HmObNonuaVA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj",
+  "projectFilePath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\abarr\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\dolph\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": []
 }

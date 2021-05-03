@@ -2,3 +2,7 @@ C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\GhostClien
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\GhostClient\obj\Release\netcoreapp3.1\GhostClient.AssemblyInfoInputs.cache
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\GhostClient\obj\Release\netcoreapp3.1\GhostClient.AssemblyInfo.cs
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\GhostClient\obj\Release\netcoreapp3.1\GhostClient.csproj.CoreCompileInputs.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\GhostClient\obj\Release\netcoreapp3.1\GhostClient.csprojAssemblyReference.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\GhostClient\obj\Release\netcoreapp3.1\GhostClient.AssemblyInfoInputs.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\GhostClient\obj\Release\netcoreapp3.1\GhostClient.AssemblyInfo.cs
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\GhostClient\obj\Release\netcoreapp3.1\GhostClient.csproj.CoreCompileInputs.cache

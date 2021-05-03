@@ -1,20 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj": {}
+    "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj": {}
   },
   "projects": {
-    "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj": {
+    "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj",
+        "projectUniqueName": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj",
         "projectName": "NetworkController",
-        "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj",
-        "packagesPath": "C:\\Users\\abarr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\obj\\",
+        "projectPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj",
+        "packagesPath": "C:\\Users\\dolph\\.nuget\\packages\\",
+        "outputPath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\abarr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dolph\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +31,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,6 +43,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -52,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
