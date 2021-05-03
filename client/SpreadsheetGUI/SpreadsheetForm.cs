@@ -332,6 +332,7 @@ namespace SpreadsheetGUI
         /// <param name="names">List of spreadsheet names</param>
         private void PopulateSpreadsheetNameList(List<string> names)
         {
+            SpreadsheetNameList.Items.Clear();
             SpreadsheetNameList.Items.AddRange(names.ToArray());
             SpreadsheetNameList.Enabled = true;
             OpenButton.Enabled = true;
