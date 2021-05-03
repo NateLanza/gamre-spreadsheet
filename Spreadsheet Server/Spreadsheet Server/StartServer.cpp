@@ -17,7 +17,8 @@ void HandleExit() {
 }
 
 int main(int, char**) {
-	
+	cout << "Server starting on port 1100" << endl;
+
 	srv.StartServer();
 	std::atexit(HandleExit);
 	return 0;
