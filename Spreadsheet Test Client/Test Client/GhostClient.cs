@@ -55,6 +55,16 @@ namespace TestHandler
         public delegate void DisconnectHandler(string message);
         public event DisconnectHandler Disconnected;
 
+        /// <summary>
+        /// Fires when a successful connection to the server is established and
+        /// a list of spreadsheets is received from the server, 
+        /// or if an attempted connection to the server fails
+        /// </summary>
+        /// <param name="error">True if an error occurred and no connection was established</param>
+        /// <param name="spreadsheets">List of spreadsheets that can be opened. Will be null if error == true</param>
+        public delegate void ServerConnectionHandler(bool error, List<string> spreadsheets);
+        public event ServerConnectionHandler ConnectionAttempted;
+
         //===========================================================================================================//
 
         private string IP;
