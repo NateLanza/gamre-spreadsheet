@@ -200,7 +200,7 @@ namespace TestHandler
             GhostClient client1 = new GhostClient(IP, port);
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet2");
             });
             client1.ConnectionAttempted += client1Callback;
 
@@ -284,13 +284,13 @@ namespace TestHandler
             
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet4");
             });
             GhostClient.ServerConnectionHandler client2Callback = ((bool error, List<String> ssNames) => {
-                client2.ConnectToSpreadsheet("sheet");
+                client2.ConnectToSpreadsheet("sheet4");
             });
             GhostClient.ServerConnectionHandler client3Callback = ((bool error, List<String> ssNames) => {
-                client3.ConnectToSpreadsheet("sheet");
+                client3.ConnectToSpreadsheet("sheet4");
             });
 
             // Attach callbacks
@@ -339,10 +339,10 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet5");
             });
             GhostClient.ServerConnectionHandler client2Callback = ((bool error, List<String> ssNames) => {
-                client2.ConnectToSpreadsheet("sheet");
+                client2.ConnectToSpreadsheet("sheet5");
             });
 
             // Attach callbacks
@@ -386,7 +386,7 @@ namespace TestHandler
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
+                client1.ConnectToSpreadsheet("sheet6");
             });
             client1.ConnectionAttempted += client1Callback;
             client1.IDReceived += (int ID) => {
@@ -443,10 +443,12 @@ namespace TestHandler
             // Setup ghost clients
             GhostClient client1 = new GhostClient(IP, port);
             GhostClient client2 = new GhostClient(IP, port);
-            client1.Connect();
-            client2.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-            client2.ConnectToSpreadsheet("sheet");
+            client1.ConnectionAttempted += (bool error, List<string> ss) => {
+                client1.ConnectToSpreadsheet("sheet7");
+            };
+            client2.ConnectionAttempted += (bool error, List<string> ss) => {
+                client2.ConnectToSpreadsheet("sheet7");
+            };
 
             // Setup desired results and register handler
             desiredCell = "A1";
@@ -459,6 +461,11 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+            client1.Connect();
+            client2.Connect();
+
+            // Delay test
+            while (client1.ConnectionState != ConnectionStates.Connected && client2.ConnectionState != ConnectionStates.Connected) ;
             client1.SendSelectRequest("A1");
 
             while (time.Enabled)
@@ -497,9 +504,10 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
+            client1.ConnectionAttempted += (bool error, List<string> ss) => {
+                client1.ConnectToSpreadsheet("sheet8");
+            };
+        
             // Setup desired results and register handler
             desiredCell = "Incorrect Input";
             client1.ChangeRejected += ChangeRejectedHandler;
@@ -510,6 +518,10 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+            client1.Connect();
+
+            // Delay test
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
             client1.SendSelectRequest("Incorrect Input");
 
             while (time.Enabled)
@@ -548,8 +560,9 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
+            client1.ConnectionAttempted += (bool error, List<string> ss) => {
+                client1.ConnectToSpreadsheet("sheet9");
+            };
 
             // Setup desired results and register handler
             desiredCell = "A1";
@@ -562,6 +575,10 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+            client1.Connect();
+
+            // Delay test
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
             client1.SendEditRequest("A1", "New Content");
 
             while (time.Enabled)
@@ -601,11 +618,13 @@ namespace TestHandler
             // Setup ghost clients
             GhostClient client1 = new GhostClient(IP, port);
             GhostClient client2 = new GhostClient(IP, port);
-            client1.Connect();
-            client2.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-            client2.ConnectToSpreadsheet("sheet");
-
+            client1.ConnectionAttempted += (bool error, List<string> ss) => {
+                client1.ConnectToSpreadsheet("sheet10");
+            };
+            client2.ConnectionAttempted += (bool error, List<string> ss) => {
+                client2.ConnectToSpreadsheet("sheet10");
+            };
+            
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "New Content";
@@ -617,6 +636,11 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+            client1.Connect();
+            client2.Connect();
+
+            // Delay test
+            while (client1.ConnectionState != ConnectionStates.Connected && client2.ConnectionState != ConnectionStates.Connected) ;
             client1.SendEditRequest("A1", "New Content");
 
             while (time.Enabled)
@@ -655,9 +679,10 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
+            client1.ConnectionAttempted += (bool error, List<string> ss) => {
+                client1.ConnectToSpreadsheet("sheet11");
+            };
+            
             // Setup desired results and register handler
             desiredCell = "Incorrect Input";
             client1.ChangeRejected += ChangeRejectedHandler;
@@ -668,6 +693,10 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+            client1.Connect();
+
+            // Delay test
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
             client1.SendEditRequest("Incorrect Input", "New Content");
 
             while (time.Enabled)
@@ -706,12 +735,10 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
-            client1.SendEditRequest("A1", "Value 1");
-            client1.SendEditRequest("A1", "Value 2");
-
+            client1.ConnectionAttempted += (bool error, List<string> ss) => {
+                client1.ConnectToSpreadsheet("sheet12");
+            };
+     
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "Value 1";
@@ -723,6 +750,12 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+            client1.Connect();
+
+            // Delay test
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
+            client1.SendEditRequest("A1", "Value 1");
+            client1.SendEditRequest("A1", "Value 2");
             client1.SendUndoRequest();
 
             while (time.Enabled)
@@ -762,14 +795,13 @@ namespace TestHandler
             // Setup ghost clients
             GhostClient client1 = new GhostClient(IP, port);
             GhostClient client2 = new GhostClient(IP, port);
-            client1.Connect();
-            client2.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-            client2.ConnectToSpreadsheet("sheet");
-
-            client1.SendEditRequest("A1", "Value 1");
-            client2.SendEditRequest("A1", "Value 2");
-
+            client1.ConnectionAttempted += (bool error, List<string> ss) => {
+                client1.ConnectToSpreadsheet("sheet12");
+            };
+            client2.ConnectionAttempted += (bool error, List<string> ss) => {
+                client2.ConnectToSpreadsheet("sheet12");
+            };
+            
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "Value 1";
@@ -781,6 +813,13 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+            client1.Connect();
+            client2.Connect();
+
+            // Delay test
+            while (client1.ConnectionState != ConnectionStates.Connected && client2.ConnectionState != ConnectionStates.Connected) ;
+            client1.SendEditRequest("A1", "Value 1");
+            client2.SendEditRequest("A1", "Value 2");
             client1.SendUndoRequest();
 
             while (time.Enabled)
