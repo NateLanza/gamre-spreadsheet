@@ -1536,12 +1536,6 @@ namespace TestHandler
             // Attach callbacks
             client1.ConnectionAttempted += client1Callback;
 
-            // Setup test
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
-
-            client1.SendEditRequest("A1", "=B1");
-
             // Setup desired results and register handler
             desiredCell = "B1";
             client1.ChangeRejected += ChangeRejectedHandler;
@@ -1552,6 +1546,11 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+            client1.Connect();
+
+            // Delay until connected
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
+            client1.SendEditRequest("A1", "=B1");
             client1.SendEditRequest("B1", "=A1");
 
             while (time.Enabled)
@@ -1588,18 +1587,10 @@ namespace TestHandler
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
 
-            // Bool & callback to delay test until connected
-            bool connected = false;
-            client1.IDReceived += (int ID) => {
-                connected = true;
-            };
-
-            // Connection callbacks
-            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet");
-            });
             // Attach callbacks
-            client1.ConnectionAttempted += client1Callback;            
+            client1.ConnectionAttempted += ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            }); ;            
 
             // Setup desired results and register handler
             desiredCell = "A1";
@@ -1614,7 +1605,8 @@ namespace TestHandler
             client1.Connect();
 
             // Delay until connected
-            while (!connected) ;
+            while (client1.ConnectionState != ConnectionStates.Connected) ;
+            // Run test
             client1.SendEditRequest("A1", "=B1");
             client1.SendEditRequest("A1", "New Content");
             client1.SendEditRequest("B1", "=A1");
