@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Xss8qLP4iaIzdsZ5Qp999jLk8Nx2A3LlUVPl/uks85L0vVns0FNODltKZ2p6zgMNSYkBW7ZO7r+dE0GpvKB6uQ==",
+  "dgSpecHash": "Q1pQXxPj4mvRSj0xCP4GumIf3bS7ahHTkNyUeboPhVC7KIpfl/8KunGVMrkl9nLpNorDZyEy91VtXV9R5/Thng==",
   "success": true,
-  "projectFilePath": "C:\\Users\\e-gei\\Source\\Repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj",
+  "projectFilePath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet3\\client\\NetworkController\\NetworkController.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\e-gei\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\e-gei\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+    "C:\\Users\\abarr\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\abarr\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
   ],
   "logs": []
 }
