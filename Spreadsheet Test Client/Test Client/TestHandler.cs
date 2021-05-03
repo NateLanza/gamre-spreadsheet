@@ -608,6 +608,7 @@ namespace TestHandler
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "New Content");
 
             while (time.Enabled)
@@ -672,6 +673,7 @@ namespace TestHandler
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected && client2.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "New Content");
 
             while (time.Enabled)
@@ -730,6 +732,7 @@ namespace TestHandler
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("Incorrect Input", "New Content");
 
             while (time.Enabled)
@@ -789,6 +792,7 @@ namespace TestHandler
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "Value 1");
             client1.SendEditRequest("A1", "Value 2");
             client1.SendUndoRequest();
@@ -855,6 +859,8 @@ namespace TestHandler
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected && client2.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
+            client2.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "Value 1");
             client2.SendEditRequest("A1", "Value 2");
             client1.SendUndoRequest();
@@ -920,6 +926,7 @@ namespace TestHandler
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "Value 1");
             client1.SendEditRequest("A1", "Value 2");
             client1.SendEditRequest("B1", "Value 3");
@@ -988,6 +995,7 @@ namespace TestHandler
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "Value 1");
             client1.SendEditRequest("A1", "Value 2");
             client1.SendEditRequest("B1", "Value 3");
@@ -1060,6 +1068,8 @@ namespace TestHandler
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
+            client2.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "Value 1");
             client2.SendEditRequest("A1", "Value 2");
             client1.SendRevertRequest("A1");
@@ -1125,6 +1135,7 @@ namespace TestHandler
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "Value 1");
             client1.SendEditRequest("A1", "Value 2");
             client1.SendEditRequest("A1", "Value 3");
@@ -1251,6 +1262,8 @@ namespace TestHandler
 
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
+
+            client1.SendSelectRequest("A1");
             client1.SendRevertRequest("A1");
 
             while (time.Enabled)
@@ -1312,6 +1325,8 @@ namespace TestHandler
 
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
+
+            client1.SendSelectRequest("A1");
             client1.SendRevertRequest("Incorrect Input");
 
             while (time.Enabled)
@@ -1375,6 +1390,7 @@ namespace TestHandler
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "Value 1");
             client1.SendRevertRequest("A1");
             client1.SendUndoRequest();
@@ -1440,6 +1456,7 @@ namespace TestHandler
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "= 1 + 1");
 
             while (time.Enabled)
@@ -1503,7 +1520,9 @@ namespace TestHandler
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "Value 1");
+            client1.SendSelectRequest("B1");
             client1.SendEditRequest("B1", "=A1");
 
             while (time.Enabled)
@@ -1566,6 +1585,8 @@ namespace TestHandler
 
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
+
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "=B123A");
 
             while (time.Enabled)
@@ -1625,7 +1646,9 @@ namespace TestHandler
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "=B1");
+            client1.SendSelectRequest("B1");
             client1.SendEditRequest("B1", "=A1");
 
             while (time.Enabled)
@@ -1682,9 +1705,12 @@ namespace TestHandler
             // Delay until connected
             while (client1.ConnectionState != ConnectionStates.Connected) ;
 
+            client1.SendSelectRequest("A1");
             client1.SendEditRequest("A1", "=B1");
             client1.SendEditRequest("A1", "New Content");
+            client1.SendSelectRequest("B1");
             client1.SendEditRequest("B1", "=A1");
+            client1.SendSelectRequest("A1");
             client1.SendRevertRequest("A1");
 
             while (time.Enabled)
