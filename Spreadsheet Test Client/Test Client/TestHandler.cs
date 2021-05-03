@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Timers;
 
 namespace TestHandler
@@ -276,20 +277,32 @@ namespace TestHandler
             GhostClient client1 = new GhostClient(IP, port);
             GhostClient client2 = new GhostClient(IP, port);
             GhostClient client3 = new GhostClient(IP, port);
-            client1.Connect();
-            client2.Connect();
-            client3.Connect();
+            
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+            GhostClient.ServerConnectionHandler client2Callback = ((bool error, List<String> ssNames) => {
+                client2.ConnectToSpreadsheet("sheet");
+            });
+            GhostClient.ServerConnectionHandler client3Callback = ((bool error, List<String> ssNames) => {
+                client3.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+            client2.ConnectionAttempted += client2Callback;
+            client3.ConnectionAttempted += client3Callback;
 
             // Setup timer
             Timer time = new Timer(4000);
             time.Elapsed += Timeout;
 
-
             // BEGIN TEST
             time.Start();
-            client1.ConnectToSpreadsheet("sheet");
-            client2.ConnectToSpreadsheet("sheet");
-            client3.ConnectToSpreadsheet("sheet");
+            client1.Connect();
+            client2.Connect();
+            client3.Connect();
 
             while (time.Enabled)
             {

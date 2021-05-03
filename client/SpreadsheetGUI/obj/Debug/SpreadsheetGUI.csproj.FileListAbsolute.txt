@@ -99,8 +99,6 @@ C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\De
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Formula.pdb
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetClient.pdb
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetPanel.pdb
-C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Newtonsoft.Json.pdb
-C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Newtonsoft.Json.xml
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\NetworkController.pdb
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\DependencyGraph.pdb
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csprojAssemblyReference.cache
