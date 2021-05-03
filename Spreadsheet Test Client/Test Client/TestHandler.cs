@@ -9,7 +9,7 @@ namespace TestHandler
         private const int DefaultTimeout = 10000;
 
         // The number of tests that this program supprts
-        private static int numTests = 26;
+        private static int numTests = 24;
 
         // The IP and port of the server this program is testing
         private static string IP;
@@ -94,10 +94,6 @@ namespace TestHandler
                     Test23();
                 else if (args[0] == "24")
                     Test24();
-                else if (args[0] == "25")
-                    Test25();
-                else if (args[0] == "26")
-                    Test26();
             }
 
             Console.ReadLine();
@@ -1421,139 +1417,9 @@ namespace TestHandler
         }
 
         /// <summary>
-        /// Tests that a basic formula is handled correctly by the server
-        /// </summary>
-        public static void Test22()
-        {
-            // Output test description to console
-            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
-            Console.WriteLine("Basic Formula Test");
-
-            // Setup ghost client
-            GhostClient client1 = new GhostClient(IP, port);
-
-            // Connection callbacks
-            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet22");
-            });
-
-            // Attach callbacks
-            client1.ConnectionAttempted += client1Callback;
-
-            // Setup desired results and register handler
-            desiredCell = "A1";
-            desiredContent = "2";
-            client1.CellChanged += CellChangeHandler;
-
-            // Setup timer
-            Timer time = new Timer(DefaultTimeout);
-            time.Elapsed += Timeout;
-
-            // BEGIN TEST
-            time.Start();
-            client1.Connect();
-
-            // Delay until connected
-            while (client1.ConnectionState != ConnectionStates.Connected) ;
-
-            client1.SendSelectRequest("A1");
-            client1.SendEditRequest("A1", "= 1 + 1");
-
-            while (time.Enabled)
-            {
-                if (correctChangeReceived)
-                {
-                    time.Stop();
-                    time.Close();
-
-                    Console.WriteLine("Test Passed");
-
-                    return;
-                }
-                else if (incorrectChangeReceived)
-                {
-                    time.Stop();
-                    time.Close();
-
-                    Console.WriteLine("Test Failed");
-
-                    return;
-                }
-            }
-
-            time.Close();
-        }
-
-        /// <summary>
-        /// Tests that basic cell dependency (via formula) is handled correctly by the server
-        /// </summary>
-        public static void Test23()
-        {
-            // Output test description to console
-            Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
-            Console.WriteLine("Basic Cell Dependency Test");
-
-            // Setup ghost client
-            GhostClient client1 = new GhostClient(IP, port);
-
-            // Connection callbacks
-            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet23");
-            });
-
-            // Attach callbacks
-            client1.ConnectionAttempted += client1Callback;
-
-            // Setup desired results and register handler
-            desiredCell = "B1";
-            desiredContent = "Value 1";
-            client1.CellChanged += CellChangeHandler;
-
-            // Setup timer
-            Timer time = new Timer(DefaultTimeout);
-            time.Elapsed += Timeout;
-
-            // BEGIN TEST
-            time.Start();
-            client1.Connect();
-
-            // Delay until connected
-            while (client1.ConnectionState != ConnectionStates.Connected) ;
-
-            client1.SendSelectRequest("A1");
-            client1.SendEditRequest("A1", "Value 1");
-            client1.SendSelectRequest("B1");
-            client1.SendEditRequest("B1", "=A1");
-
-            while (time.Enabled)
-            {
-                if (correctChangeReceived)
-                {
-                    time.Stop();
-                    time.Close();
-
-                    Console.WriteLine("Test Passed");
-
-                    return;
-                }
-                else if (incorrectChangeReceived)
-                {
-                    time.Stop();
-                    time.Close();
-
-                    Console.WriteLine("Test Failed");
-
-                    return;
-                }
-            }
-
-            time.Close();
-        }
-
-        /// <summary>
         /// Tests that the server responds correctly to a formula which uses an invalid variable
         /// </summary>
-        public static void Test24()
+        public static void Test22()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1614,7 +1480,7 @@ namespace TestHandler
             time.Close();
         }
 
-        public static void Test25()
+        public static void Test23()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1676,7 +1542,7 @@ namespace TestHandler
             time.Close();
         }
 
-        public static void Test26()
+        public static void Test24()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
