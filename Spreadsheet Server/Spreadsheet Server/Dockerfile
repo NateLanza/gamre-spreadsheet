@@ -22,4 +22,4 @@ RUN apk --update add --no-cache \
 COPY . server/
 
 # Compile server source
-RUN g++ -lstdc++fs -std=c++17 -o server.out server/*.cpp -lstdc++fs && ./server.out
+RUN g++ -lstdc++fs -std=c++17 -o server.out server/*.cpp -lstdc++fs
