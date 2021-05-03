@@ -106,7 +106,8 @@ void Storage::Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 	try
 	{
 		string filename = spreadsheetName + ".sprd";
-		ofstream file("../../spreadsheet/" + filename);
+		ofstream file("spreadsheets/" + filename, ofstream::out);
+		//ofstream file(filename, ofstream::out);
 
 		for (Cell cell : ss.cells)
 		{
@@ -146,9 +147,9 @@ list<string> Storage::GetSavedSpreadsheetNames()
 	list<string> files;
 	//vector<string> files2;
 
-	if (fs::exists("../../spreadsheets") && fs::is_directory("../../spreadsheets"))
+	if (fs::exists("spreadsheets") && fs::is_directory("spreadsheets"))
 	{
-		for (auto const& entry : fs::recursive_directory_iterator("../../spreadsheets"))
+		for (auto const& entry : fs::recursive_directory_iterator("spreadsheets"))
 		{
 			if (entry.path().extension() == ".sprd")
 				files.push_back(entry.path().filename().string());
