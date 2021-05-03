@@ -31,13 +31,16 @@ StoredSpreadsheet Storage::Open(string filename)
 {
 	try
 	{
-		ifstream file;
-		file.open("../../spreadsheets/" + filename);
+		ifstream file("spreadsheets/" + filename);
 
 		string line;
 
 		set<Cell> ssCells;
-		list<CellEdit> ssEdits;
+		list<CellEdit> ssEdits;	
+
+		//if the file isn't good, just make a new spreadsheet
+		if (!file.good())
+			throw exception();
 
 		while (getline(file, line)) // while there are lines in the file
 		{
@@ -51,13 +54,17 @@ StoredSpreadsheet Storage::Open(string filename)
 				int loop;
 
 				// put cell fields into variables
-				file >> name;
-				file >> content;
-				file >> loop;         // created size variable in save method to know how long to run loop
+				getline(file, line);
+				name = line;
+				getline(file, line);
+				content = line;
+				getline(file, line);
+				loop = stoi(line);     // created size variable in save method to know how long to run loop
 
 				for (int i = 0; i < loop; i++)
 				{
-					file >> prevContent;
+					getline(file, line);
+					prevContent = line;
 					previousList.push_back(prevContent);
 				}
 
@@ -70,8 +77,10 @@ StoredSpreadsheet Storage::Open(string filename)
 				string name;
 				string priorState;
 
-				file >> name;
-				file >> priorState;
+				getline(file, line);
+				name = line;
+				getline(file, line);
+				priorState = line;
 
 				// put variables into fields of new CellEdit
 				CellEdit edit(name, priorState);
@@ -112,21 +121,30 @@ void Storage::Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 		for (Cell cell : ss.cells)
 		{
 			file << "CELL";
+			file << "\n";
 			file << cell.GetName();
+			file << "\n";
 			file << cell.GetContents();
+			file << "\n";
 			file << cell.GetPreviousStates().size();
+			file << "\n";
 			// parse list of previous contents into file
 			for (string f : cell.GetPreviousStates())
 			{
 				file << f;
+				file << " ";
 			}
+			file << "\n";
 		}
 
 		for (CellEdit edit : ss.edits)
 		{
 			file << "CELL_EDIT";
+			file << "\n";
 			file << edit.GetName();
+			file << "\n";
 			file << edit.GetPriorContents();
+			file << "\n";
 		}
 
 		file.close();
