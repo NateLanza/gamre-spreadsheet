@@ -18,6 +18,24 @@ D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\Spreadsheet
 D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\SpreadsheetGUI\bin\Debug\DependencyGraph.pdb
 D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.SpreadsheetForm.resources
 D:\SYS\Program Files\Visual Studio\spreadsheet-NateLanza\Spreadsheet\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.Help.resources
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe.config
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Formula.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetPanel.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\DependencyGraph.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Formula.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetPanel.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\DependencyGraph.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csprojAssemblyReference.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.Help.resources
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.SpreadsheetForm.resources
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.Properties.Resources.resources
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.GenerateResource.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.CoreCompileInputs.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.CopyComplete
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.exe
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.pdb
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe.config
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.pdb
@@ -40,6 +58,10 @@ C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\De
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.CopyComplete
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.exe
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet-bitch\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetClient.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\NetworkController.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetClient.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\NetworkController.pdb
 C:\Users\izana\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe.config
 C:\Users\izana\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe
 C:\Users\izana\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.pdb
@@ -152,25 +174,3 @@ C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\SpreadsheetGUI\obj\Debug\S
 C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.CopyComplete
 C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.exe
 C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.pdb
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe.config
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.pdb
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Formula.dll
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetClient.dll
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetPanel.dll
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\NetworkController.dll
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\DependencyGraph.dll
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Formula.pdb
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetClient.pdb
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetPanel.pdb
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\NetworkController.pdb
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\DependencyGraph.pdb
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csprojAssemblyReference.cache
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.Help.resources
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.SpreadsheetForm.resources
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.Properties.Resources.resources
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.GenerateResource.cache
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.CoreCompileInputs.cache
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.CopyComplete
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.exe
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.pdb
