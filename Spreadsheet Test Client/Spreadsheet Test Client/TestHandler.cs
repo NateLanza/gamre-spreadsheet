@@ -6,7 +6,7 @@ namespace TestHandler
     class TestHandler
     {
         // The number of tests that this program supprts
-        private static int numTests = 11;
+        private static int numTests = 14;
 
         // The IP of the server this program is testing
         private static string IP;
@@ -58,6 +58,12 @@ namespace TestHandler
                     Test10();
                 else if (args[0] == "11")
                     Test11();
+                else if (args[0] == "12")
+                    Test12();
+                else if (args[0] == "13")
+                    Test13();
+                else if (args[0] == "14")
+                    Test14();
             }
         }
 
@@ -583,7 +589,7 @@ namespace TestHandler
         }
 
         /// <summary>
-        /// Tests that the server responds correvtly to a valid undo request
+        /// Tests that the server responds correctly to a valid undo request
         /// </summary>
         public static void Test11 ()
         {
@@ -611,6 +617,178 @@ namespace TestHandler
             // BEGIN TEST
             time.Start();
             client1.SendUndoRequest();
+
+            while (time.Enabled)
+            {
+                if (correctChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server responds correctly to a valid undo request with multiple users connected
+        /// </summary>
+        public static void Test12()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Basic Multi-Client Undo Request Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            GhostClient client2 = new GhostClient(IP);
+            client1.Connect();
+            client2.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+            client2.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "Value 1");
+            client1.SendEditRequest("A1", "Value 2");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "Value 1";
+            client2.CellChanged += CellChangeHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendUndoRequest();
+
+            while (time.Enabled)
+            {
+                if (correctChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server responds correctly to a valid revert request
+        /// </summary>
+        public static void Test13()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Basic Revert Request Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            client1.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "Value 1");
+            client1.SendEditRequest("A1", "Value 2");
+            client1.SendEditRequest("B1", "Value 3");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "Value 1";
+            client1.CellChanged += CellChangeHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendRevertRequest("A1");
+
+            while (time.Enabled)
+            {
+                if (correctChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Passed");
+
+                    return;
+                }
+                else if (incorrectChangeReceived)
+                {
+                    time.Stop();
+                    time.Close();
+
+                    Console.WriteLine("Test Failed");
+
+                    return;
+                }
+            }
+
+            time.Close();
+        }
+
+        /// <summary>
+        /// Tests that the server responds correctly to a valid revert request from a different client.
+        /// </summary>
+        public static void Test14()
+        {
+            // Output test description to console
+            Console.WriteLine("Max runtime: 4 seconds");
+            Console.WriteLine("Multi-Client Revert Request Test");
+
+            // Setup ghost clients
+            GhostClient client1 = new GhostClient(IP);
+            GhostClient client2 = new GhostClient(IP);
+            client1.Connect();
+            client2.Connect();
+            client1.ConnectToSpreadsheet("sheet");
+            client2.ConnectToSpreadsheet("sheet");
+
+            client1.SendEditRequest("A1", "Value 1");
+            client2.SendEditRequest("A1", "Value 2");
+
+            // Setup desired results and register handler
+            desiredCell = "A1";
+            desiredContent = "Value 1";
+            client1.CellChanged += CellChangeHandler;
+
+            // Setup timer
+            Timer time = new Timer(4000);
+            time.Elapsed += Timeout;
+
+            // BEGIN TEST
+            time.Start();
+            client1.SendRevertRequest("A1");
 
             while (time.Enabled)
             {

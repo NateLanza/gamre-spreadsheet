@@ -215,13 +215,14 @@ list<string> ServerController::GetSpreadsheetNames() {
 
 	// Add stored spreadsheets
 	for (string s : storage.GetSavedSpreadsheetNames()) {
-		names.push_back(s);
+		if (!s.empty())
+			names.push_back(s);
 	}
 
 	// Add open spreadsheets
 	for (pair<string, SpreadsheetState*> openSheet : openSpreadsheets) {
 		// Check if names already contains the name
-		if (std::find(names.begin(), names.end(), openSheet.first) == names.end())
+		if (std::find(names.begin(), names.end(), openSheet.first) == names.end() && !openSheet.first.empty())
 			names.push_back(openSheet.first);
 	}
 
