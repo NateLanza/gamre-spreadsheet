@@ -120,6 +120,9 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 	bool requestSuccess = false;
 	// Take action based on request type
 	if (request.GetType() == "editCell") {
+		//if the contents are the same, ignore this request
+		if (request.GetContent() == openSpreadsheets[request.GetClient()->spreadsheet]->GetCell(request.GetName()))
+			return;
 		requestSuccess = openSpreadsheets[request.GetClient()->spreadsheet]->
 			EditCell(request.GetName(), request.GetContent(), request.GetClient()->GetID());
 	}
