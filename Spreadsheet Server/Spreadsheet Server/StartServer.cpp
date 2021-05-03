@@ -18,8 +18,16 @@ void HandleExit() {
 
 int main(int, char**) {
 	cout << "Server starting on port 1100" << endl;
+	cout << "Press enter to stop server" << endl;
 
 	srv.StartServer();
 	std::atexit(HandleExit);
+
+	// Wait until user closes server
+	while (cin.get() != '\n') {
+
+	}
+	srv.StopServer();
+
 	return 0;
 }

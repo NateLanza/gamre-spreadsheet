@@ -65,7 +65,7 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 			SelectCell(request.GetName(), request.GetClient()->GetID());
 
 		string message = SerializeMessage(
-			basic_string("cellSelected"),
+			"cellSelected",
 			request.GetName(),
 			"",
 			request.GetClient()->GetID(),
