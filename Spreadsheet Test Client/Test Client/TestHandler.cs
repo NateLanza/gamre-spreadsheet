@@ -198,15 +198,19 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
-            client1.Connect();
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+            client1.ConnectionAttempted += client1Callback;
 
             // Setup timer
             Timer time = new Timer(4000);
             time.Elapsed += Timeout;
-
+            
             // BEGIN TEST
             time.Start();
-            client1.ConnectToSpreadsheet("sheet");
+            client1.Connect();
 
             while (time.Enabled)
             {
@@ -332,8 +336,18 @@ namespace TestHandler
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
             GhostClient client2 = new GhostClient(IP, port);
-            client1.Connect();
-            client2.Connect();
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+            GhostClient.ServerConnectionHandler client2Callback = ((bool error, List<String> ssNames) => {
+                client2.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+            client2.ConnectionAttempted += client2Callback;
 
             // Setup timer
             Timer time = new Timer(4000);
@@ -341,8 +355,8 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-            client1.ConnectToSpreadsheet("sheet1");
-            client2.ConnectToSpreadsheet("sheet2");
+            client1.Connect();
+            client2.Connect();
 
             while (time.Enabled)
             {
@@ -371,8 +385,13 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
-            client1.Connect();
-            client1.ConnectToSpreadsheet("sheet");
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+            client1.ConnectionAttempted += client1Callback;
+            client1.IDReceived += (int ID) => {
+                client1.SendSelectRequest("A1");
+            };
 
             // Setup desired results and register handler
             desiredCell = "A1";
@@ -385,7 +404,7 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
-            client1.SendSelectRequest("A1");
+            client1.Connect();
 
             while (time.Enabled)
             {
