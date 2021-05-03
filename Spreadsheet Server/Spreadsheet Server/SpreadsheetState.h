@@ -89,7 +89,7 @@ private:
 	/// Read operations should use lock_shared and unlock_shared
 	/// Write operations should use lock and unlock
 	/// </summary>
-	shared_mutex* threadkey;
+	shared_ptr<shared_mutex> threadkey;
 
 	/// <summary>
 	/// Adds a cell to cells if it doesn't already exist,

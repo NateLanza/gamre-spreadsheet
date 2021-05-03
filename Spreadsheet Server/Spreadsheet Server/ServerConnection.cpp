@@ -16,7 +16,7 @@ using boost::property_tree::ptree;
 using boost::property_tree::read_json;
 using boost::property_tree::write_json;
 
-ServerConnection::ServerConnection(ServerController* control) : s_ioservice(), s_acceptor(s_ioservice), connections(), control(control) {
+ServerConnection::ServerConnection(shared_ptr<ServerController> control) : s_ioservice(), s_acceptor(s_ioservice), connections(), control(control) {
 }
 
 void ServerConnection::run()
@@ -64,7 +64,7 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 				// Creates client if userName is provided
 
 				state->setID(ids);
-				Client* client = new Client(ids, userName, state);
+				shared_ptr<Client> client = make_shared<Client>(ids, userName, state);
 				connected_clients.emplace(ids, client);
 				ids++;
 				state->user_chosen = true;
@@ -96,7 +96,7 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 				std::string ss_name(s);
 				if (s[s.size() - 1] == '\n')
 					ss_name = s.substr(0, s.size() - 1);
-				Client* c = connected_clients.at(state->ID);
+				shared_ptr<Client> c = connected_clients.at(state->ID);
 				control->ConnectClientToSpreadsheet(c, ss_name);
 			}
 		}
@@ -119,7 +119,7 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 
 				//Selector and messageType gone!
 				// Create a client pointer to add to the stack of requests
-				Client* c = connected_clients.at(state->ID);
+				shared_ptr<Client> c = connected_clients.at(state->ID);
 				EditRequest request(requestType, cellName, content, c);
 				control->ProcessClientRequest(request);
 			}
@@ -186,14 +186,14 @@ void ServerConnection::listen(uint16_t port)
 	begin_accept();
 }
 
-void ServerConnection::broadcast(std::list<Client*>& clients, std::string message)
+void ServerConnection::broadcast(std::list<shared_ptr<Client>>& clients, std::string message)
 {
 
 	cout << "Sending message: " << message;
 
 	auto buffer = std::make_shared<std::string>(message);
 
-	for (Client* client : clients)
+	for (shared_ptr<Client> client : clients)
 	{
 		try {
 			if (client->state->socket.is_open()) {
@@ -213,11 +213,10 @@ void ServerConnection::delete_client(int ID) {
 	if (connected_clients.count(ID) == 0)
 		return;
 
-	Client* c = connected_clients.at(ID);
+	shared_ptr<Client> c = connected_clients.at(ID);
 	if (c->spreadsheet != "")
 		control->DisconnectClient(c);
 
 	connected_clients.erase(ID);
-	delete c;
 }
 

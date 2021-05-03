@@ -32,7 +32,7 @@ private:
 	/// <summary>
 	/// Client who sent this request
 	/// </summary>
-	Client* client;
+	shared_ptr<Client> client;
 
 public:
 	/// <summary>
@@ -42,7 +42,7 @@ public:
 	/// <param name="cellName">cellName field</param>
 	/// <param name="content">content field</param>
 	/// <param name="client">Request sender</param>
-	EditRequest(string type, string cellName, string content, Client* client);
+	EditRequest(string type, string cellName, string content, shared_ptr<Client> client);
 
 	/// <summary>
 	/// Gets request type
@@ -64,7 +64,7 @@ public:
 	/// Gets client
 	/// </summary>
 	/// <returns>Pointer to client object that sent request</returns>
-	Client* GetClient();
+	shared_ptr<Client> GetClient();
 };
 
 #endif // EDITREQUEST_H

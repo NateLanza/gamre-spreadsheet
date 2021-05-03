@@ -38,7 +38,7 @@ public:
 	/// Should be called before the Client object is deleted
 	/// </summary>
 	/// <param name="client">Client who disconnected</param>
-	void DisconnectClient(Client* client);
+	void DisconnectClient(shared_ptr<Client>client);
 
 	/// <summary>
 	/// Processes an edit request from the client
@@ -54,7 +54,7 @@ public:
 	/// <param name="client">Client to connect</param>
 	/// <param name="spreadsheet">Spreadsheet name</param>
 	/// <returns>All cells in this spreadsheet, to be sent to the client</returns>
-	void ConnectClientToSpreadsheet(Client* client, string spreadsheet);
+	void ConnectClientToSpreadsheet(shared_ptr<Client>client, string spreadsheet);
 
 	/// <summary>
 	/// Returns all of the names of the spreadsheets stored in the server
@@ -83,17 +83,17 @@ private:
 	/// All spreadsheets which are currently open & being edited by users
 	/// Key is the name of the spreadsheet, value is the state of the spreadsheet
 	/// </summary>
-	unordered_map<string, SpreadsheetState*> openSpreadsheets;
+	unordered_map<string, shared_ptr<SpreadsheetState>> openSpreadsheets;
 
 	/// <summary>
 	/// Maps each spreadsheet name to the list of clients connected to it
 	/// </summary>
-	unordered_map<string, list<Client*>> clientConnections;
+	unordered_map<string, list<shared_ptr<Client>>> clientConnections;
 
 	/// <summary>
 	/// Handles connections with clients
 	/// </summary>
-	ServerConnection *network;
+	shared_ptr<ServerConnection> network;
 
 	/// <summary>
 	/// Handles storing files
