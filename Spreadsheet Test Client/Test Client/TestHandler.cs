@@ -361,10 +361,10 @@ namespace TestHandler
 
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
-                client1.ConnectToSpreadsheet("sheet5");
+                client1.ConnectToSpreadsheet("sheet5.1");
             });
             GhostClient.ServerConnectionHandler client2Callback = ((bool error, List<String> ssNames) => {
-                client2.ConnectToSpreadsheet("sheet5");
+                client2.ConnectToSpreadsheet("sheet5.2");
             });
 
             // Attach callbacks

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
+<<<<<<< HEAD
   <ProjectOutputs>
     <ProjectOutput>
       <FullPath>C:\Users\e-gei\Source\Repos\gamre-spreadsheet\Spreadsheet Server\x64\Debug\Server.exe</FullPath>
@@ -8,4 +9,10 @@
   <ContentFiles />
   <SatelliteDlls />
   <NonRecipeFileRefs />
+=======
+  <ProjectOutputs>C:\Users\abarr\Source\Repos\gamre-spreadsheet7\Spreadsheet Server\x64\Debug\Server.exe</ProjectOutputs>
+  <ContentFiles></ContentFiles>
+  <SatelliteDlls></SatelliteDlls>
+  <NonRecipeFileRefs></NonRecipeFileRefs>
+>>>>>>> ad4e5cbc1b9e3cbb8ebf4cd238fc641f74388635
 </Project>
