@@ -34,7 +34,7 @@ namespace TestHandler
         private static bool incorrectRejectionReceived = false;
 
         public static void Main(string[] args)
-        {           
+        {
             if (args.Length == 0)
                 Console.WriteLine(numTests.ToString());
             else
@@ -108,7 +108,7 @@ namespace TestHandler
         /// </summary>
         /// <param name="source"> The timer which triggered this event </param>
         /// <param name="e"> Standard event args </param>
-        private static void Timeout (Object source, ElapsedEventArgs e)
+        private static void Timeout(Object source, ElapsedEventArgs e)
         {
             Timer t = (Timer)source;
             t.Stop();
@@ -121,12 +121,24 @@ namespace TestHandler
         /// <param name="cell"> The name of the cell selected </param>
         /// <param name="name"> The name of the client who selected the cell </param>
         /// <param name="ID"> The ID of the client who selected the cell </param>
-        private static void CellSelectionHandler (string cell, string name, int ID)
+        private static void CellSelectionHandler(string cell, string name, int ID)
         {
+            Console.WriteLine("here! in CellSelectionHandler");
+            Console.WriteLine(cell + ", " + ID);
+            Console.WriteLine(desiredCell + ", " + desiredID);
             if (cell == desiredCell && ID == desiredID)
                 correctSelectionReceived = true;
             else
                 incorrectSelectionReceived = true;
+        }
+
+        /// <summary>
+        /// Callback to set the ID of the client
+        /// </summary>
+        /// <param name="ID"></param>
+        private static void SetDesiredID(int ID)
+        {
+            desiredID = ID;
         }
 
         /// <summary>
@@ -147,7 +159,7 @@ namespace TestHandler
         /// </summary>
         /// <param name="cell"> The name of the cell in which a change was rejected </param>
         /// <param name="message"> The rejection message from the server  </param>
-        private static void ChangeRejectedHandler (string cell, string message)
+        private static void ChangeRejectedHandler(string cell, string message)
         {
             rejectionReceived = true;
 
@@ -160,7 +172,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that a client can connect to the server.
         /// </summary>
-        public static void Test1 ()
+        public static void Test1()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -197,7 +209,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that a client can connect to a spreadsheet
         /// </summary>
-        public static void Test2 ()
+        public static void Test2()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -214,7 +226,7 @@ namespace TestHandler
             // Setup timer
             Timer time = new Timer(DefaultTimeout);
             time.Elapsed += Timeout;
-            
+
             // BEGIN TEST
             time.Start();
 
@@ -235,11 +247,11 @@ namespace TestHandler
 
             time.Close();
         }
-        
+
         /// <summary>
         /// Expands on Test1 to test that multiple clients can be connected to a server at once.
         /// </summary>
-        public static void Test3 ()
+        public static void Test3()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -280,7 +292,7 @@ namespace TestHandler
         /// <summary>
         /// Expands on Test2 to test that multiple clients can be connected to a spreadsheet at once.
         /// </summary>
-        public static void Test4 ()
+        public static void Test4()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -290,7 +302,7 @@ namespace TestHandler
             GhostClient client1 = new GhostClient(IP, port);
             GhostClient client2 = new GhostClient(IP, port);
             GhostClient client3 = new GhostClient(IP, port);
-            
+
             // Connection callbacks
             GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
                 client1.ConnectToSpreadsheet("sheet4");
@@ -337,7 +349,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that clients can connect to multiple different spreadsheets simultaneously
         /// </summary>
-        public static void Test5 ()
+        public static void Test5()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -388,7 +400,7 @@ namespace TestHandler
         /// <summary>
         /// Tests basic cell selections by ensuring that the proper server message is received after the request is made
         /// </summary>
-        public static void Test6 ()
+        public static void Test6()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -403,6 +415,7 @@ namespace TestHandler
             client1.IDReceived += (int ID) => {
                 client1.SendSelectRequest("A1");
             };
+            client1.IDReceived += SetDesiredID;
 
             // Setup desired results and register handler
             desiredCell = "A1";
@@ -446,7 +459,7 @@ namespace TestHandler
         /// <summary>
         /// Expands on Test5 to test that the correct server response to a cell selection is received by multiple clients
         /// </summary>
-        public static void Test7 ()
+        public static void Test7()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -465,6 +478,7 @@ namespace TestHandler
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredID = client1.ID;
+            client1.IDReceived += SetDesiredID;
             client2.SelectionChanged += CellSelectionHandler;
 
             // Setup timer
@@ -510,7 +524,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the correct change rejection is received when an invalid input is given to a cell selection request
         /// </summary>
-        public static void Test8 ()
+        public static void Test8()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -521,7 +535,7 @@ namespace TestHandler
             client1.ConnectionAttempted += (bool error, List<string> ss) => {
                 client1.ConnectToSpreadsheet("sheet8");
             };
-        
+
             // Setup desired results and register handler
             desiredCell = "Incorrect Input";
             client1.ChangeRejected += ChangeRejectedHandler;
@@ -568,7 +582,7 @@ namespace TestHandler
         /// <summary>
         /// Tests basic cell edits by ensuring that the proper server message is received after the request is made
         /// </summary>
-        public static void Test9 ()
+        public static void Test9()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -607,7 +621,7 @@ namespace TestHandler
                     time.Close();
 
                     Console.WriteLine("Test Passed");
-                    
+
                     return;
                 }
                 else if (incorrectChangeReceived)
@@ -627,7 +641,7 @@ namespace TestHandler
         /// <summary>
         /// Tests multi-client cell edits by ensuring that the proper server message is received after the request is made
         /// </summary>
-        public static void Test10 ()
+        public static void Test10()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -642,7 +656,7 @@ namespace TestHandler
             client2.ConnectionAttempted += (bool error, List<string> ss) => {
                 client2.ConnectToSpreadsheet("sheet10");
             };
-            
+
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "New Content";
@@ -671,7 +685,7 @@ namespace TestHandler
                     time.Close();
 
                     Console.WriteLine("Test Passed");
-                    
+
                     return;
                 }
                 else if (incorrectChangeReceived)
@@ -691,7 +705,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the correct change rejection is received when an invalid input is given to a cell edit request
         /// </summary>
-        public static void Test11 ()
+        public static void Test11()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -702,7 +716,7 @@ namespace TestHandler
             client1.ConnectionAttempted += (bool error, List<string> ss) => {
                 client1.ConnectToSpreadsheet("sheet11");
             };
-            
+
             // Setup desired results and register handler
             desiredCell = "Incorrect Input";
             client1.ChangeRejected += ChangeRejectedHandler;
@@ -729,7 +743,7 @@ namespace TestHandler
                     time.Close();
 
                     Console.WriteLine("Test Passed");
-                    
+
                     return;
                 }
                 else if (incorrectRejectionReceived)
@@ -749,7 +763,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the server responds correctly to a valid undo request
         /// </summary>
-        public static void Test12 ()
+        public static void Test12()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -760,7 +774,7 @@ namespace TestHandler
             client1.ConnectionAttempted += (bool error, List<string> ss) => {
                 client1.ConnectToSpreadsheet("sheet12");
             };
-     
+
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "Value 1";
@@ -810,7 +824,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the server responds correctly to a valid undo request by another client
         /// </summary>
-        public static void Test13 ()
+        public static void Test13()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -825,7 +839,7 @@ namespace TestHandler
             client2.ConnectionAttempted += (bool error, List<string> ss) => {
                 client2.ConnectToSpreadsheet("sheet13");
             };
-            
+
             // Setup desired results and register handler
             desiredCell = "A1";
             desiredContent = "Value 1";
@@ -876,7 +890,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the server properly responds to multiple consecutive undo requests
         /// </summary>
-        public static void Test14 ()
+        public static void Test14()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -944,7 +958,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the server responds correctly to a valid revert request
         /// </summary>
-        public static void Test15 ()
+        public static void Test15()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1010,7 +1024,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the server responds correctly to a valid revert request from a different client.
         /// </summary>
-        public static void Test16 ()
+        public static void Test16()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1081,7 +1095,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the server responds correctly to multiple consecutive revert requests
         /// </summary>
-        public static void Test17 ()
+        public static void Test17()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1149,7 +1163,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the server responds correctly to an invalid undo request
         /// </summary>
-        public static void Test18 ()
+        public static void Test18()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1209,7 +1223,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the server rejects a revert request on a raw spreadsheet
         /// </summary>
-        public static void Test19 ()
+        public static void Test19()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1270,7 +1284,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the server rejects a revert request trageted at an invalid cell
         /// </summary>
-        public static void Test20 ()
+        public static void Test20()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1331,7 +1345,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the server correctly handles the interaction between the undo and revert functions
         /// </summary>
-        public static void Test21 ()
+        public static void Test21()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1396,7 +1410,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that a basic formula is handled correctly by the server
         /// </summary>
-        public static void Test22 ()
+        public static void Test22()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1459,7 +1473,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that basic cell dependency (via formula) is handled correctly by the server
         /// </summary>
-        public static void Test23 ()
+        public static void Test23()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1523,7 +1537,7 @@ namespace TestHandler
         /// <summary>
         /// Tests that the server responds correctly to a formula which uses an invalid variable
         /// </summary>
-        public static void Test24 ()
+        public static void Test24()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1582,7 +1596,7 @@ namespace TestHandler
             time.Close();
         }
 
-        public static void Test25 ()
+        public static void Test25()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1642,7 +1656,7 @@ namespace TestHandler
             time.Close();
         }
 
-        public static void Test26 ()
+        public static void Test26()
         {
             // Output test description to console
             Console.WriteLine("Max runtime: " + (DefaultTimeout / 1000) + " seconds");
@@ -1654,7 +1668,7 @@ namespace TestHandler
             // Attach callbacks
             client1.ConnectionAttempted += (bool error, List<String> ssNames) => {
                 client1.ConnectToSpreadsheet("sheet26");
-            }; ;            
+            }; ;
 
             // Setup desired results and register handler
             desiredCell = "A1";

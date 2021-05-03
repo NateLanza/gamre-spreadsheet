@@ -31,7 +31,6 @@ void ServerConnection::mng_send(it_connection state, std::shared_ptr<std::string
 	if (error)
 	{
 		std::cout << error.message() << std::endl;
-		connections.erase(state);
 	}
 	else {
 		std::string s((std::istreambuf_iterator<char>(&state->read_buffer)), std::istreambuf_iterator<char>());
@@ -150,7 +149,6 @@ void ServerConnection::mng_accept(it_connection state, boost::system::error_code
 	// Reports an error, if present
 	if (error)
 	{
-		connections.erase(state);
 		std::cout << "Cannot establish connection with client: " << error.message() << std::endl;
 
 	}

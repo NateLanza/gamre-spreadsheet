@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\e-gei\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Test Client\\Test Client.csproj": {}
+    "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Test Client\\Test Client.csproj": {}
   },
   "projects": {
-    "C:\\Users\\e-gei\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Test Client\\Test Client.csproj": {
+    "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Test Client\\Test Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\e-gei\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Test Client\\Test Client.csproj",
+        "projectUniqueName": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Test Client\\Test Client.csproj",
         "projectName": "Test Client",
-        "projectPath": "C:\\Users\\e-gei\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Test Client\\Test Client.csproj",
+        "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Test Client\\Test Client.csproj",
         "packagesPath": "C:\\Users\\e-gei\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\e-gei\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Test Client\\obj\\",
+        "outputPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Test Client\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\e-gei\\AppData\\Roaming\\NuGet\\NuGet.Config",

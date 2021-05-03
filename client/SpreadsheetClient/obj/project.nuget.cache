@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Bqy5JaKLFOhUFF1hEpdrrFPsslr/UXu8bpG+xjkQG965LrXZV4ksQIcgjPH79amdzHU9FXwvpqkyjyJ7REvF1g==",
+  "dgSpecHash": "HBbMQsz/SMSptLRUmtdQntSNfqIcdDn52PuQOshlJS0RVNpQqJS9IJsNqQL/PNw4C0KbqDAAyeoFImIDpWf/cw==",
   "success": true,
-  "projectFilePath": "D:\\SYS\\Program Files\\Visual Studio\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
+  "projectFilePath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\dolph\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\dolph\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+    "C:\\Users\\e-gei\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\e-gei\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
   ],
   "logs": []
 }
