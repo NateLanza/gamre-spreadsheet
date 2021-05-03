@@ -182,6 +182,8 @@ namespace TestHandler
                     return;
 
                 ConnectionState = ConnectionStates.WaitForSpreadsheetConnection;
+
+                ConnectionAttempted(!ss.ErrorOccured, spreadsheets);
             }
         }
 
