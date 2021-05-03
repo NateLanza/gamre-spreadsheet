@@ -169,6 +169,7 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
 
             while (time.Enabled)
@@ -210,6 +211,7 @@ namespace TestHandler
             
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
 
             while (time.Enabled)
@@ -248,6 +250,7 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
             client2.Connect();
             client3.Connect();
@@ -304,6 +307,7 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
             client2.Connect();
             client3.Connect();
@@ -355,6 +359,7 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
             client2.Connect();
 
@@ -404,6 +409,7 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
 
             while (time.Enabled)
@@ -461,11 +467,13 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
             client2.Connect();
 
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected && client2.ConnectionState != ConnectionStates.Connected) ;
+
             client1.SendSelectRequest("A1");
 
             while (time.Enabled)
@@ -518,10 +526,12 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
 
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected) ;
+
             client1.SendSelectRequest("Incorrect Input");
 
             while (time.Enabled)
@@ -575,10 +585,12 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
 
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected) ;
+
             client1.SendEditRequest("A1", "New Content");
 
             while (time.Enabled)
@@ -636,11 +648,13 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
             client2.Connect();
 
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected && client2.ConnectionState != ConnectionStates.Connected) ;
+
             client1.SendEditRequest("A1", "New Content");
 
             while (time.Enabled)
@@ -693,10 +707,12 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
 
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected) ;
+
             client1.SendEditRequest("Incorrect Input", "New Content");
 
             while (time.Enabled)
@@ -750,10 +766,12 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
 
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected) ;
+
             client1.SendEditRequest("A1", "Value 1");
             client1.SendEditRequest("A1", "Value 2");
             client1.SendUndoRequest();
@@ -813,11 +831,13 @@ namespace TestHandler
 
             // BEGIN TEST
             time.Start();
+
             client1.Connect();
             client2.Connect();
 
             // Delay test
             while (client1.ConnectionState != ConnectionStates.Connected && client2.ConnectionState != ConnectionStates.Connected) ;
+
             client1.SendEditRequest("A1", "Value 1");
             client2.SendEditRequest("A1", "Value 2");
             client1.SendUndoRequest();
