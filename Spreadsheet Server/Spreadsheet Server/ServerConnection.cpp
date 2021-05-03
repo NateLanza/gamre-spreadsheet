@@ -41,7 +41,7 @@ void ServerConnection::mng_send(it_connection state, std::shared_ptr<std::string
 void ServerConnection::mng_receive(it_connection state, boost::system::error_code const& error, size_t bytes)
 {
 	// Check for client disconnect
-	if ((boost::asio::error::eof == error) || (boost::asio::error::connection_reset == error))     {
+	if ((boost::asio::error::eof == error) || (boost::asio::error::connection_reset == error)) {
 		delete_client(state->ID);
 		connections.erase(state);
 		return;
@@ -52,15 +52,17 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 	{
 		std::string s((std::istreambuf_iterator<char>(&state->read_buffer)), std::istreambuf_iterator<char>());
 		std::cout << "Received message: " << s;
+		state->read_buffer.commit(s.size());
+		state->read_buffer.consume(s.size());
 		// Checks if this JSON and needs to be serialized
 		if (s.at(0) != '{') {
 
 
 			if (!state->user_chosen) {
-				
+
 				string userName(s);
-				if (s[s.size() - 1] == '\n')
-					userName = s.substr(0, s.size() - 1);
+				if (s.find('\n') != string::npos)
+					userName = s.substr(0, s.find('\n'));
 				// Creates client if userName is provided
 
 				state->setID(ids);
@@ -101,46 +103,44 @@ void ServerConnection::mng_receive(it_connection state, boost::system::error_cod
 			}
 		}
 		else {
-			//Creates a tree and stream to read the json
-			ptree pt2;
-			std::stringstream jsonInput;
-			jsonInput << s;
+			//Basically - we didn't encounter this issue before because the localhost
+			//sends so quickly to itself (I think), but the server may end up with
+			//s containing multiple lines of json commands. so we need to 
+			//handle each of these lines seperately
+			while (s.find('\n') != string::npos) {
+				string jsonstr = s.substr(0, s.find('\n'));
+				s = s.substr(s.find('\n')+1);
+				//Creates a tree and stream to read the json
+				ptree pt2;
+				std::stringstream jsonInput;
+				jsonInput << jsonstr;
+				cout << jsonstr << endl;
 
+				try {
+					read_json(jsonInput, pt2);
 
-			try {
-				read_json(jsonInput, pt2);
+					// Extracts value from keys. Represents all possible client fields
+					std::string cellName = pt2.get<std::string>("cellName", "");
+					std::string content = pt2.get<std::string>("contents", "");
+					std::string requestType = pt2.get<std::string>("requestType", "");
 
-				// Extracts value from keys. Represents all possible client fields
-				std::string cellName = pt2.get<std::string>("cellName", "");
-				std::string content = pt2.get<std::string>("contents", "");
-				std::string requestType = pt2.get<std::string>("requestType", "");
+					// If the client is already connected, sending an edit request
 
-				// If the client is already connected, sending an edit request
-
-				//Selector and messageType gone!
-				// Create a client pointer to add to the stack of requests
-				shared_ptr<Client> c = connected_clients.at(state->ID);
-				EditRequest request(requestType, cellName, content, c);
-				control->ProcessClientRequest(request);
-			}
-			catch (const exception& e) {
-				cout << "Bad json read: " << e.what() << endl;
+					//Selector and messageType gone!
+					// Create a client pointer to add to the stack of requests
+					shared_ptr<Client> c = connected_clients.at(state->ID);
+					EditRequest request(requestType, cellName, content, c);
+					control->ProcessClientRequest(request);
+				}
+				catch (const exception& e) {
+					cout << "Bad json read: " << e.what() << endl;
+				}
 			}
 		}
 	}
 
-	// Reports an error, if one is present
-	// This also detects when sockets are disconnected!
-	if (error)
-	{
-		delete_client(state->ID);
-		std::cout << error.message() << std::endl;
-	}
-
 	// Starts asynchronous read again
-	else {
-		async_receive(state);
-	}
+	async_receive(state);
 
 }
 
