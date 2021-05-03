@@ -25,14 +25,6 @@ C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\obj\Debug\netstanda
 C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.csproj.CoreCompileInputs.cache
 C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.dll
 C:\Users\izana\Source\Repos\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.pdb
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.deps.json
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.dll
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.pdb
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.AssemblyInfoInputs.cache
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.AssemblyInfo.cs
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.csproj.CoreCompileInputs.cache
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.dll
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.pdb
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.deps.json
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.dll
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.pdb
@@ -69,3 +61,12 @@ C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\Formula\obj\Debug\netstand
 C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\Formula\obj\Debug\netstandard2.0\Formula.csproj.CoreCompileInputs.cache
 C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\Formula\obj\Debug\netstandard2.0\Formula.dll
 C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\Formula\obj\Debug\netstandard2.0\Formula.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.deps.json
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\bin\Debug\netstandard2.0\Formula.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.csprojAssemblyReference.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.AssemblyInfoInputs.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.AssemblyInfo.cs
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.csproj.CoreCompileInputs.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.dll
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\Formula\obj\Debug\netstandard2.0\Formula.pdb

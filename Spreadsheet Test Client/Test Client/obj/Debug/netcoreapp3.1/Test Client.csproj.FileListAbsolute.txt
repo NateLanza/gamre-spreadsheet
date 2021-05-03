@@ -48,4 +48,3 @@ C:\Users\e-gei\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\Test Clien
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.dll
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.pdb
 C:\Users\e-gei\Source\Repos\gamre-spreadsheet\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.genruntimeconfig.cache
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.csprojAssemblyReference.cache
