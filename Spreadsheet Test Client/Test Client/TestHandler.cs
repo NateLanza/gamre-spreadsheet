@@ -549,21 +549,12 @@ namespace TestHandler
 
             while (time.Enabled)
             {
-                if (correctRejectionReceived)
+                if (rejectionReceived)
                 {
                     time.Stop();
                     time.Close();
 
                     Console.WriteLine("Test Passed");
-
-                    return;
-                }
-                else if (incorrectRejectionReceived)
-                {
-                    time.Stop();
-                    time.Close();
-
-                    Console.WriteLine("Test Failed");
 
                     return;
                 }
