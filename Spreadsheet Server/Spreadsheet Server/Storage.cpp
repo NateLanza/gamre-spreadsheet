@@ -132,7 +132,7 @@ void Storage::Save(const string spreadsheetName, const StoredSpreadsheet& ss)
 			for (string f : cell.GetPreviousStates())
 			{
 				file << f;
-				file << " ";
+				file << "\n";
 			}
 			file << "\n";
 		}

@@ -86,6 +86,10 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 
 		// If request successful, send out the new cell
 		if (get<0>(undoRequestSuccess)) {
+			// We save on every change, since this should be relatively fast
+			shared_ptr<SpreadsheetState> ss = openSpreadsheets[request.GetClient()->spreadsheet];
+			StoredSpreadsheet toStore(ss->GetPopulatedCells(), ss->GetEditHistory());
+			storage.Save(request.GetClient()->spreadsheet, toStore);
 			network->broadcast(clientConnections[request.GetClient()->spreadsheet],
 				SerializeMessage(
 					"cellUpdated",
@@ -126,6 +130,10 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 
 	// If request successful, send out the new cell
 	if (requestSuccess) {
+		// We save on every change, since this should be relatively fast
+		shared_ptr<SpreadsheetState> ss = openSpreadsheets[request.GetClient()->spreadsheet];
+		StoredSpreadsheet toStore(ss->GetPopulatedCells(), ss->GetEditHistory());
+		storage.Save(request.GetClient()->spreadsheet, toStore);
 		network->broadcast(clientConnections[request.GetClient()->spreadsheet],
 			SerializeMessage(
 				"cellUpdated",

@@ -282,7 +282,6 @@ namespace NetworkUtil
         /// <returns>True if the send process was started, false if an error occurs or the socket is already closed</returns>
         public static bool Send(Socket socket, string data)
         {
-            Console.WriteLine("sending stuff!");
             if (!socket.Connected) {
                 return false;
             }
