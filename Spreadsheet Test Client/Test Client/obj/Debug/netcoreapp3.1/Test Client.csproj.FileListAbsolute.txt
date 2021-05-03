@@ -31,3 +31,4 @@ D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Tes
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.dll
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.pdb
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.genruntimeconfig.cache
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\Spreadsheet Test Client\Test Client\obj\Debug\netcoreapp3.1\Test Client.csprojAssemblyReference.cache

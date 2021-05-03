@@ -2,7 +2,7 @@
   "profiles": {
     "Test Client": {
       "commandName": "Project",
-      "commandLineArgs": "2 127.0.0.1:1100 "
+      "commandLineArgs": "3 127.0.0.1:1100 "
     }
   }
 }
