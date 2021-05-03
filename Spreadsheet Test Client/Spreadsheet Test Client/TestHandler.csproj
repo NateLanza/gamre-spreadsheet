@@ -4,10 +4,16 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Spreadsheet_Test_Client</RootNamespace>
+    <Nullable>warnings</Nullable>
+    <StartupObject>TestHandler.TestHandler</StartupObject>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>C:\Users\abarr\Desktop\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GhostClient\GhostClient.csproj" />
+    <ProjectReference Include="..\GhostClient(1)\GhostClient.csproj" />
   </ItemGroup>
 
 </Project>

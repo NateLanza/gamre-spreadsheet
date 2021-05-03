@@ -10,16 +10,6 @@
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
-      },
-      "NetworkController/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "compile": {
-          "bin/placeholder/NetworkController.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/NetworkController.dll": {}
-        }
       }
     }
   },
@@ -50,16 +40,10 @@
         "newtonsoft.json.nuspec",
         "packageIcon.png"
       ]
-    },
-    "NetworkController/1.0.0": {
-      "type": "project",
-      "path": "../NetworkController/NetworkController.csproj",
-      "msbuildProject": "../NetworkController/NetworkController.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "NetworkController >= 1.0.0",
       "Newtonsoft.Json >= 13.0.1"
     ]
   },
@@ -88,11 +72,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {
-            "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj": {
-              "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\NetworkController\\NetworkController.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

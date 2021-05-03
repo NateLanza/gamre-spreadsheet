@@ -13,7 +13,7 @@
       },
       "GhostClient/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
+        "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "NetworkController": "1.0.0",
           "Newtonsoft.Json": "13.0.1"
@@ -27,7 +27,7 @@
       },
       "NetworkController/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
+        "framework": ".NETStandard,Version=v2.0",
         "compile": {
           "bin/placeholder/NetworkController.dll": {}
         },
@@ -67,13 +67,13 @@
     },
     "GhostClient/1.0.0": {
       "type": "project",
-      "path": "../GhostClient/GhostClient.csproj",
-      "msbuildProject": "../GhostClient/GhostClient.csproj"
+      "path": "../GhostClient(1)/GhostClient.csproj",
+      "msbuildProject": "../GhostClient(1)/GhostClient.csproj"
     },
     "NetworkController/1.0.0": {
       "type": "project",
-      "path": "../NetworkController/NetworkController.csproj",
-      "msbuildProject": "../NetworkController/NetworkController.csproj"
+      "path": "../NetworkController(1)/NetworkController.csproj",
+      "msbuildProject": "../NetworkController(1)/NetworkController.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -107,8 +107,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj": {
-              "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient\\GhostClient.csproj"
+            "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient(1)\\GhostClient.csproj": {
+              "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet\\Spreadsheet Test Client\\GhostClient(1)\\GhostClient.csproj"
             }
           }
         }
