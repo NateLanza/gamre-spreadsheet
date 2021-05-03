@@ -58,6 +58,7 @@ namespace TestHandler
         //===========================================================================================================//
 
         private string IP;
+        private int port;
 
         private List<string> spreadsheets;
 
@@ -72,9 +73,10 @@ namespace TestHandler
 
         public int ID;
 
-        public GhostClient(string _IP)
+        public GhostClient(string _IP, string _port)
         {
             IP = _IP;
+            port = Int32.Parse(_port);
         }
 
         public bool HasReceivedSpreadsheets ()
@@ -100,7 +102,7 @@ namespace TestHandler
                 ConnectionState = ConnectionStates.WaitingForConnection;
             }
             Thread t = new Thread(() => {
-                Networking.ConnectToServer(ServerConnectionCallback, IP, 1100);
+                Networking.ConnectToServer(ServerConnectionCallback, IP, port);
             });
             t.Start();
         }
