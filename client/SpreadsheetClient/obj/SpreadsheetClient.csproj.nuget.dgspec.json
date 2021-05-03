@@ -1,6 +1,22 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
+    "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
+        "projectName": "DependencyGraph",
+        "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
+        "packagesPath": "C:\\Users\\e-gei\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\e-gei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
     "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\client\\SpreadsheetClient\\SpreadsheetClient.csproj": {}
   },
   "projects": {
@@ -15,6 +31,7 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\abarr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> ad4e5cbc1b9e3cbb8ebf4cd238fc641f74388635
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -59,6 +76,19 @@
         }
       }
     },
+<<<<<<< HEAD
+    "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj",
+        "projectName": "Formula",
+        "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj",
+        "packagesPath": "C:\\Users\\e-gei\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\Formula\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\e-gei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
     "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\client\\Formula\\Formula.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -70,6 +100,7 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\abarr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> ad4e5cbc1b9e3cbb8ebf4cd238fc641f74388635
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -114,6 +145,19 @@
         }
       }
     },
+<<<<<<< HEAD
+    "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj",
+        "projectName": "NetworkController",
+        "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj",
+        "packagesPath": "C:\\Users\\e-gei\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\e-gei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
     "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\client\\NetworkController\\NetworkController.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -125,6 +169,7 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\abarr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> ad4e5cbc1b9e3cbb8ebf4cd238fc641f74388635
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -169,6 +214,19 @@
         }
       }
     },
+<<<<<<< HEAD
+    "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
+        "projectName": "SpreadsheetClient",
+        "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\SpreadsheetClient.csproj",
+        "packagesPath": "C:\\Users\\e-gei\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\SpreadsheetClient\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\e-gei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
     "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\client\\SpreadsheetClient\\SpreadsheetClient.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -180,6 +238,7 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\abarr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> ad4e5cbc1b9e3cbb8ebf4cd238fc641f74388635
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -192,6 +251,16 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
+<<<<<<< HEAD
+              "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj": {
+                "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj"
+              },
+              "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj": {
+                "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\Formula\\Formula.csproj"
+              },
+              "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj": {
+                "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\NetworkController\\NetworkController.csproj"
+=======
               "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\client\\DependencyGraph\\DependencyGraph.csproj": {
                 "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\client\\DependencyGraph\\DependencyGraph.csproj"
               },
@@ -200,6 +269,7 @@
               },
               "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\client\\NetworkController\\NetworkController.csproj": {
                 "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\client\\NetworkController\\NetworkController.csproj"
+>>>>>>> ad4e5cbc1b9e3cbb8ebf4cd238fc641f74388635
               }
             }
           }

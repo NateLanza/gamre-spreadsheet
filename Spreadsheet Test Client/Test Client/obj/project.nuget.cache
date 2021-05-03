@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
+  "dgSpecHash": "n1JXdcRoakPqe41gn+RCOAJToOG5jcKBAfIBh4FgT2jDywkyTzUdZUlKGge6iijVrU7Uula9CLdGSiOiQ1acBg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\Spreadsheet Test Client\\Test Client\\Test Client.csproj",
+=======
   "dgSpecHash": "LQNLdZCNC/dWYKbtThkBZ2hk3LfBhWt97YPF7vX514y586L6djUTLIeK6BnvnxVZEEpzJvAx6GWuIe7AOZOgEQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\Spreadsheet Test Client\\Test Client\\Test Client.csproj",
+>>>>>>> ad4e5cbc1b9e3cbb8ebf4cd238fc641f74388635
   "expectedPackageFiles": [],
   "logs": []
 }

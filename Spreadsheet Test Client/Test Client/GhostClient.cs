@@ -97,11 +97,11 @@ namespace TestHandler
             ConnectionAttempted += (bool error, List<string> ss) => { };
         }
 
-        public bool HasReceivedSpreadsheets ()
-        {  return spreadsheetsReceived;  }
+        public bool HasReceivedSpreadsheets()
+        { return spreadsheetsReceived; }
 
-        public bool HasConnectedToSheet ()
-        { return connectedToSheet;   }
+        public bool HasConnectedToSheet()
+        { return connectedToSheet; }
 
         ////////////////////////////////////////////////////////////////////////
         /// CONNECTION SEQUENCE BEGINS:                                      ///
@@ -242,8 +242,10 @@ namespace TestHandler
         private void WaitForIDCallback(SocketState ss)
         {
             // Validate state
-            lock (ConnectionThreadKey) {
-                if (ConnectionState != ConnectionStates.WaitForID) {
+            lock (ConnectionThreadKey)
+            {
+                if (ConnectionState != ConnectionStates.WaitForID)
+                {
                     Networking.GetData(Connection);
                     return;
                 }
@@ -251,28 +253,37 @@ namespace TestHandler
 
             // See if we have tokens
             List<string> serverTokens = ParseServerTokens();
-            if (serverTokens.Count == 0) {
+            if (serverTokens.Count == 0)
+            {
                 Networking.GetData(Connection);
                 return;
             }
 
             bool receivedID = false;
             // Process server tokens
-            foreach (string token in serverTokens) {
+            foreach (string token in serverTokens)
+            {
                 // See if we've received the ID, set if so
-                if (!token.Contains("{")) {
-                    if (int.TryParse(token, out int intID)) {
+                if (!token.Contains("{"))
+                {
+                    if (int.TryParse(token, out int intID))
+                    {
                         this.ID = intID;
                         receivedID = true;
-                    } else {}
-                } else {
+                    }
+                    else { }
+                }
+                else
+                {
                     ProcessServerJson(token);
                 }
             }
 
             // Move to next connection stage if ID received
-            if (receivedID) {
-                lock (ConnectionThreadKey) {
+            if (receivedID)
+            {
+                lock (ConnectionThreadKey)
+                {
                     ConnectionState = ConnectionStates.Connected;
                     Connection.OnNetworkAction = ReceiveLoop;
                     IDReceived(ID);
@@ -388,7 +399,7 @@ namespace TestHandler
         /// SENDING CLIENT MESSAGES:   ///
         /// Edit, Revert, Select, Undo ///
         //////////////////////////////////
-        
+
         /// <summary>
         /// Sends an edit request to the server
         /// </summary>
@@ -408,7 +419,7 @@ namespace TestHandler
                 cell +
                 "\", \"contents\": \"" +
                 contents +
-                "\"}"
+                "\"}\n"
                 );
         }
 
@@ -428,7 +439,7 @@ namespace TestHandler
             Networking.Send(Connection.TheSocket,
                 "{\"requestType\": \"revertCell\", \"cellName\": \"" +
                 cell +
-                "\"}"
+                "\"}\n"
                 );
         }
 
@@ -448,7 +459,7 @@ namespace TestHandler
             Networking.Send(Connection.TheSocket,
                 "{\"requestType\": \"selectCell\", \"cellName\": \"" +
                 cell +
-                "\"}"
+                "\"}\n"
                 );
         }
 
@@ -465,7 +476,7 @@ namespace TestHandler
             }
 
             Networking.Send(Connection.TheSocket,
-                "{\"requestType\": \"undo\"}"
+                "{\"requestType\": \"undo\"}\n"
                 );
         }
 

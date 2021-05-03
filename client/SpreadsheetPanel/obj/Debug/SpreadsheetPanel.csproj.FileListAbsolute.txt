@@ -39,3 +39,4 @@ C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\SpreadsheetPanel\obj\Debug
 C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.dll
 C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.pdb
 D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csprojAssemblyReference.cache
+C:\Users\e-gei\source\repos\gamre-spreadsheet\client\SpreadsheetPanel\obj\Debug\SpreadsheetPanel.csprojAssemblyReference.cache

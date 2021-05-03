@@ -180,11 +180,25 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
+    "C:\\Users\\e-gei\\.nuget\\packages\\": {}
+=======
     "C:\\Users\\abarr\\.nuget\\packages\\": {}
+>>>>>>> ad4e5cbc1b9e3cbb8ebf4cd238fc641f74388635
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
+      "projectUniqueName": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
+      "projectName": "DependencyGraph",
+      "projectPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\DependencyGraph.csproj",
+      "packagesPath": "C:\\Users\\e-gei\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\e-gei\\source\\repos\\gamre-spreadsheet\\client\\DependencyGraph\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\e-gei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
       "projectUniqueName": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\client\\DependencyGraph\\DependencyGraph.csproj",
       "projectName": "DependencyGraph",
       "projectPath": "C:\\Users\\abarr\\Source\\Repos\\gamre-spreadsheet7\\client\\DependencyGraph\\DependencyGraph.csproj",
@@ -193,6 +207,7 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\abarr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> ad4e5cbc1b9e3cbb8ebf4cd238fc641f74388635
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
