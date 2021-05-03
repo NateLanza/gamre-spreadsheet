@@ -160,7 +160,7 @@ namespace TestHandler
             Console.WriteLine("Basic Connection Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
 
             // Setup timer
             Timer time = new Timer(4000);
@@ -196,7 +196,7 @@ namespace TestHandler
             Console.WriteLine("Spreadsheet Connection Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
 
             // Setup timer
@@ -233,9 +233,9 @@ namespace TestHandler
             Console.WriteLine("Multi-Client Server Connection Test");
 
             // Setup ghost clients
-            GhostClient client1 = new GhostClient(IP);
-            GhostClient client2 = new GhostClient(IP);
-            GhostClient client3 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
+            GhostClient client2 = new GhostClient(IP, port);
+            GhostClient client3 = new GhostClient(IP, port);
 
             // Setup timer
             Timer time = new Timer(4000);
@@ -273,9 +273,9 @@ namespace TestHandler
             Console.WriteLine("Multi-Client Spreadsheet Connection Test");
 
             // Setup ghost clients
-            GhostClient client1 = new GhostClient(IP);
-            GhostClient client2 = new GhostClient(IP);
-            GhostClient client3 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
+            GhostClient client2 = new GhostClient(IP, port);
+            GhostClient client3 = new GhostClient(IP, port);
             client1.Connect();
             client2.Connect();
             client3.Connect();
@@ -317,8 +317,8 @@ namespace TestHandler
             Console.WriteLine("Multi-Spreadsheet Connection Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
-            GhostClient client2 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
+            GhostClient client2 = new GhostClient(IP, port);
             client1.Connect();
             client2.Connect();
 
@@ -357,7 +357,7 @@ namespace TestHandler
             Console.WriteLine("Basic Cell Selection Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -409,8 +409,8 @@ namespace TestHandler
             Console.WriteLine("Multi-Client Basic Cell Selection Test");
 
             // Setup ghost clients
-            GhostClient client1 = new GhostClient(IP);
-            GhostClient client2 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
+            GhostClient client2 = new GhostClient(IP, port);
             client1.Connect();
             client2.Connect();
             client1.ConnectToSpreadsheet("sheet");
@@ -464,7 +464,7 @@ namespace TestHandler
             Console.WriteLine("Basic Cell Selection Rejection Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -515,7 +515,7 @@ namespace TestHandler
             Console.WriteLine("Basic Cell Edit Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -567,8 +567,8 @@ namespace TestHandler
             Console.WriteLine("Multi-Client Cell Edit Test");
 
             // Setup ghost clients
-            GhostClient client1 = new GhostClient(IP);
-            GhostClient client2 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
+            GhostClient client2 = new GhostClient(IP, port);
             client1.Connect();
             client2.Connect();
             client1.ConnectToSpreadsheet("sheet");
@@ -622,7 +622,7 @@ namespace TestHandler
             Console.WriteLine("Basic Cell Edit Rejection Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -673,7 +673,7 @@ namespace TestHandler
             Console.WriteLine("Basic Undo Request Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -728,8 +728,8 @@ namespace TestHandler
             Console.WriteLine("Basic Multi-Client Undo Request Test");
 
             // Setup ghost clients
-            GhostClient client1 = new GhostClient(IP);
-            GhostClient client2 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
+            GhostClient client2 = new GhostClient(IP, port);
             client1.Connect();
             client2.Connect();
             client1.ConnectToSpreadsheet("sheet");
@@ -786,7 +786,7 @@ namespace TestHandler
             Console.WriteLine("Multiple Undo Requests Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -844,7 +844,7 @@ namespace TestHandler
             Console.WriteLine("Basic Revert Request Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -900,8 +900,8 @@ namespace TestHandler
             Console.WriteLine("Multi-Client Revert Request Test");
 
             // Setup ghost clients
-            GhostClient client1 = new GhostClient(IP);
-            GhostClient client2 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
+            GhostClient client2 = new GhostClient(IP, port);
             client1.Connect();
             client2.Connect();
             client1.ConnectToSpreadsheet("sheet");
@@ -958,7 +958,7 @@ namespace TestHandler
             Console.WriteLine("Multiple Revert Requests Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1017,7 +1017,7 @@ namespace TestHandler
             Console.WriteLine("Invalid Undo Request Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1067,7 +1067,7 @@ namespace TestHandler
             Console.WriteLine("Invalid Revert Request Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1118,7 +1118,7 @@ namespace TestHandler
             Console.WriteLine("Invalid Revert Target Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1169,7 +1169,7 @@ namespace TestHandler
             Console.WriteLine("Undoing Revert Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1225,7 +1225,7 @@ namespace TestHandler
             Console.WriteLine("Basic Formula Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1277,7 +1277,7 @@ namespace TestHandler
             Console.WriteLine("Basic Cell Dependency Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1331,7 +1331,7 @@ namespace TestHandler
             Console.WriteLine("Invalid Formula Variable Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1380,7 +1380,7 @@ namespace TestHandler
             Console.WriteLine("Invalid Formula Variable Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1430,7 +1430,7 @@ namespace TestHandler
             Console.WriteLine("Invalid Formula Variable Test");
 
             // Setup ghost client
-            GhostClient client1 = new GhostClient(IP);
+            GhostClient client1 = new GhostClient(IP, port);
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
