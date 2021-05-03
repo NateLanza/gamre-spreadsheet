@@ -16,7 +16,7 @@ using boost::property_tree::ptree;
 using boost::property_tree::read_json;
 using boost::property_tree::write_json;
 
-ServerConnection::ServerConnection(shared_ptr<ServerController> control) : s_ioservice(), s_acceptor(s_ioservice), connections(), control(control) {
+ServerConnection::ServerConnection(ServerController* control) : s_ioservice(), s_acceptor(s_ioservice), connections(), control(control) {
 }
 
 void ServerConnection::run()

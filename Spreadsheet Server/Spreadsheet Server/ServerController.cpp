@@ -9,8 +9,7 @@
 using namespace std;
 // See ServerController.h for method documentation
 
-ServerController::ServerController() : openSpreadsheets(), clientConnections(), storage(), threadkey() {
-	network = make_shared<ServerConnection>(this);
+ServerController::ServerController() : openSpreadsheets(), clientConnections(), storage(), threadkey(), network(make_shared<ServerConnection>(this)) {
 }
 
 void ServerController::StartServer() {

@@ -36,7 +36,7 @@ public:
 	/// Creates a new server connection, initializes the members of the Connection
 	/// </summary>
 	/// <param name="control"></param>
-	ServerConnection(shared_ptr<ServerController> control);
+	ServerConnection(ServerController* control);
 
 	/// <summary>
 	/// Starts the server. The io_service allows for asynchrony
