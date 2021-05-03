@@ -1,7 +1,7 @@
 #include "EditRequest.h"
 #include <string>
 
-EditRequest::EditRequest(string type, string cellName, string content, Client* client) :
+EditRequest::EditRequest(string type, string cellName, string content, shared_ptr<Client> client) :
 	type(type), cellName(cellName), content(content), client(client)
 {
 }
@@ -21,6 +21,6 @@ string EditRequest::GetContent()
 	return content;
 }
 
-Client* EditRequest::GetClient() {
+shared_ptr<Client> EditRequest::GetClient() {
 	return client;
 }

@@ -8,11 +8,11 @@
 /// </summary>
 SpreadsheetState::SpreadsheetState() : cells(), edits(), dependencies(), selections(), threadkey()
 {
-	threadkey = new shared_mutex();
+	threadkey = make_shared<shared_mutex>();
 }
 
 SpreadsheetState::SpreadsheetState(set<Cell>& cells, list<CellEdit>& edits) : cells(), edits(edits), dependencies(), threadkey(), selections() {
-	threadkey = new shared_mutex();
+	threadkey = make_shared<shared_mutex>();
 	// Edits are set by the initializer list, now we just need to map dependencies & cells
 	WriteLock();
 	for (Cell cell : cells) {
@@ -34,8 +34,7 @@ SpreadsheetState::~SpreadsheetState() {
 	while (!edits.empty())
 		edits.pop_front();
 	selections.clear();
-	// We have to explicitly call delete on pointers
-	delete threadkey;
+
 	// Destructors are called automatically
 }
 

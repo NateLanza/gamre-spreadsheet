@@ -22,10 +22,10 @@ class ServerConnection
 {
 	boost::asio::io_service s_ioservice;					// Boost class that supports asynchronous functions
 	boost::asio::ip::tcp::acceptor s_acceptor;				// Boost class that accepts clients					
-	ServerController *control;								// The ServerController class associated with this connection
+	shared_ptr<ServerController> control;								// The ServerController class associated with this connection
 	std::list<Connection> connections;						// List used to generate iterator for a connection
 		
-	unordered_map<int, Client*> connected_clients;			// List of Connected clients
+	unordered_map<int, shared_ptr<Client>> connected_clients;			// List of Connected clients
 	int ids = 0;											// Integer used to assign ID's (potential race condition)
 	
 
@@ -88,7 +88,7 @@ public:
 	/// </summary>
 	/// <param name="clients"></param>
 	/// <param name="message"></param>
-	void broadcast(std::list<Client*> &clients, std::string message);
+	void broadcast(std::list<shared_ptr<Client>> &clients, std::string message);
 
 	/// <summary>
 	/// Deletes the specified client

@@ -9,8 +9,7 @@
 using namespace std;
 // See ServerController.h for method documentation
 
-ServerController::ServerController() : openSpreadsheets(), clientConnections(), storage(), threadkey() {
-	network = new ServerConnection(this);
+ServerController::ServerController() : openSpreadsheets(), clientConnections(), storage(), threadkey(), network(make_shared<ServerConnection>(this)) {
 }
 
 void ServerController::StartServer() {
@@ -19,15 +18,15 @@ void ServerController::StartServer() {
 	network->run();
 }
 
-void ServerController::ConnectClientToSpreadsheet(Client* client, string spreadsheet) {
+void ServerController::ConnectClientToSpreadsheet(shared_ptr<Client> client, string spreadsheet) {
 	Lock();
 
 	// See if any clients have this spreadsheet open, open if not
 	if (clientConnections.count(spreadsheet) < 1) {
 		StoredSpreadsheet newSS = storage.Open(spreadsheet);
-		SpreadsheetState* toAdd = new SpreadsheetState(newSS.cells, newSS.edits);
+		shared_ptr<SpreadsheetState> toAdd = make_shared<SpreadsheetState>(newSS.cells, newSS.edits);
 		openSpreadsheets[spreadsheet] = toAdd;
-		list<Client*> clientList;
+		list<shared_ptr<Client>> clientList;
 		clientConnections[spreadsheet] = clientList;
 	}
 
@@ -36,7 +35,7 @@ void ServerController::ConnectClientToSpreadsheet(Client* client, string spreads
 	client->spreadsheet = spreadsheet;
 
 	// Send spreadsheet cells to client
-	list<Client*> sendTo = clientConnections[spreadsheet];
+	list<shared_ptr<Client>> sendTo = clientConnections[spreadsheet];
 	for (Cell cell : openSpreadsheets[spreadsheet]->GetPopulatedCells()) {
 		// Skip empty cells
 		if (cell.GetContents() == "")
@@ -66,7 +65,7 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 			SelectCell(request.GetName(), request.GetClient()->GetID());
 
 		string message = SerializeMessage(
-			basic_string("cellSelected"),
+			"cellSelected",
 			request.GetName(),
 			"",
 			request.GetClient()->GetID(),
@@ -100,7 +99,7 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 		}
 		else {
 			// Send error message to client for bad request
-			list<Client*> toSend;
+			list<shared_ptr<Client>> toSend;
 			toSend.push_back(request.GetClient());
 			network->broadcast(toSend, SerializeMessage(
 				"requestError",
@@ -140,7 +139,7 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 	}
 	else {
 		// Send error message to client for bad request
-		list<Client*> toSend;
+		list<shared_ptr<Client>> toSend;
 		toSend.push_back(request.GetClient());
 		network->broadcast(toSend, SerializeMessage(
 			"requestError",
@@ -154,7 +153,7 @@ void ServerController::ProcessClientRequest(EditRequest request) {
 	}
 }
 
-void ServerController::DisconnectClient(Client* client) {
+void ServerController::DisconnectClient(shared_ptr<Client> client) {
 	// Gonna modify connections, so lock
 	Lock();
 	string ssname = client->spreadsheet;
@@ -164,7 +163,7 @@ void ServerController::DisconnectClient(Client* client) {
 	// If so, close spreadsheet and save
 	if (clientConnections[ssname].size() == 0) {
 		// Save
-		SpreadsheetState* ss = openSpreadsheets[client->spreadsheet];
+		shared_ptr<SpreadsheetState> ss = openSpreadsheets[client->spreadsheet];
 		StoredSpreadsheet toStore(ss->GetPopulatedCells(), ss->GetEditHistory());
 		storage.Save(ssname, toStore);
 		// Delete from current state
@@ -220,7 +219,7 @@ list<string> ServerController::GetSpreadsheetNames() {
 	}
 
 	// Add open spreadsheets
-	for (pair<string, SpreadsheetState*> openSheet : openSpreadsheets) {
+	for (pair<string, shared_ptr<SpreadsheetState>> openSheet : openSpreadsheets) {
 		// Check if names already contains the name
 		if (std::find(names.begin(), names.end(), openSheet.first) == names.end() && !openSheet.first.empty())
 			names.push_back(openSheet.first);
@@ -239,16 +238,15 @@ void ServerController::Unlock() {
 
 void ServerController::StopServer() {
 	// Save spreadsheet
-	for (pair<string, SpreadsheetState*> ssPair : openSpreadsheets) {
-		SpreadsheetState* ss = ssPair.second;
+	for (pair<string, shared_ptr<SpreadsheetState>> ssPair : openSpreadsheets) {
+		shared_ptr<SpreadsheetState> ss = ssPair.second;
 		StoredSpreadsheet toStore(ss->GetPopulatedCells(), ss->GetEditHistory());
 		storage.Save(ssPair.first, toStore);
-		delete ssPair.second;
 	}
 
 	// Inform clients of disconnect
-	list<Client*> toSend;
-	for (pair<string, list<Client*>> Clients : clientConnections) {
+	list<shared_ptr<Client>> toSend;
+	for (pair<string, list<shared_ptr<Client>>> Clients : clientConnections) {
 		// Send message
 		network->broadcast(Clients.second, SerializeMessage(
 			"serverError",
