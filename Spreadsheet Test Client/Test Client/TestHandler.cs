@@ -800,6 +800,16 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+
+            // Setup test
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -858,6 +868,16 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+
+            // Setup test
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -915,6 +935,20 @@ namespace TestHandler
             // Setup ghost clients
             GhostClient client1 = new GhostClient(IP, port);
             GhostClient client2 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+            GhostClient.ServerConnectionHandler client2Callback = ((bool error, List<String> ssNames) => {
+                client2.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+            client2.ConnectionAttempted += client2Callback;
+
+            // Setup test
             client1.Connect();
             client2.Connect();
             client1.ConnectToSpreadsheet("sheet");
@@ -972,6 +1006,16 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+
+            // Setup test
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1031,6 +1075,16 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+
+            // Setup test
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1081,6 +1135,16 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+
+            // Setup test
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1132,6 +1196,16 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+
+            // Setup test
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1183,6 +1257,16 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+
+            // Setup test
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1239,6 +1323,16 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+
+            // Setup test
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1291,6 +1385,16 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+
+            //Setup test
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1345,6 +1449,16 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+
+            // Setup test
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1394,6 +1508,16 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+
+            // Setup test
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
@@ -1444,6 +1568,16 @@ namespace TestHandler
 
             // Setup ghost client
             GhostClient client1 = new GhostClient(IP, port);
+
+            // Connection callbacks
+            GhostClient.ServerConnectionHandler client1Callback = ((bool error, List<String> ssNames) => {
+                client1.ConnectToSpreadsheet("sheet");
+            });
+
+            // Attach callbacks
+            client1.ConnectionAttempted += client1Callback;
+
+            // Setup test
             client1.Connect();
             client1.ConnectToSpreadsheet("sheet");
 
