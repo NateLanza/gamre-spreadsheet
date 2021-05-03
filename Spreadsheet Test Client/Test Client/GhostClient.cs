@@ -87,6 +87,14 @@ namespace TestHandler
         {
             IP = _IP;
             port = Int32.Parse(_port);
+            // Add blank handlers to prevent null exceptions
+            CellChanged += (string cell, string contents) => { };
+            SelectionChanged += (string s, string n, int i) => { };
+            IDReceived += (int id) => { };
+            ChangeRejected += (string s, string ss) => { };
+            OtherClientDisconnected += (int id) => { };
+            Disconnected += (string s) => { };
+            ConnectionAttempted += (bool error, List<string> ss) => { };
         }
 
         public bool HasReceivedSpreadsheets ()
