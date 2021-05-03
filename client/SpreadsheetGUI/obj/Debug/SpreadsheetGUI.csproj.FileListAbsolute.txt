@@ -84,8 +84,6 @@ C:\Users\izana\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\Sp
 C:\Users\izana\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.CopyComplete
 C:\Users\izana\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.exe
 C:\Users\izana\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.pdb
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Newtonsoft.Json.pdb
-D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Newtonsoft.Json.xml
 C:\Users\izana\source\repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Newtonsoft.Json.pdb
 C:\Users\izana\source\repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\Newtonsoft.Json.xml
 C:\Users\abarr\Source\Repos\gamre-spreadsheet\client\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe.config
