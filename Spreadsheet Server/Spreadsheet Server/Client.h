@@ -2,6 +2,7 @@
 #include <string>
 #include <boost/asio.hpp> 
 #include "Connection.h"
+#include <list>
 
 using namespace std;
 using it_connection = std::list<Connection>::iterator;

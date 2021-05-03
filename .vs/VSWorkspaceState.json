@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\client",
-    "\\Spreadsheet Server"
+    ""
   ],
-  "SelectedNode": "\\client\\Spreadsheet Client.sln",
+  "SelectedNode": "\\Spreadsheet Server.sln",
   "PreviewInSolutionExplorer": false
 }

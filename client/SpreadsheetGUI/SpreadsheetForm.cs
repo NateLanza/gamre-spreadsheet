@@ -369,6 +369,10 @@ namespace SpreadsheetGUI
         /// <param name="e"></param>
         private void OpenButton_Click(object sender, EventArgs e)
         {
+            if (SpreadsheetNameList.Text.Length == 0) {
+                MessageBox.Show("Please select a spreadsheet to open", "", MessageBoxButtons.OK);
+                return;
+            }
             OpenButton.Enabled = false;
             SpreadsheetNameList.Enabled = false;
             newSSButton.Enabled = false;
@@ -393,6 +397,10 @@ namespace SpreadsheetGUI
 
         private void newSSButton_Click(object sender, EventArgs e)
         {
+            if (newSSName.Text.Length == 0) {
+                MessageBox.Show("Please enter a name for the new spreadsheet", "", MessageBoxButtons.OK);
+                return;
+            }
             OpenButton.Enabled = false;
             SpreadsheetNameList.Enabled = false;
             newSSButton.Enabled = false;
