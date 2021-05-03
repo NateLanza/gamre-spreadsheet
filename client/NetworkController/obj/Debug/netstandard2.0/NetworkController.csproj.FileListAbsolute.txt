@@ -68,3 +68,4 @@ C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\NetworkController\obj\Debu
 C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.csproj.CoreCompileInputs.cache
 C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.dll
 C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.pdb
+D:\SYS\Program Files\Visual Studio\gamre-spreadsheet\client\NetworkController\obj\Debug\netstandard2.0\NetworkController.csprojAssemblyReference.cache
