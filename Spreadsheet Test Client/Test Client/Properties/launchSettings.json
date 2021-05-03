@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Test Client": {
+      "commandName": "Project",
+      "commandLineArgs": "5 127.0.0.1:1100 "
+    }
+  }
+}

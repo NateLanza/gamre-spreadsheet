@@ -158,7 +158,7 @@ tuple<bool, string> SpreadsheetState::UndoLastEdit() {
 	}
 
 	// Undo validated, implement it
-	AddOrUpdateCell(name, f, false);
+	cells[name].Revert();
 	dependencies.ReplaceDependents(name, cells[name].GetVariables());
 	edits.pop_front();
 	WriteUnlock();
