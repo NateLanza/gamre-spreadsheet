@@ -60,3 +60,12 @@ C:\Users\abarr\Source\Repos\gamre-spreadsheet3\client\DependencyGraph\obj\Debug\
 C:\Users\abarr\Source\Repos\gamre-spreadsheet3\client\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.csproj.CoreCompileInputs.cache
 C:\Users\abarr\Source\Repos\gamre-spreadsheet3\client\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.dll
 C:\Users\abarr\Source\Repos\gamre-spreadsheet3\client\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.pdb
+C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\DependencyGraph\bin\Debug\netstandard2.0\DependencyGraph.deps.json
+C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\DependencyGraph\bin\Debug\netstandard2.0\DependencyGraph.dll
+C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\DependencyGraph\bin\Debug\netstandard2.0\DependencyGraph.pdb
+C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.csprojAssemblyReference.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.AssemblyInfoInputs.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.AssemblyInfo.cs
+C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.csproj.CoreCompileInputs.cache
+C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.dll
+C:\Users\abarr\Source\Repos\gamre-spreadsheet4\client\DependencyGraph\obj\Debug\netstandard2.0\DependencyGraph.pdb

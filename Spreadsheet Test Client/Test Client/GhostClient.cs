@@ -276,6 +276,7 @@ namespace TestHandler
                     ConnectionState = ConnectionStates.Connected;
                     Connection.OnNetworkAction = ReceiveLoop;
                     IDReceived(ID);
+                    connectedToSheet = true;
                 }
             }
 
